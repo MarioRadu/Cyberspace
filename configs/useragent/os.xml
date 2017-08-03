@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <os>
+ 	<type>
+			<name type="mobile">
+				<os>Android</os>
+				<identify>
+					<osName>Android</osName>
+					<uaString>Android</uaString>
+				</identify>
+			</name>
+			<name type="mobile">
+				<os>Blackberry</os>
+				<identify>
+					<osName>Blackberry</osName>
+					<uaString>Blackberry</uaString>
+				</identify>
+			</name>
+			<name type="mobile">
+				<os>Windows Mobile</os>
+				<identify>
+					<osName>Windows Mobile</osName>
+					<uaString>Windows Mobile</uaString>
+				</identify>
+			</name>
+			<name type="mobile">
+				<os>Apple</os>
+				<identify>
+					<osName>iOS</osName>
+					<uaString>iPhone|iPad|iPod</uaString>
+				</identify>
+			</name>
+			<name type="mobile">
+				<os>Samsung</os>
+				<identify>
+					<osName>Samsung OS</osName>
+					<uaString>Samsung|sam-r|SCH|SGH</uaString>
+				</identify>
+			</name>
+			<name type="mobile">
+				<os>Huawei</os>
+				<identify>
+					<osName>Huawei</osName>
+					<uaString>huawei</uaString>
+				</identify>
+			</name>
+			<name type="mobile">
+				<os>LG</os>
+				<identify>
+					<osName>LG OS</osName>
+					<uaString>LG</uaString>
+				</identify>
+			</name>
+			<name type="mobile">
+				<os>Motorola</os>
+				<identify>
+					<osName>Motorola</osName>
+					<uaString>Cricket</uaString>
+				</identify>
+			</name>
+			<name type="mobile">
+				<os>PlayStation Portable</os>
+				<identify>
+					<osName>PlayStation Portable</osName>
+					<uaString>PlayStation Portable</uaString>
+				</identify>
+			</name>
+			<name type="mobile">
+				<os>Kyocera</os>
+				<identify>
+					<osName>Kyocera</osName>
+					<uaString>KWC</uaString>
+				</identify>
+			</name>
+			<name type="mobile">
+				<os>Symbian</os>
+				<identify>
+					<osName>Symbian OS</osName>
+					<uaString>SymbOS</uaString>
+				</identify>
+			</name>
+ 			<name type="desktop">
+ 				<os>Windows</os>
+				<identify>
+					<osName>Windows 3.11</osName>
+					<uaString>Win16</uaString>
+				</identify>
+				<identify>
+					<osName>Windows 95</osName>
+					<uaString>Windows 95|Win95|Windows_95</uaString>
+				</identify>
+				<identify>
+					<osName>Windows 98</osName>
+					<uaString>Windows 98|Win98</uaString>
+				</identify>
+				<identify>
+					<osName>Windows 2000</osName>
+					<uaString>Windows NT 5.0|Windows 2000</uaString>
+				</identify>
+				<identify>
+					<osName>Windows XP</osName>
+					<uaString>Windows NT 5.1|Windows XP</uaString>
+				</identify>
+				<identify>
+					<osName>Windows Server 2003</osName>
+					<uaString>Windows NT 5.2</uaString>
+				</identify>
+				<identify>
+					<osName>Windows Vista</osName>
+					<uaString>Windows NT 6.0</uaString>
+				</identify>
+				<identify>
+					<osName>Windows 7</osName>
+					<uaString>Windows NT 6.1</uaString>
+				</identify>
+				<identify>
+					<osName>Windows 8</osName>
+					<uaString>Windows NT 6.2</uaString>
+				</identify>
+				<identify>
+					<osName>Windows 8.1</osName>
+					<uaString>Windows NT 6.3</uaString>
+				</identify>
+				<!--  
+					Based on Windows Technical Preview 
+					the Windows 10 UserAgent must contain
+					"Windows NT 6.4" 
+				-->
+				<identify>
+					<osName>Windows 10</osName>
+					<uaString>Windows NT 6.4</uaString>
+				</identify>
+				<identify>
+					<osName>Windows NT</osName>
+					<uaString>Windows NT 4|WinNT4.0|WinNT</uaString>
+				</identify>
+				<identify>
+					<osName>Windows ME</osName>
+					<uaString>Windows ME</uaString>
+				</identify>
+ 			</name>
+			<name type="desktop">
+				<os>Gnome</os>
+			</name>
+			<name type="desktop">
+				<os>Mandriva</os>
+				<identify>
+					<osName>Linux Mandriva</osName>
+					<uaString>Mandriva</uaString>
+				</identify>
+			</name>
+			<name type="desktop">
+				<os>Fedora</os>
+				<identify>
+					<osName>Linux Fedora</osName>
+					<uaString>Fedora</uaString>
+				</identify>
+			</name>
+			<name type="desktop">
+				<os>Debian</os>
+				<identify>
+					<osName>Linux Debian</osName>
+					<uaString>Debian</uaString>
+				</identify>
+			</name>
+			<name type="desktop">
+				<os>Linux</os>
+			</name>
+			<name type="desktop">
+				<os>Ubuntu</os>
+				<identify>
+					<osName>Linux Ubuntu</osName>
+					<uaString>Ubuntu</uaString>
+				</identify>
+			</name>
+			<name type="desktop">
+				<os>Apple</os>
+				<identify>
+					<osName>Mac OS X</osName>
+					<uaString>Mac OS X</uaString>
+				</identify>
+			</name>
+			<name type="desktop">
+				<os>Macintosh</os>
+				<identify>
+					<osName>Mac OS</osName>
+					<uaString>Mac OS</uaString>
+				</identify>
+			</name>
+			<name type="desktop">
+				<os>Java</os>
+				<identify>
+					<osName>JVM</osName>
+					<uaString>J2ME|JRE|Java|MIDP</uaString>
+				</identify>
+			</name>
+ 	</type>
+ </os>

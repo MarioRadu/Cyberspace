@@ -1,0 +1,145 @@
+/* CLEARFIX CLASS */
+.clearfix:after {
+	content:".";
+	display:block;
+	height:0;
+	clear:both;
+	visibility:hidden;
+}
+.clearfix {display:inline-block;}
+/* Hide from IE Mac \*/
+.clearfix {display:block;}
+/* End hide from IE Mac */
+* html .clearfix {height:1px;}
+
+/* END OF CLEARFIX CLASS */
+
+
+.debugger{
+	border: 0px;
+	margin: 0px;
+	font-size: 10px;
+	font-family:Consolas, monospace;
+	width:auto;
+	padding: 15px 0px;
+	width: 95%;
+	margin-left: 2.5%;
+	background-color: #EEF2F5; 
+}
+.debuggertable{
+	border: 0px;
+	margin: 20px 0px 5px 0px;
+	font-size: 10px;
+	font-family:Consolas, monospace;
+	width:100%;
+	background-color: #D1D1D1;
+	width:100%;
+	border-spacing: 1px;
+	border-collapse: separate;
+}
+.index_debugger{
+	border: 0px;
+	font-size: 11px;
+}
+.index_debugger b{
+	float: left;
+	padding: 0px 0px 0px 0px;
+}
+.index_debugger span{
+	color: #4E4E4E;
+}
+.debugger_images{
+	float: left;
+	vertical-align: middle;
+	border: 0px;
+	margin: 3px 5px 3px 0px;
+}
+
+.debug_table{
+	border: 0px;
+	font-size: 11px;
+	width:100%;
+}
+
+.debuggertable th{
+	background-color: #EDEDED;
+	padding: 8px 0px 8px 3px;
+	font-size: 12px;
+}
+
+.debuggertable td{
+	padding: 5px 0px 5px 3px;
+}
+
+.debugger_1 {
+	background-color: #FFFFFF;
+	color: #333333;
+	letter-spacing: 0.5px;
+}
+
+.debugger_2 {
+	background-color: #FFFFFF;
+	border: 1px solid #FFFFFF;
+	color: #333333;
+	letter-spacing: 0.5px;
+}
+
+.debugger_1_params {
+	background-color: #FFFFFF;
+}
+
+.debugger_2_params {
+	background-color: #F7F7F7;
+	border: 1px solid #FFFFFF;
+}
+
+.details_debugger_db{
+	cursor: pointer;
+}
+
+.debugger_db{
+	float: left;
+	margin-right: 3px;
+	background-color: #ffffff;
+	border: 1px solid #CFCFCF;
+	width: 250px;
+	padding: 6px 4px 6px 4px;
+	height: 21px;
+	line-height: 21px;
+}
+
+.version_zf, .version_php{
+	float: right;
+	margin-left: 15px;
+	line-height: 21px;
+}
+
+.total_time, .memory_usage, .debugger_db, .details_debugger_db{
+	float: left;
+	margin-right: 15px;
+	line-height: 21px;
+}
+
+.db_debug_rows {
+	clear: both;
+}
+
+.details_debugger_opcache{
+	cursor: pointer;
+	float: left;
+	margin-right: 3px;
+	height: 21px;
+	line-height: 21px;
+}
+.debugger_opcache{
+	float: left;
+	margin-right: 3px;
+	width: 250px;
+	height: 21px;
+	line-height: 21px;
+}
+.opcache_debug_rows{
+	clear: both;
+	width: 1000px;
+}
+.opcache_debug_rows tr td.debugger_1 { width: 150px; }

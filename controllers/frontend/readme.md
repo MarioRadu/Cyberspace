@@ -1,0 +1,1 @@
+erorile de server -> tail -f /var/log/apache2/error_log    in linia de comanda.
