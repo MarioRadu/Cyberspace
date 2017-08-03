@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<dots>
+		<variable option="global">
+		</variable>
+		<variable option="admin">
+		</variable>
+		<variable option="frontend">
+			<pageTitle>
+				<action>
+					<home>Home Page</home>
+					<about>About Us</about>
+					<who-we-are>Who We Are</who-we-are>
+					<coding-standard>Coding Standard</coding-standard>
+					<image>Image Structure</image>
+					<outbound-links>Outbound Links</outbound-links>
+				</action>
+			</pageTitle>
+		</variable>
+		<variable option="mobile">
+			<pageTitle>
+				<action>
+					<home>Mobile Version</home>
+				</action>
+			</pageTitle>
+			<validate>
+				<details>
+					<lengthMin>3</lengthMin>
+				</details>
+			</validate>	
+			<contactForm>
+				<subject>Mobile Contact Form</subject>
+				<message>
+From: %EMAIL%
+Phone: %PHONE%
+
+%MESSAGE%
+
+---
+Date: %DATE%
+IP: %IP%
+User Agent: %USERAGENT%
+				</message>
+				<mailSent>Your message was sent!</mailSent>
+			</contactForm>
+		</variable>			
+	</dots>
+</config>
