@@ -6,7 +6,7 @@ class Article extends Dot_Model
 	public function getArticleList()
 	{
 		$select = $this->db->select()
-						->from('article');
+						->from('question');
 		$result = $this->db->fetchAll($select);
 		return $result;
 	}
@@ -16,7 +16,7 @@ class Article extends Dot_Model
 	{
 		// $select from table "article" where id = $id ; 
 		$select = $this->db->select()
-							->from("article")
+							->from("question")
 							->where("id = ?",$id);
 
 		// store in $result all the data from the database ;

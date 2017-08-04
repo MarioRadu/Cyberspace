@@ -1,5 +1,6 @@
 <?php
 
+
 class Article_View extends View
 {
 
@@ -33,18 +34,26 @@ class Article_View extends View
 	}
 
 
-		public function showArticle($templateFile="",$data)
+		public function showArticle($templateFile="",$data, $userId=null)
 		{
 			if($templateFile !="") $this->templateFile = $templateFile;
 			$this->tpl->setFile('tpl_main','article/'.$this->templateFile.".tpl");
-
-			foreach ($data as $key => $value) 
-			{
-				foreach ($value as $k => $v) 
+			$this->tpl->setBlock('tpl_main','comment','comment_block');
+			
+				foreach ($data as $key => $value) 
 				{
-					$this->tpl->setVar(strtoupper($k),$v);
+					foreach ($value as $k => $v) 
+					{
+						$this->tpl->setVar(strtoupper($k),$v);
+					}
+					if($userId !== null)
+						{	 
+							$this->tpl->parse("comment_block","comment",true);
+						}
+			
 				}
-			}
+			
+			
 		}
 
 
