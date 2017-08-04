@@ -18,6 +18,7 @@ switch ($registry->requestAction)
 		break;
 	break;
 	case 'show_article':
+		$userId = NULL;
 		$id = $registry->request['id'];
 		if(isset($session->user->id))
 		{
