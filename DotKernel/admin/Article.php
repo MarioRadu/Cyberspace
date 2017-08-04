@@ -7,7 +7,7 @@ class Article extends Dot_Model
 	{
 		//$page = 1 ;
 		$select = $this->db->select()
-						->from('article');
+						->from('question');
 		$dotPaginator = new Dot_Paginator($select,$page,$this->settings->resultsPerPage);
 
 		$result = $dotPaginator->getData();
@@ -19,13 +19,13 @@ class Article extends Dot_Model
 		//var_dump($data['name']);
 
 		$dataToBeInserted = array('content'=>$data['name']);
-		$this->db->insert("article",$dataToBeInserted);
+		$this->db->insert("question",$dataToBeInserted);
 	}
 
 	public function deleteArticle($id)
 	{
 		//var_dump($data['name']);
-		$delete = $this->db->delete('article','id = '.$id);
+		$delete = $this->db->delete('question','id = '.$id);
 		//header("Location: localhost/dotkernel1/admin/article/list");
 	}
 
@@ -34,7 +34,7 @@ class Article extends Dot_Model
 	{
 		// $select from table "article" where id = $id ; 
 		$select = $this->db->select()
-							->from("article")
+							->from("question")
 							->where("id = ?",$id);
 
 		// store in $result all the data from the database ;
@@ -50,7 +50,7 @@ class Article extends Dot_Model
 		var_dump("ajuns in updateArticle");
 		
 
-		$update = $this->db->update('article',$data,'id = '.$id);
+		$update = $this->db->update('question',$data,'id = '.$id);
 	}				/// where what 
 
 
