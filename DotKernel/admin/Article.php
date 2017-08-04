@@ -53,5 +53,5 @@ class Article extends Dot_Model
 		$update = $this->db->update('question',$data,'id = '.$id);
 	}				/// where what 
 
-
+//asdahojdhiasdiuhlosadoliujsadoipasdopusadopi
 }
