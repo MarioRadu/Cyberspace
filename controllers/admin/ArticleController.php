@@ -52,4 +52,20 @@ switch ($registry->requestAction) {
 		$articleData = $articleModel->getArticleById($id);
 		$articleView->showArticle("showArticle",$articleData);
 		break;
+
+	case "add_comment":
+
+		
+		//$id = $registry->request['id'];
+		//$articleComment = $articleModel->getArticleById($id);
+		if($_SERVER)['REQUEST_METHOD']=='POST')
+		{	
+			var_dump("Ajuns in add comment");
+			$articleModel->postComment("test");
+		}
+		else
+		{
+			var_dump("nu a em post");
+		}
+
 }

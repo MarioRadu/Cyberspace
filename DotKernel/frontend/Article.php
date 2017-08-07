@@ -26,4 +26,22 @@ class Article extends Dot_Model
 		return $result;
 	}
 
+	public function addArticle($data)
+	{
+
+		$this->db->insert("question",$data);
+	}
+
+	public function postComment($data)
+	{
+		//var_dump("ajuns in post comment");
+		//var_dump($data);
+		//exit();
+		$dataToBeInserted = array('userId'=>$data['userId'],'questionId'=>$data['questionId'],'content'=>$data['comment']);
+
+		//var_dump($dataToBeInserted);
+		//exit();
+		$this->db->insert("comment",$dataToBeInserted);
+	}
+
 }

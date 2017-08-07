@@ -8,9 +8,11 @@
 <!-- COMMENT BOX -->
 
 <!-- BEGIN comment -->
-<form method="POST" action="#">
+<form method="POST" action="{SITE_URL}/article/comment/id/{ID}">
 <textarea name = "comment" cols = "110" rows = "2">Comment here</textarea><br/>
+
 <input type="submit" name="submit" value="submit" />
 </form>
+
 <!-- END comment -->
 
