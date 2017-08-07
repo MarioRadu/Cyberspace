@@ -19,6 +19,9 @@
 		<a href="{SITE_URL}/user/account">My Account</a>
 	</li>
 	<li>
+		<a href="{SITE_URL}/article/list">Add question</a>
+	</li>
+	<li>
 		<a href="{SITE_URL}/user/logout">Log Out</a>
 	</li>
 	<!-- END sidebar_menu_logged -->
