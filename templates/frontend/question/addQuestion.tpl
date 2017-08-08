@@ -9,7 +9,7 @@
  }
  </style>
 <!-- BEGIN post_comment -->
-<form action="{SITE_URL}/article/add" method="POST" id="form">
+<form action="{SITE_URL}/question/add" method="POST" id="form">
   Title: <input type="text" name="title" style="border:10px ridge #008080;">
   <input type="submit"  style="font-size: 14px;border:5px groove #008080;background-color:#008080;color:white;">
 </form>

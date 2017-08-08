@@ -1,9 +1,9 @@
 <?php
 
-class Article extends Dot_Model
+class Question extends Dot_Model
 {
 
-	public function getArticleList()
+	public function getQuestionList()
 	{
 		$select = $this->db->select()
 						->from('question');
@@ -12,7 +12,7 @@ class Article extends Dot_Model
 	}
 
 	
-	public function getArticleById($id)
+	public function getQuestionById($id)
 	{
 		// $select from table "article" where id = $id ; 
 		$select = $this->db->select()

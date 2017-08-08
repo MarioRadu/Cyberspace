@@ -13,7 +13,7 @@
 		<variable option="frontend">
 			<pageTitle>
 				<action>
-					<list>List Articles</list>
+					<list>List Question</list>
 				</action>
 			</pageTitle>
 		</variable>

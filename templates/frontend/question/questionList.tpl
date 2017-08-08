@@ -11,9 +11,9 @@ a.button {
 
 
 
-<!-- BEGIN article_list -->
-<a href ="{SITE_URL}/article/show_article/id/{ID}" class = "buttonn"> <h2>{TITLE}</h2></a>
-<p>{CONTENT}</p>
+<!-- BEGIN question_list -->
+<a href ="{SITE_URL}/question/show_question/id/{ID}" class = "buttonn"> <h2>{TITLE}</h2></a>
+<p >{CONTENT}</p>
 <p>Date : {DATE}</p>
 <hr>
-<!-- END article_list -->
+<!-- END question_list -->

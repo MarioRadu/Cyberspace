@@ -1,7 +1,7 @@
 <?php
 
 
-class Article_View extends View
+class Question_View extends View
 {
 
 
@@ -17,11 +17,11 @@ class Article_View extends View
 	}
 
 
-	public function showAllArticles($templateFile="",$data)
+	public function showAllQuestion($templateFile="",$data)
 	{
 		if($templateFile !="") $this->templateFile = $templateFile;
-		$this->tpl->setFile('tpl_main','article/'.$this->templateFile.".tpl");
-		$this->tpl->setBlock('tpl_main','article_list','article_list_block');
+		$this->tpl->setFile('tpl_main','question/'.$this->templateFile.".tpl");
+		$this->tpl->setBlock('tpl_main','question_list','question_list_block');
 
 		foreach ($data as $key => $value) 
 		{
@@ -29,15 +29,15 @@ class Article_View extends View
 			{
 				$this->tpl->setVar(strtoupper($key),$value);
 			}
-		 	$this->tpl->parse("article_list_block","article_list",true);
+		 	$this->tpl->parse("question_list_block","question_list",true);
 		}
 	}
 
 
-	public function showArticle($templateFile="",$data, $userId=null)
+	public function showQuestion($templateFile="",$data, $userId=null)
 	{
 		if($templateFile !="") $this->templateFile = $templateFile;
-		$this->tpl->setFile('tpl_main','article/'.$this->templateFile.".tpl");
+		$this->tpl->setFile('tpl_main','question/'.$this->templateFile.".tpl");
 		$this->tpl->setBlock('tpl_main','comment','comment_block');
 			
 			foreach ($data as $key => $value) 
@@ -52,10 +52,10 @@ class Article_View extends View
 					}
 			}	
 	}
-	//
+	// 
 	public function postQuestion($templateFile="")
 	{
 		if($templateFile !="") $this->templateFile = $templateFile;
-		$this->tpl->setFile('tpl_main','article/'.$this->templateFile.".tpl");
+		$this->tpl->setFile('tpl_main','question/'.$this->templateFile.".tpl");
 	}
 }

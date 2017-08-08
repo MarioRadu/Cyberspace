@@ -3,12 +3,12 @@
 <p>{DATE}</p>
 
 <!-- GO BACK BUTTON -->
-<a href ="{SITE_URL}/article/list" class = "">Back</a>
+<a href ="{SITE_URL}/question/list" class = "">Back</a>
 
 <!-- COMMENT BOX -->
 
 <!-- BEGIN comment -->
-<form method="POST" action="{SITE_URL}/article/comment/id/{ID}">
+<form method="POST" action="{SITE_URL}/question/comment/id/{ID}">
 <textarea name = "comment" cols = "110" rows = "2">Comment here</textarea><br/>
 
 <input type="submit" name="submit" value="submit" />
