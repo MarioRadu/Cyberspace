@@ -34,27 +34,28 @@ class Article_View extends View
 	}
 
 
-		public function showArticle($templateFile="",$data, $userId=null)
-		{
-			if($templateFile !="") $this->templateFile = $templateFile;
-			$this->tpl->setFile('tpl_main','article/'.$this->templateFile.".tpl");
-			$this->tpl->setBlock('tpl_main','comment','comment_block');
+	public function showArticle($templateFile="",$data, $userId=null)
+	{
+		if($templateFile !="") $this->templateFile = $templateFile;
+		$this->tpl->setFile('tpl_main','article/'.$this->templateFile.".tpl");
+		$this->tpl->setBlock('tpl_main','comment','comment_block');
 			
-				foreach ($data as $key => $value) 
+			foreach ($data as $key => $value) 
+			{
+				foreach ($value as $k => $v) 
 				{
-					foreach ($value as $k => $v) 
-					{
-						$this->tpl->setVar(strtoupper($k),$v);
-					}
-					if($userId !== null)
-						{	 
-							$this->tpl->parse("comment_block","comment",true);
-						}
-			
+					$this->tpl->setVar(strtoupper($k),$v);
 				}
-			
-			
-		}
-
-
+				if($userId !== null)
+					{	 
+						$this->tpl->parse("comment_block","comment",true);
+					}
+			}	
+	}
+	//
+	public function postQuestion($templateFile="")
+	{
+		if($templateFile !="") $this->templateFile = $templateFile;
+		$this->tpl->setFile('tpl_main','article/'.$this->templateFile.".tpl");
+	}
 }

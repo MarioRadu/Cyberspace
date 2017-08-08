@@ -28,16 +28,16 @@ switch ($registry->requestAction)
 		$articleView->showArticle("article_pages",$articleData,$userId);
 	break;
 	case 'add' :
-		//var_dump($registry->request['page']);
-		$articleView->postComment("addArticle");
+		$userId = (isset($session->user->id)) ? $session->user->id : '' ;
+
+		//var_dump($userId);
+		//exit();
+		$articleView->postQuestion("addQuestion");
 		if($_SERVER['REQUEST_METHOD'] == 'POST')
 		{
-			//var_dump("avem post");
-			$articleModel->addArticle($_POST);
-		}
-		else
-		{
-			var_dump("nu avem post");
+			$baseUrl = $registry->configuration->website->params->url;
+			$articleModel->addQuestion($_POST,$userId);
+			header("Location: " . $baseUrl . "/article/list");
 		}
 		break;
 
