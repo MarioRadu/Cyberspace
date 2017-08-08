@@ -26,10 +26,18 @@ class Article extends Dot_Model
 		return $result;
 	}
 
-	public function addArticle($data)
+	public function addQuestion($data,$userId)
 	{
-
-		$this->db->insert("question",$data);
+		$title = $data['title'];
+		$question = $data['question'];
+		//var_dump($userId);
+		//exit();
+		//$questionData = array('title'=>$title,'content'=>$question);
+		//var_dump($data['name']);
+		//var_dump("ajuns in add question".$title.$question);
+		//exit();
+		$dataToBeInserted = array('title'=>$title,'content'=>$question,'userId'=>$userId);
+		$this->db->insert("question",$dataToBeInserted);
 	}
 
 	public function postComment($data)
@@ -43,5 +51,4 @@ class Article extends Dot_Model
 		//exit();
 		$this->db->insert("comment",$dataToBeInserted);
 	}
-
 }

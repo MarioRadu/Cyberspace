@@ -12,7 +12,7 @@ a.button {
 
 
 <!-- BEGIN article_list -->
-<a href ="{SITE_URL}/article/show_article/id/{ID}" class = "button">Article {ID}</a>
+<a href ="{SITE_URL}/article/show_article/id/{ID}" class = "buttonn"> <h2>{TITLE}</h2></a>
 <p>{CONTENT}</p>
 <p>Date : {DATE}</p>
 <hr>
