@@ -1,8 +1,8 @@
 <?php
 
 
-$articleView = new Article_View($tpl);
-$articleModel = new Article();
+$questionView = new Question_View($tpl);
+$questionModel = new Question();
 // all actions MUST set  the variable  $pageTitle
 $pageTitle = $option->pageTitle->action->{$registry->requestAction};
 $session = Zend_Registry::get('session');
@@ -10,34 +10,36 @@ switch ($registry->requestAction)
 {
 	default:
 	case 'list':
-		// call getArticleList method to view the article pages
-		$list = $articleModel->getArticleList();
-		$articleView->showAllArticles("articleList",$list);
+		// call getQuestionList method to view the article pages
+		$list = $questionModel->getQuestionList();
+		$questionView->showAllQuestion("questionList",$list);
 		//Zend_Debug::dump($list);
 		//exit();
 		break;
 	break;
-	case 'show_article':
+
+	case 'show_question':
 		$userId = NULL;
 		$id = $registry->request['id'];
 		if(isset($session->user->id))
 		{
 			$userId = $session->user->id;
 		}
-		$articleData = $articleModel->getArticleById($id);
-		$articleView->showArticle("article_pages",$articleData,$userId);
+		$questionData = $questionModel->getQuestionById($id);
+		$questionView->showQuestion("question_pages",$questionData,$userId);
 	break;
+
 	case 'add' :
 		$userId = (isset($session->user->id)) ? $session->user->id : '' ;
 
 		//var_dump($userId);
 		//exit();
-		$articleView->postQuestion("addQuestion");
+		$questionView->postQuestion("addQuestion");
 		if($_SERVER['REQUEST_METHOD'] == 'POST')
 		{
 			$baseUrl = $registry->configuration->website->params->url;
-			$articleModel->addQuestion($_POST,$userId);
-			header("Location: " . $baseUrl . "/article/list");
+			$questionModel->addQuestion($_POST,$userId);
+			header("Location: " . $baseUrl . "/question/list");
 		}
 		break;
 
@@ -49,7 +51,7 @@ switch ($registry->requestAction)
 		{
 		$data = ['userId'=>$userId,'comment'=>$_POST['comment'],'questionId'=>$questionId]; 
 		//var_dump($data);	
-		$articleModel->postComment($data);
+		$questionModel->postComment($data);
 		
 		}
 		else
@@ -58,6 +60,5 @@ switch ($registry->requestAction)
 			exit();
 		}
 		break;
-
 }
 
