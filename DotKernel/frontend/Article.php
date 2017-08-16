@@ -7,7 +7,8 @@ class Article extends Dot_Model
 	public function getArticleList()
 	{
 		$select = $this->db->select()
-						->from('question');
+						->from('question')
+						->order('date DESC');
 		$result = $this->db->fetchAll($select);
 		return $result;
 	}
@@ -18,10 +19,7 @@ class Article extends Dot_Model
 		// $select from table "question" where id = $id ; 
 		$select = $this->db->select()
 							->from("question")
-							->where("id = ?",$id)
-
-							;
-
+							->where("id = ?",$id);
 		// store in $result all the data from the database ;
 		$result = $this->db->fetchAll($select);
 

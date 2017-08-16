@@ -108,10 +108,6 @@ class Article_View extends View
 					foreach ($currentReplyList as $key => $reply) 
 					{
 						$this->_setData($reply,'REPLY_');	
-						//var_dump($currentReplyList);
-						// foreach ($reply as $key => $value) {
-						// 	$this->tpl->setVar(strtoupper('REPLY_' . $key),$value);
-						// 	}
 						$this->tpl->parse("reply_list_block","reply_list",true);
 						if($key == $lastKey)
 						{
@@ -121,10 +117,6 @@ class Article_View extends View
 					}
 						
 				}
-//					$this->tpl->parse("comment_list_block","comment_list",true);
-
-
-			
 		}
 
 	// set the tpl file and display it .

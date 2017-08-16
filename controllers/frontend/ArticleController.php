@@ -97,23 +97,12 @@ switch ($registry->requestAction)
 					$reply = $_POST['reply'];
 					$questionId = (isset($registry->request['id'])) ? $registry->request['id'] : '';
 					$articleModel->postReply($questionId,$userId,$reply);
-					header("Location: " . $baseUrl . "/article/list");
-					//var_dump($userId);
-					//var_dump($questionId);
-					//header('Location: '.$_SERVER['REQUEST_URI']);
-					///article/show_article/id/2
-					//header("Location: " . $baseUrl . "/article/show_article/id/" . $questionId);
-				//header('Location: '.$_SERVER['PHP_SELF']);  
-					//$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-					//var_dump($actual_link);
+					header("Location: " . $baseUrl . "/article/show_article/id/" . $_POST['id']);
 				}
 				else
 				{
 					var_dump("nu avem post"); //nu avem post"
 				}
-		//header("Location: " . $baseUrl . "/article/show_article/id/" . $commentId);
-				//header("Refresh:0");
-				//header('Location: '.$_SERVER['REQUEST_URI']);
 		}
 		break;
 }
