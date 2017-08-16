@@ -4,7 +4,7 @@
 		<a href="{SITE_URL}" target="_self">Home</a> 
 	</li>
 	<li class="">
-		<a href ="{SITE_URL}/question/list" class = "">Questions</a>
+		<a href ="{SITE_URL}/article/list" class = "">List Articles</a>
 	</li>
 	<!-- BEGIN sidebar_menu_not_logged -->
 	<li class="{SEL_USER_LOGIN}">
@@ -18,8 +18,8 @@
 	<li class="{SEL_USER_ACCOUNT}">
 		<a href="{SITE_URL}/user/account">My Account</a>
 	</li>
-	<li class="{SEL_PAGE_HOME}">
-		<a href="{SITE_URL}/question/add">Add question</a> 
+	<li>
+		<a href="{SITE_URL}/article/add_question">Add question</a>
 	</li>
 	<li>
 		<a href="{SITE_URL}/user/logout">Log Out</a>

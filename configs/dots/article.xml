@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<dots>
+		<variable option="global">
+		</variable>
+		<variable option="admin">
+			<pageTitle>
+				<action>
+					<list>TEST</list>
+				</action>
+			</pageTitle>
+		</variable>
+		<variable option="frontend">
+			<pageTitle>
+				<action>
+					<list>List Articles</list>
+				</action>
+			</pageTitle>
+		</variable>
+		<variable option="mobile"></variable>			
+	</dots>
+</config>

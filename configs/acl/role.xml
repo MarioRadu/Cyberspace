@@ -12,7 +12,7 @@
 				<guest>
 					<Page>all</Page><!-- allow 'guest' to access 'Page' controller -->
 					<User>all</User><!-- allow 'guest' to access 'User' controller -->
-					<Question>all</Question> <!-- allow 'guest' to acces 'Article' controller -->
+					<Article>all</Article> <!-- allow 'guest' to acces 'Article' controller -->
 				</guest> 				
 				<user>
 					<User>account</User><!-- allow 'user' to access 'User' controller and also 'account' action-->

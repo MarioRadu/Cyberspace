@@ -5,7 +5,7 @@
 	<controllers>
 		<frontend>Page</frontend>
 		<frontend>User</frontend>
-		<frontend>Question</frontend>
+		<frontend>Article</frontend>
 		<admin>Admin</admin>
 		<admin>System</admin>
 		<admin>User</admin>
@@ -16,7 +16,7 @@
  	<routes>
  		<!-- default controllers for modules -->
 		<controller>
-			<frontend>Question</frontend>
+			<frontend>Article</frontend>
 			<admin>System</admin>
 			<rss>Sample</rss>
 			<mobile>Page</mobile>
@@ -24,9 +24,8 @@
 		<action>
 			<!-- default action for controllers ... -->
 			<frontend>
-				<Page>home</Page>
+				<Article>list</Article>
 				<User>login</User>
-				<Question>list</Question>
 			</frontend>
 			<admin>
 				<Admin>account</Admin>
