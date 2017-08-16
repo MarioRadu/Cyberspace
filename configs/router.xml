@@ -24,9 +24,8 @@
 		<action>
 			<!-- default action for controllers ... -->
 			<frontend>
-				<Page>home</Page>
-				<User>login</User>
 				<Article>list</Article>
+				<User>login</User>
 			</frontend>
 			<admin>
 				<Admin>account</Admin>

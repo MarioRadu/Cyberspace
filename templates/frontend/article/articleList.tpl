@@ -1,19 +1,6 @@
-<style type="text/css">
-a.button {
-    -webkit-appearance: button;
-    -moz-appearance: button;
-    appearance: button;
-
-    text-decoration: none;
-    color: initial;
-}
-</style>
-
-
-
 <!-- BEGIN article_list -->
-<a href ="{SITE_URL}/article/show_article/id/{ID}" class = "buttonn"> <h2>{TITLE}</h2></a>
+<a href ="{SITE_URL}/article/show_article/id/{ID}"><h2>{TITLE}</h2></a>
 <p>{CONTENT}</p>
-<p>Date : {DATE}</p>
+Date : {DATE}
 <hr>
 <!-- END article_list -->

@@ -18,8 +18,8 @@
 	<li class="{SEL_USER_ACCOUNT}">
 		<a href="{SITE_URL}/user/account">My Account</a>
 	</li>
-	<li class="{SEL_PAGE_HOME}">
-		<a href="{SITE_URL}/article/add">Add question</a> 
+	<li>
+		<a href="{SITE_URL}/article/add_question">Add question</a>
 	</li>
 	<li>
 		<a href="{SITE_URL}/user/logout">Log Out</a>

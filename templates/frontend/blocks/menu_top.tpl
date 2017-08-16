@@ -20,7 +20,7 @@
 	<!-- END top_menu_not_logged -->
 	<!-- BEGIN top_menu_logged -->
 	<li class="{SEL_USER_ACCOUNT}">
-		<a href="{SITE_URL}/user/account">My Account</a>
+		<a href="{SITE_URL}/user/account">{USERNAME}</a>
 	</li>
 	<li>
 		<a href="{SITE_URL}/user/logout">Log Out</a>
