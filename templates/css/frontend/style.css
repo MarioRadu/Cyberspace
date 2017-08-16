@@ -71,7 +71,7 @@ header { height: 140px; width:100%; background-color: #EEF2F5; }
 footer { background-color:#EEF2F5; width:100%; }
 
 /****** Logo *********/
-#logo { font-size:26px; margin-top: 45px; float:left; }
+#logo { font-size:26px; margin-top: 20px; float:left; }
 #logo a { color:#41403B !important; text-decoration:none; }
 
 /****** Top Menu *********/

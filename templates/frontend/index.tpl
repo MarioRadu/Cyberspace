@@ -22,7 +22,7 @@
 		<header>
 			<div id="header-content" class="clearfix">
 				<div id="logo">
-					<h1><a href="{SITE_URL}/">{SITE_NAME}</a></h1>
+					<h1><a href="{SITE_URL}/"><img src="{SITE_URL}/templates/frontend/2.png" style="width:100px;height:100px;">CyberSpace</a></h1>
 				</div>
 				{MENU_TOP}
 			</div>
