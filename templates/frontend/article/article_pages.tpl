@@ -24,6 +24,7 @@ Comentarii :
 <div id="replyForm_{COMMENT_ID}" style="display:none;">
 	<form action="{SITE_URL}/article/post_reply/id/{COMMENT_ID}" method="POST">
 	<input type="number" name="id" value="{ID}" hidden="true">	
+
 	<textarea name="reply" placeholder="Enter text here..." id="textarea">		
 	</textarea>
   	<input type="submit" value="Post Reply">

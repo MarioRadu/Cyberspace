@@ -101,6 +101,7 @@ switch ($registry->requestAction)
 					//var_dump($userId);
 					//exit;
 					header("Location: " . $baseUrl . "/article/show_article/id/" . $redirectId);
+
 				}
 				else
 				{

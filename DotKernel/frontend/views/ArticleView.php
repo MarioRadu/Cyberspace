@@ -123,10 +123,6 @@ class Article_View extends View
 					}
 						
 				}
-//					$this->tpl->parse("comment_list_block","comment_list",true);
-
-
-			
 		}
 
 	// set the tpl file and display it .
