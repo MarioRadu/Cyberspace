@@ -1,10 +1,10 @@
 <script>
 	var SITE_URL = '{SITE_URL}';
 </script>
-<script type="text/javascript" src="{TEMPLATES_URL}/js/frontend/user.js"></script>
+<!--<script type="text/javascript" src="{TEMPLATES_URL}/js/frontend/user.js"></script>-->
 <div class="message_error" style="display:none" id="msgError"></div>
 <br/>
-<form id="userRegister" action="" method="post">
+<form id="userRegister" action="" method="post" enctype="multipart/form-data">
 	<ul class="form">
 		<li class="clearfix">
 			<label for="username">Username:</label>
@@ -29,6 +29,11 @@
 		<li class="clearfix">
 			<label for="lastName">Last Name:</label>
 			<input type="text" name="lastName" value="{LASTNAME}" id="lastName" />
+		</li>
+		<li class = "clearfix">
+		<label>Profile Picture : </label>
+		<input type = "file" name = "profilePicture"/>
+		<input type = "hidden" name = "url" value = "<?php echo htmlentities($_SERVER['REQUEST_URI'])>"/>
 		</li>
 		<!--<li class="clearfix">
 			<label>Secure Image:</label>
