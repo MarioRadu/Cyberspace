@@ -181,6 +181,7 @@ switch ($registry->requestAction)
 					move_uploaded_file($_FILES["profilePicture"]["tmp_name"], $target_file);
 				// no error - then add user
 				$data = $dotValidateUser->getData();
+
 				$data['image'] = $target_file;
 				$userModel->addUser($data);
 				$session->message['txt'] = $option->infoMessage->add;
@@ -205,7 +206,6 @@ switch ($registry->requestAction)
 			// header('Content-type: application/json');  
 			// echo Zend_Json::encode(array('data'=>$dotValidateUser->getData(), 'error'=>$dotValidateUser->getError()));
 			// return $data and $error as json
-		
 		}
 		$userView->details('add',$data);
 	break;
@@ -297,29 +297,31 @@ switch ($registry->requestAction)
 		exit;
 	break;
 }
+
 	function validateImage($type, $data)
-{
-	$errors = [];
-	if($type == 'type')
 	{
-		$typesAllowed = ['image/jpeg'=>'image/jpeg','image/jpg'=>'image/jpg','image/gif'=>'image/gif'];
-		if(!array_key_exists($data, $typesAllowed))
+		$errors = [];
+		if($type == 'type')
 		{
-			$errors[] = $data . "is Not an accepted Image type !";
-		}
-	}	
-	if($type == 'size')
-	{
-		if($data > 2097152)
+			$typesAllowed = ['image/jpeg'=>'image/jpeg','image/jpg'=>'image/jpg','image/gif'=>'image/gif'];
+			if(!array_key_exists($data, $typesAllowed))
+			{
+				$errors[] = $data . "is Not an accepted Image type !";
+			}
+		}	
+		if($type == 'size')
 		{
-			$errors[] = "Image is to big ! Chose an image that is below" . $data . " size !";
+			if($data > 2097152)
+			{
+				$errors[] = "Image is to big ! Chose an image that is below" . $data . " size !";
+			}
+		}	
+		if(count($errors) === 0)
+		{
+			return true;
 		}
-	}	
-	if(count($errors) === 0)
-	{
-		return true;
+		
+			return $errors ;
+
 	}
-	else {
-		return $errors ;
-	}
-}
+

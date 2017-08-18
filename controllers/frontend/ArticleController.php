@@ -18,11 +18,13 @@ switch ($registry->requestAction)
 	case 'list':
 		$list = $articleModel->getArticleList();
 		$articleView->showAllArticles("articleList",$list);
+		//echo "<pre>";
+		//var_dump($list);
+		//exit;
 		break;
 	break;
 	case 'show_article':
 		$id = $registry->request['id'];
-		$commentId = $id;
 		if(isset($session->user->id))
 		{
 			$userId = $session->user->id;
@@ -32,9 +34,7 @@ switch ($registry->requestAction)
 		$questionId = (isset($registry->request['id'])) ? $registry->request['id'] : '';
 		$commentList = $articleModel->getCommentListByQuestionId($questionId);
 		$replyList = $articleModel->getReplyListByQuestionId($questionId);
-		$articleView->showArticle("article_pages",$articleData,$commentList,$replyList, $userId);
-		//echo "<pre>";
-		//var_dump($replyList);		
+		$articleView->showArticle("article_pages",$articleData,$commentList,$replyList, $userId);	
 	break;
 	case 'add' :
 		$articleView->postComment("addArticle");
@@ -92,12 +92,16 @@ switch ($registry->requestAction)
 		if(isset($session->user->id))
 		{
 			$userId = $session->user->id;
+			$questionId = (isset($registry->request['id'])) ? $registry->request['id'] : '';
 			if($_SERVER['REQUEST_METHOD']=='POST')
 				{
+					$redirectId = $_POST['id'];
 					$reply = $_POST['reply'];
-					$questionId = (isset($registry->request['id'])) ? $registry->request['id'] : '';
 					$articleModel->postReply($questionId,$userId,$reply);
-					header("Location: " . $baseUrl . "/article/show_article/id/" . $_POST['id']);
+					//var_dump($userId);
+					//exit;
+					header("Location: " . $baseUrl . "/article/show_article/id/" . $redirectId);
+
 				}
 				else
 				{
@@ -105,5 +109,28 @@ switch ($registry->requestAction)
 				}
 		}
 		break;
+
+	case "search_question" :
+				if($_SERVER['REQUEST_METHOD']=='POST')
+				{
+					$stringToSearch = $_POST['search'];
+
+					$result = $articleModel->searchQuestion($stringToSearch);
+
+					if($result != NULL)
+					{
+						$articleView->showAllArticles("articleList",$result);
+						break;	
+					}
+					else
+					{
+						var_dump("NULL");
+					}
+				}
+				else
+				{
+					var_dump("nu avem post"); //nu avem post"
+				}
+	
 }
 
