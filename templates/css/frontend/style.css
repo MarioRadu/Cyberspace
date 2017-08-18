@@ -182,3 +182,28 @@ ul.url_pattern li { list-style: disc; padding: 10px 0px; }
 	ul.form li label.empty { line-height: 1px; margin-bottom: 0px; }
 	ul.form li input[type="text"], ul.form li input[type="password"] { float: none; width: 100%; }
 }
+
+/** custom styling **/
+#logo {
+	display: block;
+	margin-top: 0px;
+}
+#logo img {
+	width:200px;height:160px;
+}
+
+input[type=text] {
+    width: 130px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 12px;
+    background-color: white;
+    background-repeat: no-repeat;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+input[type=text]:focus {
+    width: 100%;
+}

@@ -58,7 +58,7 @@ switch ($registry->requestAction) {
 		
 		//$id = $registry->request['id'];
 		//$articleComment = $articleModel->getArticleById($id);
-		if($_SERVER)['REQUEST_METHOD']=='POST')
+		if($_SERVER['REQUEST_METHOD']=='POST')
 		{	
 			var_dump("Ajuns in add comment");
 			$articleModel->postComment("test");
