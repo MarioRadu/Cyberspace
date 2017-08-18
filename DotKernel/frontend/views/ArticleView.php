@@ -55,6 +55,7 @@ class Article_View extends View
 		// in ou tpl file we must have a article_list block, in order to set it .
 		$this->tpl->setBlock('tpl_main','article_list','article_list_block');
 
+		// Zend_Debug::dump($data);exit();
 		// for each value in our "data" array set to upper the key .
 		foreach ($data as $key => $value) 
 		{

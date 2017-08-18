@@ -18,6 +18,9 @@ switch ($registry->requestAction)
 	case 'list':
 		$list = $articleModel->getArticleList();
 		$articleView->showAllArticles("articleList",$list);
+		//echo "<pre>";
+		//var_dump($list);
+		//exit;
 		break;
 	break;
 	case 'show_article':
@@ -115,10 +118,8 @@ switch ($registry->requestAction)
 
 					if($result != NULL)
 					{
-						echo "<pre>";
-						var_dump("am gasit");
-						var_dump($result);
-					//	$articleView->showArticle("article_pages",$articleData,$commentList,$replyList, $userId);	
+						$articleView->showAllArticles("articleList",$result);
+						break;	
 					}
 					else
 					{
@@ -129,6 +130,6 @@ switch ($registry->requestAction)
 				{
 					var_dump("nu avem post"); //nu avem post"
 				}
-		exit;
+	
 }
 
