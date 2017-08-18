@@ -7,7 +7,8 @@ class Article extends Dot_Model
 	public function getArticleList()
 	{
 		$select = $this->db->select()
-						->from('question');
+						->from('question')
+						->order('date DESC');
 		$result = $this->db->fetchAll($select);
 		return $result;
 	}
@@ -19,7 +20,6 @@ class Article extends Dot_Model
 		$select = $this->db->select()
 							->from("question")
 							->where("id = ?",$id)
-
 							;
 
 		// store in $result all the data from the database ;
@@ -76,19 +76,43 @@ class Article extends Dot_Model
 		//exit();
 		$select = $this->db->select()
 							->from('comment')
-							->where("parent <> 0");
+							->where("parent <> 0")
+							->joinLeft("user","comment.userId=user.id",["username"=>"username"])
+							;
 		$result = $this->db->fetchAll($select);
-		return $result ; 
+
+		//var_dump($result['userId']);
+		//$result['userId'] = "test";
+		//return $result ;
+		//var_dump($result);
+		return $result ;
+		//exit(); 
+		//return $result ;
 	}
 
-		public function postReply($questionId,$userId,$reply)
+	public function postReply($questionId,$userId,$reply)
 	{
-		$dataToBeInserted = array('id'=>$questionId,'userId'=>$userId,'content'=>$reply,'parent'=>$questionId);
-		$this->db->insert("comment",$dataToBeInserted);
+		//var_dump($userId);
+	
+		$dataToBeInserted = array('userId'=>$userId,'content'=>$reply,'parent'=>$questionId);
+	 	$save = $this->db->insert("comment",$dataToBeInserted);
 		var_dump($dataToBeInserted);
 		//exit();
-
+		//var_dump($save);
+		//exit;
 	}
 
+	public function searchQuestion($searchString)
+	{
+		//var_dump($searchString);
+		//exit();
+		// $select from table "question" where id = $id ; 
+		$select = $this->db->select()
+							->from("question")
+							->where('title LIKE ?', '%' . $searchString .'%')
+							;
+		$result = $this->db->fetchAll($select);
+		return $result;
+	}
 
 }

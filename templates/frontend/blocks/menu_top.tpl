@@ -1,3 +1,6 @@
+
+
+
 <div id="top_menu_button" class="menu_button" onclick="ShowTopMenu()">
 	<span></span>
 	<span></span>
@@ -9,6 +12,12 @@
 	</li>
 	<li class="{SEL_PAGE_OUTBOUND-LINKS}">
 		<a href="{SITE_URL}/page/outbound-links">Outbound Links</a>
+		</br><br><br>
+		<form action="{SITE_URL}/article/search_question" method="POST" id="seachForm">
+			  Search: <input type="text" name="search" placeholder="Search on this site...">
+	  					 <input type="submit" value="Search">
+		</form> 
+
 	</li>
 	<!-- BEGIN top_menu_not_logged -->
 	<li class="{SEL_USER_LOGIN}">

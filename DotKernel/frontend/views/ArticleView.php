@@ -31,6 +31,7 @@ class Article_View extends View
 		return $replies;
 	}
 
+   //
 	private function _setData($data, $prefix='')
 	{
 		if(!is_array($data))
@@ -90,13 +91,15 @@ class Article_View extends View
 				}
 				foreach ($commentList as $comment) 
 				{
-					$this->_setData($comment,'COMMENT_');
-					foreach ($comment as $key => $value) {
+
+					foreach ($comment as $key => $value)
+					{
 						$this->tpl->setVar(strtoupper('COMMENT_' . $key),$value);
+						//$this->tpl->setVar(strtoupper('REPLY_'.$key), $value);
 					}
+
 					$currentReplyList = $this->_getReplyList($replyList, $comment['id']);
 
-					//echo "<pre/>";var_dump($comment);exit;
 
 					$lastKey = count($currentReplyList)-1 ;
 					if(empty($currentReplyList))
@@ -107,11 +110,9 @@ class Article_View extends View
 
 					foreach ($currentReplyList as $key => $reply) 
 					{
+						
+
 						$this->_setData($reply,'REPLY_');	
-						//var_dump($currentReplyList);
-						// foreach ($reply as $key => $value) {
-						// 	$this->tpl->setVar(strtoupper('REPLY_' . $key),$value);
-						// 	}
 						$this->tpl->parse("reply_list_block","reply_list",true);
 						if($key == $lastKey)
 						{
