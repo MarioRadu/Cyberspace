@@ -47,7 +47,7 @@ class Article_View extends View
 	}
 	// show all questions, we have 2 parameters. The first one stores the name of the tpl file we want to show .
 	// The second parameter "data" stores the data we want to load into our tpl file in order to be displayed.
-	public function showAllArticles($templateFile="",$data)
+	public function showAllArticles($templateFile="",$data,$views,$comments)
 	{
 		// if our tpl file exists set it 
 		if($templateFile !="") $this->templateFile = $templateFile;
@@ -57,16 +57,25 @@ class Article_View extends View
 
 		// Zend_Debug::dump($data);exit();
 		// for each value in our "data" array set to upper the key .
+		//var_dump($username);
+		//exit();
 		foreach ($data as $key => $value) 
 		{
 			foreach ($value as $key => $value) 
 			{
-				$this->tpl->setVar(strtoupper($key),$value);
+				//$this->tpl->setVar(strtoupper($key),$value);
+				$this->tpl->setVar(strtoupper($key),substr($value, 0, 205));
+				if($key == 'content')
+				{
+					$this->tpl->setVar(strtoupper($key),substr($value, 0, 205) . "...");
+				}
 			}
 			// parse the block with the value "true" in order to repeat it,if we have to . 
 		 	$this->tpl->parse("article_list_block","article_list",true);
 		}
+	//	exit();
 	}
+
 
 
 		// show question,we have 4 parameters 
