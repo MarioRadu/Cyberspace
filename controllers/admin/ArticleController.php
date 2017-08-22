@@ -1,10 +1,8 @@
 <?php
 
-
 $articleView = new Article_View($tpl);
 $articleModel = new Article();
-
-
+$pageTitle = $option->pageTitle->action->{$registry->requestAction};
 switch ($registry->requestAction) {
 	default:
 	case 'list':
@@ -36,10 +34,6 @@ switch ($registry->requestAction) {
 			//var_dump("avem post");
 			$articleModel->addArticle($_POST);
 		}
-		else
-		{
-			var_dump("nu avem post");
-		}
 		break;
 	case 'delete' :
 		$baseUrl = $registry->configuration->website->params->url;
@@ -58,14 +52,9 @@ switch ($registry->requestAction) {
 		
 		//$id = $registry->request['id'];
 		//$articleComment = $articleModel->getArticleById($id);
-		if($_SERVER)['REQUEST_METHOD']=='POST')
+		if($_SERVER['REQUEST_METHOD']=='POST')
 		{	
 			var_dump("Ajuns in add comment");
 			$articleModel->postComment("test");
 		}
-		else
-		{
-			var_dump("nu a em post");
-		}
-
 }

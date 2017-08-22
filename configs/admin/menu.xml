@@ -93,11 +93,6 @@
 			<description>List all articles</description>
 			<subItems>
 				<subItem>
-					<title>Delete</title>
-					<link>user/logins/</link>
-					<description>Delete</description>
-				</subItem>
-				<subItem>
 					<title>List</title>
 					<link>article/list</link>
 					<description>List</description>

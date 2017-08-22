@@ -130,7 +130,6 @@ class Article_View extends View
 						$this->tpl->parse("reply_list_block","");
 						}
 					}
-						
 				}
 		}
 

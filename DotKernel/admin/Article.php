@@ -48,10 +48,7 @@ class Article extends Dot_Model
 	{
 
 		var_dump("ajuns in updateArticle");
-		
-
 		$update = $this->db->update('question',$data,'id = '.$id);
 	}				/// where what 
 
-//asdahojdhiasdiuhlosadoliujsadoipasdopusadopi
 }

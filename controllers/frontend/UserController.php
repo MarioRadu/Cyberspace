@@ -141,8 +141,7 @@ switch ($registry->requestAction)
 		$userView->details('update',$data);
 	break;
 	case 'register':
-case 'register':
-		// display signup form and allow user to register
+				// display signup form and allow user to register
 		$data = array();
 		$error = array();
 		$errorFile = [];
@@ -182,7 +181,8 @@ case 'register':
 					move_uploaded_file($_FILES["profilePicture"]["tmp_name"], $target_file);
 				// no error - then add user
 				$data = $dotValidateUser->getData();
-				$data['image'] = $target_file ;
+
+				$data['image'] = $target_file;
 				$userModel->addUser($data);
 				$session->message['txt'] = $option->infoMessage->add;
 				$session->message['type'] = 'info';
@@ -206,9 +206,6 @@ case 'register':
 			// header('Content-type: application/json');  
 			// echo Zend_Json::encode(array('data'=>$dotValidateUser->getData(), 'error'=>$dotValidateUser->getError()));
 			// return $data and $error as json
-		
-		
-			exit;
 		}
 		$userView->details('add',$data);
 	break;
@@ -301,32 +298,30 @@ case 'register':
 	break;
 }
 
-
-///////////function
-
-function validateImage($type, $data)
-{
-	$errors = [];
-	if($type == 'type')
+	function validateImage($type, $data)
 	{
-		$typesAllowed = ['image/jpeg'=>'image/jpeg','image/jpg'=>'image/jpg','image/gif'=>'image/gif'];
-		if(!array_key_exists($data, $typesAllowed))
+		$errors = [];
+		if($type == 'type')
 		{
-			$errors[] = $data . "is Not an accepted Image type !";
-		}
-	}	
-	if($type == 'size')
-	{
-		if($data > 2097152)
+			$typesAllowed = ['image/jpeg'=>'image/jpeg','image/jpg'=>'image/jpg','image/gif'=>'image/gif'];
+			if(!array_key_exists($data, $typesAllowed))
+			{
+				$errors[] = $data . "is Not an accepted Image type !";
+			}
+		}	
+		if($type == 'size')
 		{
-			$errors[] = "Image is to big ! Chose an image that is below" . $data . " size !";
+			if($data > 2097152)
+			{
+				$errors[] = "Image is to big ! Chose an image that is below" . $data . " size !";
+			}
+		}	
+		if(count($errors) === 0)
+		{
+			return true;
 		}
-	}	
-	if(count($errors) === 0)
-	{
-		return true;
+		
+			return $errors ;
+
 	}
-	else {
-		return $errors ;
-	}
-}
+
