@@ -21,7 +21,7 @@ class Article_View extends View
 		foreach ($data['data'] as $art => $artValue) {
 			foreach ($artValue as $key => $value) {
 				if ($key == 'content') {
-					$this->tpl->setVar(strtoupper($key),substr($value, 0, 5));
+					$this->tpl->setVar(strtoupper($key),substr($value, 0, 20));
 				} else {
 					$this->tpl->setVar(strtoupper($key),$value);
 				}

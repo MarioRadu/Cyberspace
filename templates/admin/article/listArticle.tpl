@@ -4,7 +4,9 @@
 	<table class="big_table" frame="box" rules="all">
 		<thead>
 			<tr>
+				<th style="text-align: center; width: 20px;"><span>USER ID</span></th>
 				<th style="text-align: center; width: 20px;"><span>ID</span></th>
+				<th style="text-align: center; width: 20px;"><span>TITLE</span></th>
 				<th><span>CONTENT</span></th>
 				<th><span>DATE</span></th>
 				<th width="300px"><span>Action</span></th>
@@ -13,7 +15,9 @@
 		<tbody>
 		<!-- BEGIN list_article -->
 			<tr>
-				<td style="text-align: center;">{ID}</td>
+				<td style="text-align: center;">{USERID}</td>
+				<td>{ID}</td>
+				<td style="text-align: center;">{TITLE}</td>
 				<td><a href ="{SITE_URL}/admin/article/show/id/{ID}">{CONTENT}</a></td>
 				<td>{DATE}</td>
 				<td>

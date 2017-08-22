@@ -6,7 +6,8 @@
 		<variable option="admin">
 			<pageTitle>
 				<action>
-					<list>TEST</list>
+					<list>List all</list>
+					<add>add</add>
 				</action>
 			</pageTitle>
 		</variable>
