@@ -17,6 +17,7 @@ switch ($registry->requestAction)
 {	
 	default:
 	case 'list':
+
 		$info = $articleModel->getInfo();
 		$list = $articleModel->getArticleList();
 		//$userName = $articleModel->getUserNameById(3);
@@ -36,13 +37,12 @@ switch ($registry->requestAction)
 		$articleModel->registerView($id);
 
 		$views = $articleModel->getInfo();
-
-
 		$articleData = $articleModel->getArticleById($id);
 		$questionId = (isset($registry->request['id'])) ? $registry->request['id'] : '';
 		$commentList = $articleModel->getCommentListByQuestionId($questionId);
 		$replyList = $articleModel->getReplyListByQuestionId($questionId);
-		$articleView->showArticle("article_pages",$articleData,$commentList,$replyList, $userId);	
+		$articleView->showArticle("article_pages",$articleData,$commentList,$replyList, $userId);
+
 	break;
 	case 'add' :
 		$articleView->postComment("addArticle");
@@ -140,6 +140,30 @@ switch ($registry->requestAction)
 					var_dump("nu avem post"); //nu avem post"
 				}
 		break;
-	
+
+	case "like":
+		
+		//var_dump($registry->requestAction);
+		//var_dump($_POST);
+		//exit("dsa");
+		if($_SERVER['REQUEST_METHOD']=='POST')
+			{
+				if(isset($session->user->id))
+				{	
+
+						$action = $_POST['action'];
+						$actionId = $_POST['id'];
+						$articleModel->registerLikeUnLike($action,$actionId);
+						//exit("dsa");
+					//$userId = $session->user->id;
+					//var_dump("User : " . $userId . "Action : " . $_POST['action']. " ID : ". $_POST['id']);
+
+				}
+
+			}
+		//exit;
+
+		break;
+
 }
 

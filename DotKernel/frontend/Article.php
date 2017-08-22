@@ -173,6 +173,26 @@ class Article extends Dot_Model
 		$this->db->update('question', $data, $where);
 	}
 
+	public function registerLikeUnlike($action,$id)
+	{
+		//var_dump($action);
+		//var_dump($id);
+		//exit;
+		if ($action == 'up')
+		{
+			$data = array('likes' => new Zend_Db_Expr('likes + 1')); 
+		}
+		elseif ($action == 'down')
+		{
+			$data = array('unlikes' => new Zend_Db_Expr('unlikes + 1')); 
+		}
+
+		$where = array('id = ?' => $id); 
+		$this->db->update('comment', $data, $where);
+
+		exit();
+	}
+
 
 
 }

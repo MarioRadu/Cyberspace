@@ -1,6 +1,7 @@
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-var voteRequestUrl = '{SITE_URL}/article/like/id/{COMMENT_ID}';
+
 // function to get commend id and show reply form
 function showReply(commentId)
 {
@@ -10,18 +11,21 @@ function showReply(commentId)
 }
 
 
-function voteRequest(action)
+function voteRequest(action, commentId)
 {
 	var voteRequestSettings = {
 		'data' : {
-			'action' : action
+			'action' : action,
+			'id' : commentId
 		}, 
 		'method' : 'POST'
 	};
 
-	if(action =='up' || action == 'down' || action == 'refresh' || action =='reset')
+	if(action =='up' || action == 'down')
 	{
-		 //alert("ok :" + action);
+		var voteRequestUrl = '{SITE_URL}/article/like/id/';
+		 voteRequestUrl = voteRequestUrl + commentId;
+		 alert(voteRequestUrl);
 		// $.ajax(voteRequestUrl,voteRequestSettings);
 		 $.ajax(voteRequestUrl,voteRequestSettings).done(function(response){
 
@@ -31,8 +35,8 @@ function voteRequest(action)
 		    var voteSucces = receivedData.succces;
 		    var VoteValue = receivedData.data.voteValue;	
 
-		   	$("#voteValue").html(VoteValue);
-
+		   //	$("#voteValue").html(VoteValue);
+		   alert(response);
 		 });
 	}
 	else
@@ -43,13 +47,15 @@ function voteRequest(action)
 
 
 $(document).ready(function(){
-   	    $("#upVoteBtn").click(function(){
-        alert("up");
-        voteRequest('up');
+   	    $(".upVoteBtn").click(function(){
+        // alert("up");
+        var theId = $(this).attr('id');
+        voteRequest('up', theId);
     });
-        $("#downVoteBtn").click(function(){
-        alert("down");
-        voteRequest('down');
+        $(".downVoteBtn").click(function(){
+        // alert("down");
+        var theId = $(this).attr('id');
+        voteRequest('down',theId);
     });
 });
 
@@ -57,6 +63,8 @@ $(document).ready(function(){
 
 
 </script>
+
+
 
 <style type="text/css">
 	
@@ -147,6 +155,7 @@ $(document).ready(function(){
 	<h2>{TITLE}</h2>
 	<p>{CONTENT}</p>
 	<!-- BEGIN comment_list -->
+	<div id="{COMMENT_ID}">
 		<div class ="comment">
 			<p><a href="">{COMMENT_USERNAME}</a> : {COMMENT_CONTENT}</p>
 
@@ -160,8 +169,8 @@ $(document).ready(function(){
 			<button id ="reply_{COMMENT_ID}" onclick = "showReply({COMMENT_ID})">Reply</button>
 		</div>
 
-		<button type="button" id="downVoteBtn" style = "float:right;margin: 5px 10px 0 0;">Down</button>
-		<button type="button" id="upVoteBtn" style = "float:right;margin: 5px 10px 0 0;">Up</button>
+		<button type="button" class="downVoteBtn" id="{COMMENT_ID}" style = "float:right;margin: 5px 10px 0 0;">Down</button>
+		<button type="button" class="upVoteBtn" id="{COMMENT_ID}" style = "float:right;margin: 5px 10px 0 0;">Up</button>
 		<br><br><br><br>
 		<div id="replyForm_{COMMENT_ID}" style="display:none;" >
 			<form action="{SITE_URL}/article/post_reply/id/{COMMENT_ID}" method="POST">
@@ -170,7 +179,7 @@ $(document).ready(function(){
 			  	<input type="submit" value="Post Reply" style="position: relative; right:-40px;top : -10px;">
 			</form>
 		</div>
-
+	</div>
 	<!-- END comment_list -->
 
 	<br><br><br><br><br><br>
@@ -187,4 +196,4 @@ $(document).ready(function(){
 
 
 </div>
-<p class ="info">Published on:{DATE} by <a href="dasda">{ID}</a></p>
+<p class ="info">Published on:{DATE} by <a href="">{COMMENT_USERNAME}</a></p>
