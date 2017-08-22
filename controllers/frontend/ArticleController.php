@@ -11,16 +11,22 @@ $session = Zend_Registry::get('session');
 // get the base url 
 $baseUrl = $registry->configuration->website->params->url;
 $userId = NULL;
+$views = 0 ; 
 // get the action 
 switch ($registry->requestAction)
 {	
 	default:
 	case 'list':
+		//$id = $registry->request['id'];
+		$info = $articleModel->getInfo();
 		$list = $articleModel->getArticleList();
-		$articleView->showAllArticles("articleList",$list);
-		//echo "<pre>";
-		//var_dump($list);
-		//exit;
+		$userName = $articleModel->getUserNameByQuestionId(3);
+		echo "<pre>";
+		var_dump($userName);
+		exit();
+
+		$articleView->showAllArticles("articleList",$list,$info[0],$info[1]);
+
 		break;
 	break;
 	case 'show_article':
@@ -29,6 +35,12 @@ switch ($registry->requestAction)
 		{
 			$userId = $session->user->id;
 		}
+
+
+		$articleModel->registerView($id);
+
+		$views = $articleModel->getInfo();
+
 
 		$articleData = $articleModel->getArticleById($id);
 		$questionId = (isset($registry->request['id'])) ? $registry->request['id'] : '';
@@ -119,7 +131,7 @@ switch ($registry->requestAction)
 
 					if($result != NULL)
 					{
-						$articleView->showAllArticles("articleList",$result);
+						$articleView->showAllArticles("articleList",$result,$test=NULL,$test=NULL,$test=NULL);
 						break;	
 					}
 					else
@@ -131,6 +143,7 @@ switch ($registry->requestAction)
 				{
 					var_dump("nu avem post"); //nu avem post"
 				}
+		break;
 	
 }
 

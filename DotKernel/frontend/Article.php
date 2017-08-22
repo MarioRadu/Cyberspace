@@ -37,12 +37,20 @@ class Article extends Dot_Model
 	}
 
 	// post a comment, $data is our comment we want to post . 
+	// post a comment, $data is our comment we want to post . 
 	public function postComment($data)
 	{	
 		//dataToBeInserted it's an array , we store in it our userId , questionId and content
 		// insert intro table "comment" our array 
 		$dataToBeInserted = array('userId'=>$data['userId'],'questionId'=>$data['questionId'],'content'=>$data['comment']);
 		$this->db->insert("comment",$dataToBeInserted);
+
+		$id = $data['questionId'];
+		$num = (int)$id;
+
+		$data = array('comments' => new Zend_Db_Expr('comments + 1')); 
+		$where = array('id = ?' => $num); 
+		$this->db->update("question", $data, $where);
 	}
 
 
@@ -102,6 +110,8 @@ class Article extends Dot_Model
 		//exit;
 	}
 
+
+
 	public function searchQuestion($searchString)
 	{
 		//var_dump($searchString);
@@ -114,5 +124,64 @@ class Article extends Dot_Model
 		$result = $this->db->fetchAll($select);
 		return $result;
 	}
+
+	public function getInfo()
+	{
+
+		$selectViews = $this->db->select()
+							->from("question");
+
+		$resultViews = $this->db->fetchAll($selectViews);
+
+		foreach ($resultViews as $commentId=>$value) 
+		{
+			foreach ($value as $k => $v) 
+			{
+				if($k == 'views')
+				{
+					$views[] = $v;
+				}
+				if($k == 'comments')
+				{
+					$comments[] = $v;
+				}
+			}
+		}	
+
+							//var_dump($comments);
+							//exit;
+
+	/*	$selectUserName = $this->db->select()
+							->from('user')
+							->where("id = ?," 1)
+							//->joinLeft("user","comment.userId=user.id",["username"=>"username"])
+							;
+		$resultUserName = $this->db->fetchAll($selectUserName);
+	*/
+
+		return array($views, $comments);
+	}
+
+
+	public function getUserNameByQuestionId($id)
+	{
+		$selectUserName = $this->db->select()
+									->from("user")
+									->where('id = ?', $id);
+		$resultUserName = $this->db->fetchAll($selectUserName);
+
+		return $resultUserName;
+		//var_dump($resultUserName);
+		//exit();
+	}
+
+	public function registerView($questionId)
+	{
+		$data = array('views' => new Zend_Db_Expr('views + 1')); 
+		$where = array('id = ?' => $questionId);; 
+		$this->db->update('question', $data, $where);
+	}
+
+
 
 }
