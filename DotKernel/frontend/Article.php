@@ -8,9 +8,11 @@ class Article extends Dot_Model
 	{
 		$select = $this->db->select()
 						->from('question')
-						->order('date DESC');
+						->joinLeft('user',"question.userId = user.id","username")
+						->order('question.date DESC');
 		$result = $this->db->fetchAll($select);
 		return $result;
+
 	}
 
 	
@@ -148,22 +150,11 @@ class Article extends Dot_Model
 			}
 		}	
 
-							//var_dump($comments);
-							//exit;
-
-	/*	$selectUserName = $this->db->select()
-							->from('user')
-							->where("id = ?," 1)
-							//->joinLeft("user","comment.userId=user.id",["username"=>"username"])
-							;
-		$resultUserName = $this->db->fetchAll($selectUserName);
-	*/
-
 		return array($views, $comments);
 	}
 
 
-	public function getUserNameByQuestionId($id)
+	public function getUserNameById($id)
 	{
 		$selectUserName = $this->db->select()
 									->from("user")

@@ -1,6 +1,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-var voteRequestUrl = 'http://localhost/test/test.php#';
+var voteRequestUrl = '{SITE_URL}/article/like/id/{COMMENT_ID}';
 // function to get commend id and show reply form
 function showReply(commentId)
 {

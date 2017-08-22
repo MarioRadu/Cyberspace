@@ -17,13 +17,9 @@ switch ($registry->requestAction)
 {	
 	default:
 	case 'list':
-		//$id = $registry->request['id'];
 		$info = $articleModel->getInfo();
 		$list = $articleModel->getArticleList();
-		$userName = $articleModel->getUserNameByQuestionId(3);
-		echo "<pre>";
-		var_dump($userName);
-		exit();
+		//$userName = $articleModel->getUserNameById(3);
 
 		$articleView->showAllArticles("articleList",$list,$info[0],$info[1]);
 
