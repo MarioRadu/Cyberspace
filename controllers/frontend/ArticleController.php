@@ -140,6 +140,15 @@ switch ($registry->requestAction)
 					var_dump("nu avem post"); //nu avem post"
 				}
 		break;
-	
+	case "delete_comment":
+	// if($_SERVER['REQUEST_METHOD']=='POST') 
+	// {
+		$userId = $session->user->id;
+		$baseUrl = $registry->configuration->website->params->url;
+		$articleModel->deleteCommentById($registry->request['id'],$userId);
+		// header("Location: " . $baseUrl . "/article/show_article/id/");
+	//}
+		break;
+			
 }
 

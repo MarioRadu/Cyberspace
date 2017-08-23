@@ -8,6 +8,10 @@ function showReply(commentId)
 	$('#textarea').val('');
 	$("div #commentFormDiv").hide();
 }
+function myFunction() 
+{
+    confirm("Are you sure you want to delete?");
+}
 
 
 function voteRequest(action)
@@ -146,6 +150,7 @@ $(document).ready(function(){
 <div class="mainDiv">
 	<h2>{TITLE}</h2>
 	<p>{CONTENT}</p>
+	<br><br>
 	<!-- BEGIN comment_list -->
 		<div class ="comment">
 			<p><a href="">{COMMENT_USERNAME}</a> : {COMMENT_CONTENT}</p>
@@ -153,11 +158,14 @@ $(document).ready(function(){
 			<!-- BEGIN reply_list -->
 			<div class ="reply">
 				<p><a href="">#{REPLY_USERNAME}</a>: {REPLY_CONTENT} </p>
+<!-- 				<button id ="edit" onclick = "myFunction()">Edit</button>
+				<button id ="delete_comment_{COMMENT_ID}" onclick = "myFunction()">Delete</button> -->
 			</div>
 			<!-- END reply_list -->
 		</div>
 		<div class = "replyButton">
 			<button id ="reply_{COMMENT_ID}" onclick = "showReply({COMMENT_ID})">Reply</button>
+			<td width="25%"><a href="{SITE_URL}/article/delete_comment/id/{COMMENT_ID}" title="Delete" class="delete_state"><button>Delete</button></a></td>
 		</div>
 
 		<button type="button" id="downVoteBtn" style = "float:right;margin: 5px 10px 0 0;">Down</button>

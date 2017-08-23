@@ -173,6 +173,14 @@ class Article extends Dot_Model
 		$this->db->update('question', $data, $where);
 	}
 
-
-
+	public function deleteCommentById($id , $userId)
+	{
+		$data = ['id = ?'=>$id,
+				'userId = ?'=>$userId
+				];
+	// var_dump($data); exit();
+	    $this->db->delete('comment', $data);
+	    		
+	   
+	    }
 }
