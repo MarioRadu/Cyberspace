@@ -83,8 +83,13 @@ class Article_View extends View
 		// data stores the data we want to display
 		// commentList stores the commentList 
 		// userId stores the userId, if userId it's not equal to NULL we have a user logged.
-		public function showArticle($templateFile="",$data,$commentList,$replyList, $userId=null)
+		public function showArticle($templateFile="",$data,$commentList,$replyList, $userId,$vote)
 		{
+
+			Zend_Debug::dump($vote);
+			//exit();	
+			//var_dump($vote);
+
 			if($templateFile !="") $this->templateFile = $templateFile;
 			$this->tpl->setFile('tpl_main','article/'.$this->templateFile.".tpl");
 			$this->tpl->setBlock('tpl_main','comment_form','comment_form_block');
@@ -95,7 +100,18 @@ class Article_View extends View
 					foreach ($value as $k => $v) 
 					{
 						$this->tpl->setVar(strtoupper($k),$v);
+
 					}
+
+					foreach ($vote as $voteKey => $voteValue) 
+					{
+						//$this->tpl->setVar(strtoupper($k),$v);
+						$this->tpl->setVar(strtoupper('vote'),$voteValue['vote']);
+
+
+					}
+
+					//var_dump($vote);
 					
 					$this->tpl->parse("comment_form_block","comment_form",true);
 				}
@@ -131,6 +147,30 @@ class Article_View extends View
 						}
 					}
 				}
+
+
+				//exit();
+				// foreach ($vote as $key => $value)
+				// {
+				// 	//Zend_Debug::dump($value['vote']);
+				// 	//var_dump("test");
+
+				// 	// foreach ($value as $k => $v)
+				// 	// {
+				// 	$this->tpl->setVar(strtoupper('vote'),$value['vote']);
+				// 	$this->tpl->parse("comment_list_block","comment_list",true);
+				// 		//$this->tpl->setVar('vote'$,value['vote']);
+				// 	// }
+				// 	//$this->tpl->setVar(strtoupper('VOTE'),$value);
+				// 	//$vote
+				// }
+
+				// //exit();
+				// 		var_dump($key);
+				// // foreach ($likes as $key => $value) 
+				// // {
+				// // 	$this->tpl->setVar("LIKES",$value);
+				//  }
 		}
 
 	// set the tpl file and display it .

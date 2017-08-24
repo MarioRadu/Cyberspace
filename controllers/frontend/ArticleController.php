@@ -17,11 +17,8 @@ switch ($registry->requestAction)
 {	
 	default:
 	case 'list':
-
 		$info = $articleModel->getInfo();
 		$list = $articleModel->getArticleList();
-		//$userName = $articleModel->getUserNameById(3);
-
 		$articleView->showAllArticles("articleList",$list,$info[0],$info[1]);
 
 		break;
@@ -31,18 +28,19 @@ switch ($registry->requestAction)
 		if(isset($session->user->id))
 		{
 			$userId = $session->user->id;
+			$articleModel->registerView($id);
+
 		}
 
 
-		$articleModel->registerView($id);
+		//$test = $articleModel->getAllVotes();
 
-		$views = $articleModel->getInfo();
-		$articleData = $articleModel->getArticleById($id);
-		$questionId = (isset($registry->request['id'])) ? $registry->request['id'] : '';
+		$articleData[] = $articleModel->getArticleById($id);
+		$articleData[] = $articleModel->getAllVotes();
+		$questionId = (isset($registry->request['id'])) ? $registry->request['id'] : NULL;
 		$commentList = $articleModel->getCommentListByQuestionId($questionId);
 		$replyList = $articleModel->getReplyListByQuestionId($questionId);
-		$articleView->showArticle("article_pages",$articleData,$commentList,$replyList, $userId);
-
+		$articleView->showArticle("article_pages",$articleData[0],$commentList,$replyList, $userId,$articleData[1]);	
 	break;
 	case 'add' :
 		$articleView->postComment("addArticle");
@@ -139,29 +137,52 @@ switch ($registry->requestAction)
 				{
 					var_dump("nu avem post"); //nu avem post"
 				}
-		break;
 
-	case "like":
-		
-		//var_dump($registry->requestAction);
-		//var_dump($_POST);
-		//exit("dsa");
-		if($_SERVER['REQUEST_METHOD']=='POST')
+		case 'vote':
+
+			$id = $registry->request['id'];
+
+			if(isset($_POST) && !empty($_POST))
 			{
 				if(isset($session->user->id))
 				{	
 
-						$action = $_POST['action'];
-						$actionId = $_POST['id'];
-						$articleModel->registerLikeUnLike($action,$actionId);
-						//exit("dsa");
-					//$userId = $session->user->id;
-					//var_dump("User : " . $userId . "Action : " . $_POST['action']. " ID : ". $_POST['id']);
+
+					$userId = $session->user->id;
+					$articleModel->registerView($id);
+
+
+					$vote = [];
+              	 	$vote['commentId'] = $_POST['commentId'];
+              	 	$vote['questionId'] = $_POST['questionId'];
+              	 	$vote['userId'] = $session->user->id;
+              	 	if($_POST['action'] == 'up')
+               		$vote['vote'] = ($_POST['action'] == 'up') ? 1 : 0;
+
+					$checkVote = $articleModel->checkVotes($vote['commentId'], $vote['userId']);
+
+
+			    	if (empty($checkVote)) 
+			    	{
+                   	    $articleModel->registerVote($vote);
+               	    }
+               	    else
+               	    {
+                    	$articleModel->updateVote($vote, $checkVote['commentId']);
+                	}
+
+                	//var_dump($voteCount);
+                	//$voteCount = $articleModel->countVotes($vote['commentId']);
+
+
+
+                	//echo "<pre>";
+                	//var_dump($voteCount);
+
+                	//exit();
 
 				}
-
 			}
-		//exit;
 
 		break;
 

@@ -15,6 +15,15 @@ class Article extends Dot_Model
 
 	}
 
+		public function getVoteList()
+	{
+
+		 $select = $this->db->select()
+                            ->from('vote');
+        $result = $this->db->fetchAll($select);
+        return $result;
+	}
+
 	
 	public function getArticleById($id)
 	{
@@ -28,6 +37,7 @@ class Article extends Dot_Model
 		$result = $this->db->fetchAll($select);
 
 		// return $result ; 
+		//$result['likes']=
 		return $result;
 	}
 
@@ -173,26 +183,73 @@ class Article extends Dot_Model
 		$this->db->update('question', $data, $where);
 	}
 
-	public function registerLikeUnlike($action,$id)
-	{
-		//var_dump($action);
-		//var_dump($id);
-		//exit;
-		if ($action == 'up')
+  public function registerVote($data)
+    {
+        $update = $this->db->insert('vote', $data);
+    }
+
+
+   public function updateVote($data, $id)
+    {
+        $update = $this->db->update('vote', $data, 'id = ' . $id);
+    }
+ 
+
+   public function checkVotes($commentId, $userId)
+    {
+        $select = $this->db->select()
+                            ->from('vote')
+                            ->where('commentId=?', $commentId)
+                            ->where('userId=?', $userId);
+        $result = $this->db->fetchRow($select);
+        return $result;
+    }
+ 
+   public function countVotes($commentId)
+    {
+        $select = $this->db->select()
+                            ->from('vote')
+                            ->where('commentId= ? ', $commentId)
+                            ->where('vote = ?', 1);
+        $result = $this->db->fetchAll($select);
+
+
+         return	$result;
+    }
+
+    public function getAllVotes()
+    {
+
+    	//echo "<pre>";
+
+   		$sql = 'SELECT *,SUM(`vote`) as `voteCount` FROM `vote` GROUP BY `commentId`';
+
+		$result = $this->db->fetchAll($sql);
+   		//return $result;
+
+		foreach ($result as $key => $value)
 		{
-			$data = array('likes' => new Zend_Db_Expr('likes + 1')); 
+			foreach ($value as $k => $v)
+			{
+				//var_dump($k);
+				if ($k == 'voteCount')
+				{	
+					$vote[] = array_fill_keys(array("vote"), $v);
+					//Zend_Debug::dump($k);
+				}
+			}
 		}
-		elseif ($action == 'down')
-		{
-			$data = array('unlikes' => new Zend_Db_Expr('unlikes + 1')); 
-		}
 
-		$where = array('id = ?' => $id); 
-		$this->db->update('comment', $data, $where);
-
-		exit();
-	}
+	
+		// Zend_Debug::dump($vote);
+		// exit();
+		return $vote;
+		//Zend_Debug::dump($vote);
+		//exit();
+    }	
 
 
 
+
+    
 }
