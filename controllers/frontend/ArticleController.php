@@ -34,13 +34,13 @@ switch ($registry->requestAction)
 
 
 		//$test = $articleModel->getAllVotes();
-
+		$allVotes = $articleModel->getAllVotes();
 		$articleData[] = $articleModel->getArticleById($id);
-		$articleData[] = $articleModel->getAllVotes();
+ 
 		$questionId = (isset($registry->request['id'])) ? $registry->request['id'] : NULL;
 		$commentList = $articleModel->getCommentListByQuestionId($questionId);
 		$replyList = $articleModel->getReplyListByQuestionId($questionId);
-		$articleView->showArticle("article_pages",$articleData[0],$commentList,$replyList, $userId,$articleData[1]);	
+		$articleView->showArticle("article_pages",$articleData,$commentList,$replyList, $userId,$allVotes);	
 	break;
 	case 'add' :
 		$articleView->postComment("addArticle");
@@ -147,7 +147,7 @@ switch ($registry->requestAction)
 				if(isset($session->user->id))
 				{	
 
-
+					// Zend_Debug::dump($_POST);exit;
 					$userId = $session->user->id;
 					$articleModel->registerView($id);
 
@@ -157,8 +157,11 @@ switch ($registry->requestAction)
               	 	$vote['questionId'] = $_POST['questionId'];
               	 	$vote['userId'] = $session->user->id;
               	 	if($_POST['action'] == 'up')
-               		$vote['vote'] = ($_POST['action'] == 'up') ? 1 : 0;
+               		$vote['vote'] = ($_POST['action'] == 'up') ? 1 : -1;
 
+
+               		//var_dump($vote);
+               		//exit();
 					$checkVote = $articleModel->checkVotes($vote['commentId'], $vote['userId']);
 
 
@@ -173,8 +176,9 @@ switch ($registry->requestAction)
 
                 	//var_dump($voteCount);
                 	//$voteCount = $articleModel->countVotes($vote['commentId']);
-
-
+                	$success = ['success' => 'true'];
+                	echo json_encode($success);
+                	exit;
 
                 	//echo "<pre>";
                 	//var_dump($voteCount);

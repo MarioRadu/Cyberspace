@@ -16,6 +16,7 @@ function showReply(commentId)
 function voteRequest(action,buttonId,questionId)
 {
 
+	//alert(action);
 	//alert("Action : " + action + " buttonId : " + buttonId + " questionId :" + questionId);
 	var voteRequestSettings = {
 		'data' : {
@@ -30,19 +31,15 @@ function voteRequest(action,buttonId,questionId)
 	if(action =='up' || action == 'down' )
 	{
 		var voteRequestUrl = '{SITE_URL}/article/vote/id/' + buttonId;
-		// alert(voteRequestUrl);
-		// $.ajax(voteRequestUrl,voteRequestSettings);
-		 $.ajax(voteRequestUrl,voteRequestSettings).done(function(response){
 
-		 	//alert(response);
-		    console.debug(response);
-		    var receivedData = jQuery.parseJSON(response);
-		    var voteSucces = receivedData.succces;
-		    var VoteValue = receivedData.data.voteValue;
-		   // var redirect = '{SITE_URL}/article/show_article/id/' + buttonId;	
-		   // window.location.replace(redirect);
-		   // alert("redirect");
-		 });
+		$.ajax(voteRequestUrl,voteRequestSettings).done(function(response) {
+			var receivedData = jQuery.parseJSON(response);
+
+			// verifica daca requestul a fost succes == true ; !!!!!!!!!!
+			
+			//$("#likeCount"+buttonId).text(parseInt($("#likeCount"+buttonId).text()) + 1);
+			// alert(receivedData.success);
+		});
 	}
 	else
 	{
@@ -55,15 +52,20 @@ $(document).ready(function()
 {
    	    $(".upVoteBtn").click(function()
    	    {
-      	 	var me = $(this);
-      	 	voteRequest('up',this.id,me.val());
+      	 	//var me = $(this);
+      	 	//alert("up");
+      	 	voteRequest('up',this.id,$(this).attr('value'));
+      	 	//alert(me.;
+      	 	//alert(this.attr(value));
+      	 	//alert($(this).attr('value'));
+      	 	//var value = document.getElementById(this.id).value;
+      	 	// alert(value);
 
   	    });
 
         $(".downVoteBtn").click(function()
         {
-        	var me = $(this);
-        	voteRequest('down',this.id,me.val());
+        	voteRequest('down',this.id,$(this).attr('value'));
     });
 });
 
@@ -155,15 +157,25 @@ $(document).ready(function()
 	margin: 5px 35px 0 0;
 	top:10px;
 }
+
+.voteState
+{	
+	font-style: italic;
+	font-size: 80%;
+	float:left;
+	margin: 0 0 0 45px;
+	top:10px;
+}
 </style>
 
 <div class="mainDiv">
 	<h2>{TITLE}</h2>
 	<p>{CONTENT}</p>
 	<!-- BEGIN comment_list -->
-		<div class ="comment">
+		<div class ="comment" id="{COMMENT_ID}">
 			<p><a href="">{COMMENT_USERNAME}</a> : {COMMENT_CONTENT}</p>
-
+				<p> Question ID : {ID} </p>
+				<p> COMMENT_ID  :  {COMMENT_ID}</p>
 			<!-- BEGIN reply_list -->
 			<div class ="reply">
 				<p><a href="">#{REPLY_USERNAME}</a>: {REPLY_CONTENT} </p>
@@ -174,9 +186,12 @@ $(document).ready(function()
 			<button id ="reply_{COMMENT_ID}" onclick = "showReply({COMMENT_ID})">Reply</button>
 		</div>
 
-		<button type="button" id="{COMMENT_ID}" class = "downVoteBtn" value = "{ID}" style = "float:right;margin: 5px 10px 0 0;">Down</button>
+		<button type="button" id="{COMMENT_ID}" class = "downVoteBtn" value="{ID}" style = "float:right;margin: 5px 10px 0 0;">Down</button>
 		<button type="button" id="{COMMENT_ID}" class = "upVoteBtn" value="{ID}" style = "float:right;margin: 5px 10px 0 0;">Up</button>
-		<p> LIKES :{VOTE5}</p>
+		<p id = "{COMMENT_ID}" class = "voteState"> 
+			Like : <span class="likeCount" id="likeCount{COMMENT_ID}">{LIKE}</span> 
+			Dislike : <span class="disLikeCount" id="disLikeCount{COMMENT_ID}">{DISLIKE}</span>
+		</p>
 		<br><br><br><br>
 		<div id="replyForm_{COMMENT_ID}" style="display:none;" >
 			<form action="{SITE_URL}/article/post_reply/id/{COMMENT_ID}" method="POST">

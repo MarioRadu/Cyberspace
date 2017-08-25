@@ -222,30 +222,16 @@ class Article extends Dot_Model
 
     	//echo "<pre>";
 
-   		$sql = 'SELECT *,SUM(`vote`) as `voteCount` FROM `vote` GROUP BY `commentId`';
+   		$selectLike = 'SELECT *,SUM(`vote`) as `voteCount` FROM `vote` GROUP BY `commentId`';
 
-		$result = $this->db->fetchAll($sql);
-   		//return $result;
+		$result = $this->db->fetchAll($selectLike);
 
+		$finalData = [];
 		foreach ($result as $key => $value)
 		{
-			foreach ($value as $k => $v)
-			{
-				//var_dump($k);
-				if ($k == 'voteCount')
-				{	
-					$vote[] = array_fill_keys(array("vote"), $v);
-					//Zend_Debug::dump($k);
-				}
-			}
+			$finalData[$value['commentId']] = $value['voteCount'];
 		}
-
-	
-		// Zend_Debug::dump($vote);
-		// exit();
-		return $vote;
-		//Zend_Debug::dump($vote);
-		//exit();
+		return $finalData;
     }	
 
 
