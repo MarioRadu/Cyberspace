@@ -255,12 +255,25 @@ class Article extends Dot_Model
 		//Zend_Debug::dump($result['id']);
 
 
-		$data = ['id = ?'=> $result['id']];
+		$data = ['id = ?'=> $result['id'],
+					'userId = ?' => $userId];
 
-		//Zend_Debug::dump($data);
+		Zend_Debug::dump($data);
+
+		$delete = $this->db->delete('comment',$data);
 
 
-		$this->db->delete('comment',$data);
+		if($delete > 0)
+		{
+			$registry->session->message['txt'] = 'Deleted Succesull !';
+			$registry->session->message['type'] = 'error';
+		}
+		else
+		{
+			$registry->session->message['txt'] = "You can't delete that reply !";
+			$registry->session->message['type'] = 'error';
+		}
+
 	}  
 
 

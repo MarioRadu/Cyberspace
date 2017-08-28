@@ -136,7 +136,7 @@ $(document).ready(function()
 
 		<div class ="comment" id="{COMMENT_ID}">
 			<p><a href="">{COMMENT_USERNAME}</a> : {COMMENT_CONTENT}</p>
-			<div id = "divProfilePic"><a href = "{SITE_URL}/article/profile/id/{COMMENT_USERNAME}/questionid/{ID}"><img src="{SITE_URL}/{PICTURE}" alt="NOT" class = "profilePic"></a></div>
+			<div id = "divProfilePic"><a href = "{SITE_URL}/article/profile/id/{COMMENT_USERNAME}"><img src="{SITE_URL}/{PICTURE}" alt="NOT" class = "profilePic"></a></div>
 			<!-- BEGIN reply_list -->
 			<div class ="reply">
 				<p><a href="">#{REPLY_USERNAME}</a>: {REPLY_CONTENT} <button type="button"><a href ="{SITE_URL}/article/delete_reply/id/{REPLY_ID}">Edit {REPLY_ID}</a></button><button type="button"><a href ="{SITE_URL}/article/delete_reply/id/{REPLY_ID}">Delete {REPLY_ID}</a></button></p>

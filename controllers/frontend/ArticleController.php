@@ -217,10 +217,7 @@ switch ($registry->requestAction)
 			break;
 
 	case "delete_comment":
-		//$id = $registry->request['id'];
 
-		//var_dump($id);
-		//exit();
 		$questionId = (isset($registry->request['id'])) ? $registry->request['id'] : '';
 		$userId = $session->user->id;
 		$baseUrl = $registry->configuration->website->params->url;
@@ -237,12 +234,12 @@ switch ($registry->requestAction)
 
 	case 'delete_reply':
 
-		
-	
 		if(isset($session->user->id))
 		{
+			//exit();
 			$userId = $session->user->id;
 			$replyId = (isset($registry->request['id'])) ? $registry->request['id'] : NULL;
+			//$replyComment = (isset($registry->request['question'])) ? $registry->request['question'] : 'nunu';
 			$reply = $articleModel->deleteReplyByReplyId($replyId,$userId);
 
 		}
@@ -251,8 +248,12 @@ switch ($registry->requestAction)
 			$registry->session->message['txt'] = 'Please Login !';
 			$registry->session->message['type'] = 'error';
 		}
+
+
+		//var_dump($replyComment);
+		//exit("DASDADADA");
 		
-		header("Location: " . $baseUrl . "/article/show_article/id/" . $ );
+		///	header("Location: " . $baseUrl . "/article/show_article/id/" );
 
         break;
 
