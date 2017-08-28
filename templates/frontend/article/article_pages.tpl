@@ -10,7 +10,7 @@ function showReply(commentId)
 }
 function myFunction() 
 {
-    confirm("Are you sure you want to delete?");
+    confirm("Your comment will be permanently canceled !");
 }
 
 
@@ -147,7 +147,7 @@ $(document).ready(function(){
 }
 </style>
 
-<div class="mainDiv">
+<div class="mainDiv" style="width: 100%; height: 100%;">
 	<h2>{TITLE}</h2>
 	<p>{CONTENT}</p>
 	<br><br>
@@ -158,14 +158,12 @@ $(document).ready(function(){
 			<!-- BEGIN reply_list -->
 			<div class ="reply">
 				<p><a href="">#{REPLY_USERNAME}</a>: {REPLY_CONTENT} </p>
-<!-- 				<button id ="edit" onclick = "myFunction()">Edit</button>
-				<button id ="delete_comment_{COMMENT_ID}" onclick = "myFunction()">Delete</button> -->
 			</div>
 			<!-- END reply_list -->
 		</div>
 		<div class = "replyButton">
 			<button id ="reply_{COMMENT_ID}" onclick = "showReply({COMMENT_ID})">Reply</button>
-			<td width="25%"><a href="{SITE_URL}/article/delete_comment/id/{COMMENT_ID}" title="Delete" class="delete_state"><button>Delete</button></a></td>
+			<td width="25%"><a href="{SITE_URL}/article/delete_comment/id/{COMMENT_ID}" title="Delete" class="delete_state"><button onclick="myFunction()">Delete</button></a></td>
 		</div>
 
 		<button type="button" id="downVoteBtn" style = "float:right;margin: 5px 10px 0 0;">Down</button>
@@ -192,6 +190,7 @@ $(document).ready(function(){
 	<!-- END comment_form -->
 
 	<a href ="{SITE_URL}/article/list" class = "">Back</a>
+	<td width="25%"><a href="{SITE_URL}/article/delete_question/id/{ID}" title="Delete" class="delete_state"><button onclick="myFunction()">Delete</button></a></td>
 
 
 </div>

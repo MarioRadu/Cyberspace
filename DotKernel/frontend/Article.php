@@ -178,9 +178,14 @@ class Article extends Dot_Model
 		$data = ['id = ?'=>$id,
 				'userId = ?'=>$userId
 				];
-	// var_dump($data); exit();
 	    $this->db->delete('comment', $data);
-	    		
-	   
-	    }
+	}
+		public function deleteQuestionById($id , $userId)
+	{
+		$data = ['id = ?'=>$id,
+				'userId = ?'=>$userId
+				];
+	    $this->db->delete('question', $data);
+	}
+
 }
