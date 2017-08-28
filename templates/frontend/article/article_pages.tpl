@@ -1,6 +1,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-var voteRequestUrl = '{SITE_URL}/article/like/id/{COMMENT_ID}';
+//var voteRequestUrl = '{SITE_URL}/article/voted/id/{COMMENT_ID}';
 // function to get commend id and show reply form
 function showReply(commentId)
 {
@@ -14,30 +14,36 @@ function myFunction()
 }
 
 
-function voteRequest(action)
+
+
+
+function voteRequest(action,buttonId,questionId)
 {
+
+	//alert(action);
+	//alert("Action : " + action + " buttonId : " + buttonId + " questionId :" + questionId);
 	var voteRequestSettings = {
 		'data' : {
-			'action' : action
+			'action' : action,
+			'commentId' : buttonId,
+			'questionId' : questionId
 		}, 
 		'method' : 'POST'
 	};
 
-	if(action =='up' || action == 'down' || action == 'refresh' || action =='reset')
+
+	if(action =='up' || action == 'down' )
 	{
-		 //alert("ok :" + action);
-		// $.ajax(voteRequestUrl,voteRequestSettings);
-		 $.ajax(voteRequestUrl,voteRequestSettings).done(function(response){
+		var voteRequestUrl = '{SITE_URL}/article/vote/id/' + buttonId;
 
-		 	//alert(response);
-		    console.debug(response);
-		    var receivedData = jQuery.parseJSON(response);
-		    var voteSucces = receivedData.succces;
-		    var VoteValue = receivedData.data.voteValue;	
+		$.ajax(voteRequestUrl,voteRequestSettings).done(function(response) {
+			var receivedData = jQuery.parseJSON(response);
 
-		   	$("#voteValue").html(VoteValue);
-
-		 });
+			// verifica daca requestul a fost succes == true ; !!!!!!!!!!
+			
+			//$("#likeCount"+buttonId).text(parseInt($("#likeCount"+buttonId).text()) + 1);
+			// alert(receivedData.success);
+		});
 	}
 	else
 	{
@@ -46,14 +52,24 @@ function voteRequest(action)
 }
 
 
-$(document).ready(function(){
-   	    $("#upVoteBtn").click(function(){
-        alert("up");
-        voteRequest('up');
-    });
-        $("#downVoteBtn").click(function(){
-        alert("down");
-        voteRequest('down');
+$(document).ready(function()
+{
+   	    $(".upVoteBtn").click(function()
+   	    {
+      	 	//var me = $(this);
+      	 	//alert("up");
+      	 	voteRequest('up',this.id,$(this).attr('value'));
+      	 	//alert(me.;
+      	 	//alert(this.attr(value));
+      	 	//alert($(this).attr('value'));
+      	 	//var value = document.getElementById(this.id).value;
+      	 	// alert(value);
+
+  	    });
+
+        $(".downVoteBtn").click(function()
+        {
+        	voteRequest('down',this.id,$(this).attr('value'));
     });
 });
 
@@ -145,6 +161,15 @@ $(document).ready(function(){
 	margin: 5px 35px 0 0;
 	top:10px;
 }
+
+.voteState
+{	
+	font-style: italic;
+	font-size: 80%;
+	float:left;
+	margin: 0 0 0 45px;
+	top:10px;
+}
 </style>
 
 <div class="mainDiv" style="width: 100%; height: 100%;">
@@ -152,9 +177,10 @@ $(document).ready(function(){
 	<p>{CONTENT}</p>
 	<br><br>
 	<!-- BEGIN comment_list -->
-		<div class ="comment">
+		<div class ="comment" id="{COMMENT_ID}">
 			<p><a href="">{COMMENT_USERNAME}</a> : {COMMENT_CONTENT}</p>
-
+				<p> Question ID : {ID} </p>
+				<p> COMMENT_ID  :  {COMMENT_ID}</p>
 			<!-- BEGIN reply_list -->
 			<div class ="reply">
 				<p><a href="">#{REPLY_USERNAME}</a>: {REPLY_CONTENT} </p>
@@ -166,8 +192,12 @@ $(document).ready(function(){
 			<td width="25%"><a href="{SITE_URL}/article/delete_comment/id/{COMMENT_ID}" title="Delete" class="delete_state"><button onclick="myFunction()">Delete</button></a></td>
 		</div>
 
-		<button type="button" id="downVoteBtn" style = "float:right;margin: 5px 10px 0 0;">Down</button>
-		<button type="button" id="upVoteBtn" style = "float:right;margin: 5px 10px 0 0;">Up</button>
+		<button type="button" id="{COMMENT_ID}" class = "downVoteBtn" value="{ID}" style = "float:right;margin: 5px 10px 0 0;">Down</button>
+		<button type="button" id="{COMMENT_ID}" class = "upVoteBtn" value="{ID}" style = "float:right;margin: 5px 10px 0 0;">Up</button>
+		<p id = "{COMMENT_ID}" class = "voteState"> 
+			Like : <span class="likeCount" id="likeCount{COMMENT_ID}">{LIKE}</span> 
+			Dislike : <span class="disLikeCount" id="disLikeCount{COMMENT_ID}">{DISLIKE}</span>
+		</p>
 		<br><br><br><br>
 		<div id="replyForm_{COMMENT_ID}" style="display:none;" >
 			<form action="{SITE_URL}/article/post_reply/id/{COMMENT_ID}" method="POST">

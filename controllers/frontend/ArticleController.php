@@ -19,8 +19,6 @@ switch ($registry->requestAction)
 	case 'list':
 		$info = $articleModel->getInfo();
 		$list = $articleModel->getArticleList();
-		//$userName = $articleModel->getUserNameById(3);
-
 		$articleView->showAllArticles("articleList",$list,$info[0],$info[1]);
 
 		break;
@@ -30,19 +28,19 @@ switch ($registry->requestAction)
 		if(isset($session->user->id))
 		{
 			$userId = $session->user->id;
+			$articleModel->registerView($id);
+
 		}
 
 
-		$articleModel->registerView($id);
-
-		$views = $articleModel->getInfo();
-
-
-		$articleData = $articleModel->getArticleById($id);
-		$questionId = (isset($registry->request['id'])) ? $registry->request['id'] : '';
+		//$test = $articleModel->getAllVotes();
+		$allVotes = $articleModel->getAllVotes();
+		$articleData[] = $articleModel->getArticleById($id);
+ 
+		$questionId = (isset($registry->request['id'])) ? $registry->request['id'] : NULL;
 		$commentList = $articleModel->getCommentListByQuestionId($questionId);
 		$replyList = $articleModel->getReplyListByQuestionId($questionId);
-		$articleView->showArticle("article_pages",$articleData,$commentList,$replyList, $userId);	
+		$articleView->showArticle("article_pages",$articleData,$commentList,$replyList, $userId,$allVotes);	
 	break;
 	case 'add' :
 		$articleView->postComment("addArticle");
@@ -139,7 +137,59 @@ switch ($registry->requestAction)
 				{
 					var_dump("nu avem post"); //nu avem post"
 				}
+
+		case 'vote':
+
+			$id = $registry->request['id'];
+
+			if(isset($_POST) && !empty($_POST))
+			{
+				if(isset($session->user->id))
+				{	
+
+					// Zend_Debug::dump($_POST);exit;
+					$userId = $session->user->id;
+					$articleModel->registerView($id);
+
+
+					$vote = [];
+              	 	$vote['commentId'] = $_POST['commentId'];
+              	 	$vote['questionId'] = $_POST['questionId'];
+              	 	$vote['userId'] = $session->user->id;
+              	 	if($_POST['action'] == 'up')
+               		$vote['vote'] = ($_POST['action'] == 'up') ? 1 : -1;
+
+
+               		//var_dump($vote);
+               		//exit();
+					$checkVote = $articleModel->checkVotes($vote['commentId'], $vote['userId']);
+
+
+			    	if (empty($checkVote)) 
+			    	{
+                   	    $articleModel->registerVote($vote);
+               	    }
+               	    else
+               	    {
+                    	$articleModel->updateVote($vote, $checkVote['commentId']);
+                	}
+
+                	//var_dump($voteCount);
+                	//$voteCount = $articleModel->countVotes($vote['commentId']);
+                	$success = ['success' => 'true'];
+                	echo json_encode($success);
+                	exit;
+
+                	//echo "<pre>";
+                	//var_dump($voteCount);
+
+                	//exit();
+
+				}
+			}
+
 		break;
+
 	case "delete_comment":
 		//$id = $registry->request['id'];
 
@@ -157,5 +207,6 @@ switch ($registry->requestAction)
 		$articleModel->deleteQuestionById($registry->request['id'],$userId);
 		header("Location: " . $baseUrl . "/article/list" );
 		break;
+
 }
 

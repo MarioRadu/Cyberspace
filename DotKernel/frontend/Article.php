@@ -15,6 +15,15 @@ class Article extends Dot_Model
 
 	}
 
+		public function getVoteList()
+	{
+
+		 $select = $this->db->select()
+                            ->from('vote');
+        $result = $this->db->fetchAll($select);
+        return $result;
+	}
+
 	
 	public function getArticleById($id)
 	{
@@ -28,6 +37,7 @@ class Article extends Dot_Model
 		$result = $this->db->fetchAll($select);
 
 		// return $result ; 
+		//$result['likes']=
 		return $result;
 	}
 
@@ -173,6 +183,7 @@ class Article extends Dot_Model
 		$this->db->update('question', $data, $where);
 	}
 
+
 	public function deleteCommentById($id , $userId)
 	{
 		$data = ['id = ?'=>$id,
@@ -188,4 +199,59 @@ class Article extends Dot_Model
 	    $this->db->delete('question', $data);
 	}
 
+  public function registerVote($data)
+    {
+        $update = $this->db->insert('vote', $data);
+    }
+
+
+   public function updateVote($data, $id)
+    {
+        $update = $this->db->update('vote', $data, 'id = ' . $id);
+    }
+ 
+
+   public function checkVotes($commentId, $userId)
+    {
+        $select = $this->db->select()
+                            ->from('vote')
+                            ->where('commentId=?', $commentId)
+                            ->where('userId=?', $userId);
+        $result = $this->db->fetchRow($select);
+        return $result;
+    }
+ 
+   public function countVotes($commentId)
+    {
+        $select = $this->db->select()
+                            ->from('vote')
+                            ->where('commentId= ? ', $commentId)
+                            ->where('vote = ?', 1);
+        $result = $this->db->fetchAll($select);
+
+
+         return	$result;
+    }
+
+    public function getAllVotes()
+    {
+
+    	//echo "<pre>";
+
+   		$selectLike = 'SELECT *,SUM(`vote`) as `voteCount` FROM `vote` GROUP BY `commentId`';
+
+		$result = $this->db->fetchAll($selectLike);
+
+		$finalData = [];
+		foreach ($result as $key => $value)
+		{
+			$finalData[$value['commentId']] = $value['voteCount'];
+		}
+		return $finalData;
+    }	
+
+
+
+
+    
 }
