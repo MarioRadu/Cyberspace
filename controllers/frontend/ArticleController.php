@@ -34,13 +34,17 @@ switch ($registry->requestAction)
 
 
 		//$test = $articleModel->getAllVotes();
-		$allVotes = $articleModel->getAllVotes();
+		$allVotes = $articleModel->getRatings();
 		$articleData[] = $articleModel->getArticleById($id);
- 
 		$questionId = (isset($registry->request['id'])) ? $registry->request['id'] : NULL;
 		$commentList = $articleModel->getCommentListByQuestionId($questionId);
+		$profilePicture = $articleModel->getCommentProfilePictureById($questionId);
+
+		//Zend_Debug::dump($commentList);
+		//exit();
+
 		$replyList = $articleModel->getReplyListByQuestionId($questionId);
-		$articleView->showArticle("article_pages",$articleData,$commentList,$replyList, $userId,$allVotes);	
+		$articleView->showArticle("article_pages",$articleData,$commentList,$replyList, $userId,$allVotes,$profilePicture);	
 	break;
 	case 'add' :
 		$articleView->postComment("addArticle");
@@ -93,6 +97,9 @@ switch ($registry->requestAction)
 		header("Location: " . $baseUrl . "/article/list");
 
 	case "post_reply" :
+
+		//Zend_Debug::dump($_POST);
+		//exit();
 		$id = $registry->request['id'];
 
 		if(isset($session->user->id))
@@ -138,8 +145,16 @@ switch ($registry->requestAction)
 					var_dump("nu avem post"); //nu avem post"
 				}
 
+
+
+			break;	
+
 		case 'vote':
 
+
+		//	Zend_Debug::dump($_POST);
+			$register = 'aa';
+			$update = 'ss';
 			$id = $registry->request['id'];
 
 			if(isset($_POST) && !empty($_POST))
@@ -149,46 +164,58 @@ switch ($registry->requestAction)
 
 					// Zend_Debug::dump($_POST);exit;
 					$userId = $session->user->id;
-					$articleModel->registerView($id);
-
 
 					$vote = [];
               	 	$vote['commentId'] = $_POST['commentId'];
               	 	$vote['questionId'] = $_POST['questionId'];
               	 	$vote['userId'] = $session->user->id;
               	 	if($_POST['action'] == 'up')
-               		$vote['vote'] = ($_POST['action'] == 'up') ? 1 : -1;
+              	 	{
+              	 		$vote['vote'] = 1 ; 
+              	 	}
+              	 	else
+              	 	{
+              	 		$vote['vote'] = -1;
+              	 	}
+               		//$vote['vote'] = ($_POST['action'] == 'up') ? 1 : -1;
 
 
-               		//var_dump($vote);
+               		//Zend_Debug::dump($vote);
                		//exit();
 					$checkVote = $articleModel->checkVotes($vote['commentId'], $vote['userId']);
 
 
 			    	if (empty($checkVote)) 
 			    	{
-                   	    $articleModel->registerVote($vote);
+                   	   $articleModel->registerVote($vote);
                	    }
                	    else
                	    {
-                    	$articleModel->updateVote($vote, $checkVote['commentId']);
+                       $articleModel->updateVote($vote, $checkVote['commentId']);
                 	}
 
-                	//var_dump($voteCount);
-                	//$voteCount = $articleModel->countVotes($vote['commentId']);
-                	$success = ['success' => 'true'];
-                	echo json_encode($success);
-                	exit;
-
-                	//echo "<pre>";
-                	//var_dump($voteCount);
-
-                	//exit();
-
+                		$success = ['success' => 'true'];
+	                	echo json_encode($success);
+	                	exit();
 				}
 			}
 
 		break;
+
+
+		case 'profile':
+			
+			$id = $registry->request['id'];
+			$username = $id;
+
+			$userInfo = $articleModel->getUserInfo($username);
+
+			//exit();
+			//Zend_Debug::dump($userInfo);
+			//exit();
+			$articleView->showProfileInfo("profileView",$userInfo);
+
+			break;
 
 }
 
