@@ -12,6 +12,10 @@ function showReply(commentId)
 	$('#textarea').val('');
 	$("div #commentFormDiv").hide();
 }
+function myFunction() 
+{
+    confirm("Your comment will be permanently canceled !");
+}
 
 
 
@@ -119,9 +123,108 @@ $(document).ready(function()
 
 </script>
 
+<<<<<<< HEAD
 <div class="mainDiv">
+=======
+<style type="text/css">
+	
+.mainDiv
+{
+	box-shadow: 1px 1px 5px #888888;
+	width: 125%;
+	padding-left: 10px;
+	background: rgba(255,255,255,1);
+	background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 6%, rgba(255,255,255,1) 14%, rgba(209,209,209,1) 49%, rgba(255,255,255,1) 84%, rgba(255,255,255,1) 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(6%, rgba(255,255,255,1)), color-stop(14%, rgba(255,255,255,1)), color-stop(49%, rgba(209,209,209,1)), color-stop(84%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
+	background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 6%, rgba(255,255,255,1) 14%, rgba(209,209,209,1) 49%, rgba(255,255,255,1) 84%, rgba(255,255,255,1) 100%);
+	background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 6%, rgba(255,255,255,1) 14%, rgba(209,209,209,1) 49%, rgba(255,255,255,1) 84%, rgba(255,255,255,1) 100%);
+	background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 6%, rgba(255,255,255,1) 14%, rgba(209,209,209,1) 49%, rgba(255,255,255,1) 84%, rgba(255,255,255,1) 100%);
+	background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 6%, rgba(255,255,255,1) 14%, rgba(209,209,209,1) 49%, rgba(255,255,255,1) 84%, rgba(255,255,255,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=0 );
+}
+
+.comment
+{
+	box-shadow: 1px 1px 5px #888888;
+	width: 90%;
+	padding-left: 10px;
+	margin-left: 40px !important;
+
+}
+.reply
+{
+	margin-left: 60px !important;	
+}
+
+.replyButton
+{
+	float:right;
+	margin: 5px 4.5% 0 0;
+}
+.info
+{
+	font-style: italic;
+	float:right;
+	font-size: 90%;
+}
+
+.replyTextArea
+{
+	resize: none;
+	position: relative;
+	max-width: 80%;
+	height: 100px;
+	width: 80%;
+	left: 5%;
+}
+
+.commentForm
+{
+	resize: none;
+	position: relative;
+	max-width: 80%;
+	height: 100px;
+	width: 80%;
+	left: 5%;
+
+}
+
+.commentButton
+{
+	float:right;
+	margin: -30px 4.5% 0 0;
+	top:10px;
+}
+
+.likeButton
+{
+	float:right;
+	margin: 5px 35px 0 0;
+	top:10px;
+}
+
+.unlikeButton
+{
+	float:right;
+	margin: 5px 35px 0 0;
+	top:10px;
+}
+
+.voteState
+{	
+	font-style: italic;
+	font-size: 80%;
+	float:left;
+	margin: 0 0 0 45px;
+	top:10px;
+}
+</style>
+
+<div class="mainDiv" style="width: 100%; height: 100%;">
+>>>>>>> a329aa085f8db1b138fe5e863cde5b75a9161f0f
 	<h2>{TITLE}</h2>
 	<p>{CONTENT}</p>
+	<br><br>
 	<!-- BEGIN comment_list -->
 <!-- 		<p class = "profilePic">{PICTURE}</p> -->
 <!-- 	<img src="{SITE_URL}/{PICTURE}" alt="NOT" class = "profilePic" height="42" width="42"> -->
@@ -138,6 +241,7 @@ $(document).ready(function()
 		</div>
 		<div class = "replyButton">
 			<button id ="reply_{COMMENT_ID}" onclick = "showReply({COMMENT_ID})">Reply</button>
+			<td width="25%"><a href="{SITE_URL}/article/delete_comment/id/{COMMENT_ID}" title="Delete" class="delete_state"><button onclick="myFunction()">Delete</button></a></td>
 		</div>
 		<button name ='unlikeButton' type="button" id="{COMMENT_ID}" class = "downVoteBtn" value="{ID}" style = "float:right;margin: 5px 10px 0 0;"><span class="glyphicon glyphicon-thumbs-down"></span></button>
 		<button name = 'likeButton' type="button" id="{COMMENT_ID}" class = "upVoteBtn" value="{ID}"  style = "float:right;margin: 5px 10px 0 0;"><span class="glyphicon glyphicon-thumbs-up"></span></button>
@@ -167,6 +271,7 @@ $(document).ready(function()
 
 
 	<a href ="{SITE_URL}/article/list" class = "">Back</a>
+	<td width="25%"><a href="{SITE_URL}/article/delete_question/id/{ID}" title="Delete" class="delete_state"><button onclick="myFunction()">Delete</button></a></td>
 
 
 </div>

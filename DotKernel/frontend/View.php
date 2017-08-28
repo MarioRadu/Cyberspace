@@ -125,25 +125,25 @@ class View extends Dot_Template
 		$this->parse('MENU_TOP', 'tpl_menu_top');
 		
 		// sidebar menu
-		$this->setFile('tpl_menu_sidebar', 'blocks/menu_sidebar.tpl');
-		$this->setBlock('tpl_menu_sidebar', 'sidebar_menu_logged', 'sidebar_menu_logged_block');
-		$this->setBlock('tpl_menu_sidebar', 'sidebar_menu_not_logged', 'sidebar_menu_not_logged_block');
+		// $this->setFile('tpl_menu_sidebar', 'blocks/menu_sidebar.tpl');
+		// $this->setBlock('tpl_menu_sidebar', 'sidebar_menu_logged', 'sidebar_menu_logged_block');
+		// $this->setBlock('tpl_menu_sidebar', 'sidebar_menu_not_logged', 'sidebar_menu_not_logged_block');
 
-		// add selected to the correct menu item
-		$this->setVar($selectedItem, 'selected');
+		// // add selected to the correct menu item
+		// $this->setVar($selectedItem, 'selected');
 		
-		if ($dotAuth->hasIdentity('user'))
-		{
-			$this->parse('sidebar_menu_logged_block', 'sidebar_menu_logged', true);
-			$this->parse('sidebar_menu_not_logged_block', '');		
-		}
-		else
-		{
-			$this->parse('sidebar_menu_not_logged_block', 'sidebar_menu_not_logged', true);
-			$this->parse('sidebar_menu_logged_block', '');		
-		}
+		// if ($dotAuth->hasIdentity('user'))
+		// {
+		// 	$this->parse('sidebar_menu_logged_block', 'sidebar_menu_logged', true);
+		// 	$this->parse('sidebar_menu_not_logged_block', '');		
+		// }
+		// else
+		// {
+		// 	$this->parse('sidebar_menu_not_logged_block', 'sidebar_menu_not_logged', true);
+		// 	$this->parse('sidebar_menu_logged_block', '');		
+		// }
 
-		$this->parse('MENU_SIDEBAR', 'tpl_menu_sidebar');
+		// $this->parse('MENU_SIDEBAR', 'tpl_menu_sidebar');
 
 		// footer menu
 		$this->setFile('tpl_menu_footer', 'blocks/menu_footer.tpl');
