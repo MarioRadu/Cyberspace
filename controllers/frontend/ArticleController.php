@@ -202,7 +202,6 @@ switch ($registry->requestAction)
 
 		break;
 
-<<<<<<< HEAD
 
 		case 'profile':
 			
@@ -217,7 +216,7 @@ switch ($registry->requestAction)
 			$articleView->showProfileInfo("profileView",$userInfo);
 
 			break;
-=======
+
 	case "delete_comment":
 		//$id = $registry->request['id'];
 
@@ -235,7 +234,6 @@ switch ($registry->requestAction)
 		$articleModel->deleteQuestionById($registry->request['id'],$userId);
 		header("Location: " . $baseUrl . "/article/list" );
 		break;
->>>>>>> a329aa085f8db1b138fe5e863cde5b75a9161f0f
 
 }
 

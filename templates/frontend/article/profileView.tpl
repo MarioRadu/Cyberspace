@@ -5,8 +5,7 @@
 
 <div id = 'profileContainer'>
 		
-
-
+		
 	<!-- BEGIN profile_view -->
 	<p>ID:{USER_ID}</p>
 	<!-- <p>Site : {SITE_URL}</p> -->
@@ -18,10 +17,6 @@
 	<p>Picture : {USER_PICTURE}</p>
 	<p>Active from : {USER_DATECREATED}</p>
 	<p>Active {}
-
-
-
-
 	<!-- END profile_view -->
 
 </div>
