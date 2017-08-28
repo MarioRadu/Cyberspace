@@ -190,5 +190,23 @@ switch ($registry->requestAction)
 
 		break;
 
+	case "delete_comment":
+		//$id = $registry->request['id'];
+
+		//var_dump($id);
+		//exit();
+		$questionId = (isset($registry->request['id'])) ? $registry->request['id'] : '';
+		$userId = $session->user->id;
+		$baseUrl = $registry->configuration->website->params->url;
+		$articleModel->deleteCommentById($registry->request['id'],$userId);
+		header("Location: " . $baseUrl . "/article/list");
+		break;
+	case "delete_question":
+		$userId = $session->user->id;
+		$baseUrl = $registry->configuration->website->params->url;
+		$articleModel->deleteQuestionById($registry->request['id'],$userId);
+		header("Location: " . $baseUrl . "/article/list" );
+		break;
+
 }
 

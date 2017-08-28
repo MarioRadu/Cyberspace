@@ -183,6 +183,22 @@ class Article extends Dot_Model
 		$this->db->update('question', $data, $where);
 	}
 
+
+	public function deleteCommentById($id , $userId)
+	{
+		$data = ['id = ?'=>$id,
+				'userId = ?'=>$userId
+				];
+	    $this->db->delete('comment', $data);
+	}
+		public function deleteQuestionById($id , $userId)
+	{
+		$data = ['id = ?'=>$id,
+				'userId = ?'=>$userId
+				];
+	    $this->db->delete('question', $data);
+	}
+
   public function registerVote($data)
     {
         $update = $this->db->insert('vote', $data);

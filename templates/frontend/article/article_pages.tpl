@@ -8,6 +8,10 @@ function showReply(commentId)
 	$('#textarea').val('');
 	$("div #commentFormDiv").hide();
 }
+function myFunction() 
+{
+    confirm("Your comment will be permanently canceled !");
+}
 
 
 
@@ -168,9 +172,10 @@ $(document).ready(function()
 }
 </style>
 
-<div class="mainDiv">
+<div class="mainDiv" style="width: 100%; height: 100%;">
 	<h2>{TITLE}</h2>
 	<p>{CONTENT}</p>
+	<br><br>
 	<!-- BEGIN comment_list -->
 		<div class ="comment" id="{COMMENT_ID}">
 			<p><a href="">{COMMENT_USERNAME}</a> : {COMMENT_CONTENT}</p>
@@ -184,6 +189,7 @@ $(document).ready(function()
 		</div>
 		<div class = "replyButton">
 			<button id ="reply_{COMMENT_ID}" onclick = "showReply({COMMENT_ID})">Reply</button>
+			<td width="25%"><a href="{SITE_URL}/article/delete_comment/id/{COMMENT_ID}" title="Delete" class="delete_state"><button onclick="myFunction()">Delete</button></a></td>
 		</div>
 
 		<button type="button" id="{COMMENT_ID}" class = "downVoteBtn" value="{ID}" style = "float:right;margin: 5px 10px 0 0;">Down</button>
@@ -214,6 +220,7 @@ $(document).ready(function()
 	<!-- END comment_form -->
 
 	<a href ="{SITE_URL}/article/list" class = "">Back</a>
+	<td width="25%"><a href="{SITE_URL}/article/delete_question/id/{ID}" title="Delete" class="delete_state"><button onclick="myFunction()">Delete</button></a></td>
 
 
 </div>
