@@ -188,4 +188,40 @@ class Article extends Dot_Model
 	    $this->db->delete('question', $data);
 	}
 
+	public function deleteReply($id)
+    {
+        try
+        {
+            $this->db->delete('comment', 'id='.$id);
+            return true;
+        }
+        catch (Exception $e)
+        {
+            return false;
+        }
+    }
+
+
+    public function getReply($id)
+	{
+	  $select = $this->db->select()
+	                    ->from('comment')
+	                    ->where('parent = ?', $id);
+	                    
+	                    
+	    $result = $this->db->fetchRow($select);
+       // / Zend_Debug::dump($result, $label=null, $echo=true);
+       // var_dump($result['id']);
+       // exit;
+
+
+	   	$data = ['id = ?'=> $result['id']];
+	    $this->db->delete('comment', $data);
+        // $delete = $this->db->select()
+        // 			  ->db->delete('comment','id ='.$result['id']);
+        // 			  ;
+
+	    return $result;
+	}  
+
 }

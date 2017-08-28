@@ -158,6 +158,8 @@ $(document).ready(function(){
 			<!-- BEGIN reply_list -->
 			<div class ="reply">
 				<p><a href="">#{REPLY_USERNAME}</a>: {REPLY_CONTENT} </p>
+				<td width="25%"><a href="{SITE_URL}/article/delete_reply/id/{ID}" title="Delete" class="delete_state"><button >Delete</button></a></td>
+				<td width="25%"><a href="{SITE_URL}/article/edit_reply/id/{REPLY_ID}" title="Edit" class="edit_state"><button >Edit</button></a></td>
 			</div>
 			<!-- END reply_list -->
 		</div>
