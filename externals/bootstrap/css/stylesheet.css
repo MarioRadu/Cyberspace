@@ -1,0 +1,262 @@
+<style> 
+input[type=text] {
+    width: 130px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('searchicon.png');
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+input[type=text]:focus {
+    width: 100%;
+}
+
+
+
+.mainDiv
+{
+    box-shadow: 1px 1px 5px #888888;
+    width: 125%;
+    padding-left: 10px;
+    background: rgba(255,255,255,1);
+    background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 6%, rgba(255,255,255,1) 14%, rgba(209,209,209,1) 49%, rgba(255,255,255,1) 84%, rgba(255,255,255,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(6%, rgba(255,255,255,1)), color-stop(14%, rgba(255,255,255,1)), color-stop(49%, rgba(209,209,209,1)), color-stop(84%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
+    background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 6%, rgba(255,255,255,1) 14%, rgba(209,209,209,1) 49%, rgba(255,255,255,1) 84%, rgba(255,255,255,1) 100%);
+    background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 6%, rgba(255,255,255,1) 14%, rgba(209,209,209,1) 49%, rgba(255,255,255,1) 84%, rgba(255,255,255,1) 100%);
+    background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 6%, rgba(255,255,255,1) 14%, rgba(209,209,209,1) 49%, rgba(255,255,255,1) 84%, rgba(255,255,255,1) 100%);
+    background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 6%, rgba(255,255,255,1) 14%, rgba(209,209,209,1) 49%, rgba(255,255,255,1) 84%, rgba(255,255,255,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=0 );
+}
+
+.comment
+{
+    box-shadow: 1px 1px 5px #888888;
+    width: 85%;
+    padding-left: 50px;
+    margin-left: 60px !important;
+
+}
+.reply
+{
+    margin-left: 60px !important;   
+}
+
+.replyButton
+{
+    float:right;
+    margin: 5px 4.5% 0 0;
+}
+.info
+{
+    font-style: italic;
+    float:right;
+    font-size: 90%;
+}
+
+.replyTextArea
+{
+    resize: none;
+    position: relative;
+    max-width: 80%;
+    height: 100px;
+    width: 80%;
+    left: 5%;
+}
+
+.commentForm
+{
+    resize: none;
+    position: relative;
+    max-width: 80%;
+    height: 100px;
+    width: 80%;
+    left: 5%;
+
+}
+
+.commentButton
+{
+    float:right;
+    margin: -30px 4.5% 0 0;
+    top:10px;
+}
+
+
+
+.voteState
+{   
+    font-style: italic;
+    font-size: 80%;
+    float:left;
+    margin: 0 0 0 45px;
+    top:10px;
+}
+
+
+#postReplyButton
+{
+    position: relative;
+    right:-40px;
+    top : -10px;
+}
+
+#commentBox
+{
+    max-width: 95%;
+    height: 100px;
+}
+
+#divArticleList
+{
+    box-shadow: 5px 5px 5px #888888;
+}
+
+.upVoteBtn, .downVoteBtn
+{
+    background: none !important;
+    color: inherit;
+    border: none;
+    padding: 0! important;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit !important;
+}
+
+.glyphicon {
+    font-size: 25px;
+    color:blue;
+}
+
+.profilePic
+{
+    width: 50px;
+    height: 50px;
+}
+
+
+
+#divProfilePic
+{
+   position: relative;
+    left:-17%;
+    margin-top:-70px;
+    /*background-color: #fff;*/
+}
+
+
+@-ms-keyframes wiggle
+{
+    0%{ -ms-transform:rotate(10deg); }
+    50%
+    {   -ms-transform:rotate(-30deg); }
+    100%
+    {   -ms-transform:rotate(23deg); }
+}
+
+@-moz-keyframes wiggle
+{
+    0%{ -moz-transform:rotate(3deg);  }
+    50%{ -moz-transform:rotate(-3deg);  }
+    100%{ -moz-transform:rotate(3deg); }
+}
+@-webkit-keyframes wiggle
+{   0%
+    { -webkit-transform:rotate(3deg); }
+    50%
+    { -webkit-transform:rotate(-3deg); }
+    100%
+    { -webkit-transform:rotate(3deg); }
+}
+@keyframes wiggle
+{   0% { transform:rotate(3deg); }
+    50%{ transform:rotate(-3deg); }
+    100%{ transform:rotate(3deg); }
+}
+.upVoteBtn:hover{
+                   -ms-animation:wiggle .3s 2;
+                   -moz-animation:wiggle .3s 2;
+                   -webkit-animation:wiggle .3s 2;
+                   animation:wiggle .3s 2;
+                }
+.downVoteBtn:hover
+                { 
+                    -ms-animation:wiggle .3s 2;
+                    -moz-animation:wiggle .3s 2;
+                    -webkit-animation:wiggle .3s 2;
+                    animation:wiggle .3s 2;
+                }
+
+
+
+.form-style-9{
+    max-width: 450px;
+    background: #FAFAFA;
+    padding: 30px;
+    margin: 50px auto;
+    box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+    border-radius: 10px;
+    border: 6px solid #305A72;
+}
+.form-style-9 ul{
+    padding:0;
+    margin:0;
+    list-style:none;
+}
+.form-style-9 ul li{
+    display: block;
+    margin-bottom: 10px;
+    min-height: 35px;
+}
+.form-style-9 ul li  .field-style{
+    box-sizing: border-box; 
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box; 
+    padding: 8px;
+    outline: none;
+    border: 1px solid #B0CFE0;
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+
+}.form-style-9 ul li  .field-style:focus{
+    box-shadow: 0 0 5px #B0CFE0;
+    border:1px solid #B0CFE0;
+}
+
+.form-style-9 ul li .field-full{
+    width: 100%;
+}
+
+.form-style-9 ul li textarea{
+    width: 100%;
+    height: 100px;
+}
+.form-style-9 ul li input[type="button"], 
+.form-style-9 ul li input[type="submit"] {
+    -moz-box-shadow: inset 0px 1px 0px 0px #3985B1;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #3985B1;
+    box-shadow: inset 0px 1px 0px 0px #3985B1;
+    background-color: #216288;
+    border: 1px solid #17445E;
+    display: inline-block;
+    cursor: pointer;
+    color: #FFFFFF;
+    padding: 8px 18px;
+    text-decoration: none;
+    font: 12px Arial, Helvetica, sans-serif;
+}
+.form-style-9 ul li input[type="button"]:hover, 
+.form-style-9 ul li input[type="submit"]:hover {
+    background: linear-gradient(to bottom, #2D77A2 5%, #337DA8 100%);
+    background-color: #28739E;
+}
+
+</style>
