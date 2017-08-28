@@ -28,9 +28,9 @@
 			</div>
 		</header>
 		<div id="body">
-			<nav id="sidebar">
+		<!-- 	<nav id="sidebar">
 				{MENU_SIDEBAR}
-			</nav>
+			</nav> -->
 			<div id="content">
 				<h1>{PAGE_CONTENT_TITLE}</h1>
 				{MESSAGE_BLOCK}

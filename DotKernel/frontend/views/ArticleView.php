@@ -231,6 +231,24 @@ class Article_View extends View
 	}
 
 
+	public function showDeleteReplyPage($templateFile = '', $data)
+    {
+        
+        if($templateFile != '') {
+            $this->templateFile = $templateFile;
+        }
+        $this->tpl->setFile('tpl_main', 'article/' . $templateFile . '.tpl');
+        
+//         Zend_Debug::dump($data, $label=null, $echo=true);exit;
+        
+        foreach ($data as $key => $value)
+        {
+            $this->tpl->setVar(strtoupper('REPLY_' . $key), $value);
+        }
+         
+    } 
+
+
 	public function showProfileInfo($templateFile="",$userData)
 	{
 
@@ -250,5 +268,6 @@ class Article_View extends View
 		//$this->tpl->parse("profile_view_block","profile_view",true);
 
 	}
+
 
 }

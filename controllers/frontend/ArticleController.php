@@ -202,7 +202,6 @@ switch ($registry->requestAction)
 
 		break;
 
-
 		case 'profile':
 			
 			$id = $registry->request['id'];
@@ -235,5 +234,26 @@ switch ($registry->requestAction)
 		header("Location: " . $baseUrl . "/article/list" );
 		break;
 
-}
 
+	case 'delete_reply':
+
+		
+	
+		if(isset($session->user->id))
+		{
+			$userId = $session->user->id;
+			$replyId = (isset($registry->request['id'])) ? $registry->request['id'] : NULL;
+			$reply = $articleModel->deleteReplyByReplyId($replyId,$userId);
+
+		}
+		else
+		{
+			$registry->session->message['txt'] = 'Please Login !';
+			$registry->session->message['type'] = 'error';
+		}
+		
+		header("Location: " . $baseUrl . "/article/show_article/id/" . $ );
+
+        break;
+
+}

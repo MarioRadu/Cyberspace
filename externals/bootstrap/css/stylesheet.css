@@ -144,9 +144,10 @@ input[type=text]:focus {
 
 #divProfilePic
 {
-   position: relative;
-    left:-17%;
-    margin-top:-70px;
+    position: relative;
+    left:-110px;
+    margin-top:-65px;
+    /*float:left;*/
     /*background-color: #fff;*/
 }
 

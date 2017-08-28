@@ -233,13 +233,36 @@ class Article extends Dot_Model
 				];
 	    $this->db->delete('comment', $data);
 	}
-		public function deleteQuestionById($id , $userId)
+	public function deleteQuestionById($id , $userId)
 	{
 		$data = ['id = ?'=>$id,
 				'userId = ?'=>$userId
 				];
 	    $this->db->delete('question', $data);
 	}
+
+
+    public function deleteReplyByReplyId($id,$userId)
+   	{
+
+		//Zend_Debug::dump("ID : " . $id);
+		$select = $this->db->select()
+							->from('comment')
+							->where('id = ?', $id)
+							;
+
+		$result = $this->db->fetchRow($select);
+		//Zend_Debug::dump($result['id']);
+
+
+		$data = ['id = ?'=> $result['id']];
+
+		//Zend_Debug::dump($data);
+
+
+		$this->db->delete('comment',$data);
+	}  
+
 
   public function registerVote($data)
     {
@@ -286,24 +309,7 @@ class Article extends Dot_Model
     }
 
 
-  //    public function getRatings()
-  //   {
-
-  //   	//echo "<pre>";
-
-  //  		$selectLike = 'SELECT *,SUM(`vote`) as `voteCount` FROM `vote` GROUP BY `commentId`';
-
-		// $result = $this->db->fetchAll($selectLike);
-
-		// $finalData = [];
-		// foreach ($result as $key => $value)
-		// {
-		// 	$finalData[$value['commentId']] = $value['voteCount'];
-		// }
-		// return $finalData;
-  //   }
-	
-    	public function getCommentProfilePictureById($questionId)
+    public function getCommentProfilePictureById($questionId)
 	{
 		$select = $this->db->select()
 							->from('comment')
@@ -393,8 +399,4 @@ class Article extends Dot_Model
 		return $datePassed;
 	}
 
-
-
-
-    
 }
