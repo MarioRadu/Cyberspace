@@ -1,6 +1,10 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{SITE_URL}/externals/bootstrap/css/stylesheet.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <script>
-var voteRequestUrl = '{SITE_URL}/article/like/id/{COMMENT_ID}';
+
+//var voteRequestUrl = '{SITE_URL}/article/voted/id/{COMMENT_ID}';
 // function to get commend id and show reply form
 function showReply(commentId)
 {
@@ -14,30 +18,77 @@ function myFunction()
 }
 
 
-function voteRequest(action)
+
+function incrementInput(id)
 {
+    document.getElementById(id).value++;
+}
+
+function incrementInput(id)
+{
+    document.getElementById(id).value++;
+}
+
+function voteRequest(action,buttonId,questionId,buttonClass)
+{
+
 	var voteRequestSettings = {
 		'data' : {
-			'action' : action
+			'action' : action,
+			'commentId' : buttonId,
+			'questionId' : questionId
 		}, 
 		'method' : 'POST'
 	};
 
-	if(action =='up' || action == 'down' || action == 'refresh' || action =='reset')
+	if(action =='up' || action == 'down' )
 	{
-		 //alert("ok :" + action);
-		// $.ajax(voteRequestUrl,voteRequestSettings);
-		 $.ajax(voteRequestUrl,voteRequestSettings).done(function(response){
+		var voteRequestUrl = '{SITE_URL}/article/vote/id/' + buttonId;
 
-		 	//alert(response);
-		    console.debug(response);
-		    var receivedData = jQuery.parseJSON(response);
-		    var voteSucces = receivedData.succces;
-		    var VoteValue = receivedData.data.voteValue;	
+		$.ajax(voteRequestUrl,voteRequestSettings).done(function(response) {
+			var receivedData = jQuery.parseJSON(response);
+			//alert(receivedData);
+			var stringReceivedData = JSON.stringify(receivedData);
 
-		   	$("#voteValue").html(VoteValue);
+			if(stringReceivedData.search('succes') > 0)
+			{	//likeCount{COMMENT_ID}
+				var ratingButton = "likeCount" + buttonId;
 
-		 });
+				//alert(ratingButton);
+				// server respon se true , increment likes + 1 ; 
+				//alert(buttonId);
+				var rating = document.getElementById(ratingButton);
+   			 	var ratingNumber = rating.innerHTML;
+    				ratingNumber++;
+    				rating.innerHTML = ratingNumber;
+
+
+    				if (buttonClass == 'upVoteBtn')
+					{	
+						ratingNumber++;
+					}
+					else if (buttonClass == 'downVoteBtn')
+					{
+						ratingNumber--;
+					}
+
+				//$(buttonId).attr('disabled','disabled');
+				// if (action == 'up')
+				// {
+				// 	$(buttonId).attr('disabled','disabled');
+				// }
+				// else
+				// 	if (action = 'down')
+				// 	{
+				// 		$(buttonId).attr('disabled','disabled');
+				// 	}
+			}
+			else
+			{
+				//alert("NO");
+				// server response false 
+			}
+		});
 	}
 	else
 	{
@@ -46,14 +97,24 @@ function voteRequest(action)
 }
 
 
-$(document).ready(function(){
-   	    $("#upVoteBtn").click(function(){
-        alert("up");
-        voteRequest('up');
-    });
-        $("#downVoteBtn").click(function(){
-        alert("down");
-        voteRequest('down');
+$(document).ready(function()
+{
+   	    $(".upVoteBtn").click(function()
+   	    {
+   	    	var buttonClass = $(this).attr("class");
+      	 	voteRequest('up',this.id,$(this).attr('value'),buttonClass);
+      	 	$(this).attr('disabled','disabled');
+      	 	$('.downVoteBtn').attr('disabled','disabled');
+  	    });
+
+        $(".downVoteBtn").click(function()
+        {
+        	var buttonClass = $(this).attr("class");
+      	 	voteRequest('down',this.id,$(this).attr('value'),buttonClass);
+      	 	$(this).attr('disabled','disabled');
+      	 	$('.upVoteBtn').attr('disabled','disabled');
+
+      		//increment(this.id);
     });
 });
 
@@ -62,103 +123,24 @@ $(document).ready(function(){
 
 </script>
 
-<style type="text/css">
-	
-.mainDiv
-{
-	box-shadow: 1px 1px 5px #888888;
-	width: 125%;
-	padding-left: 10px;
-	background: rgba(255,255,255,1);
-	background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 6%, rgba(255,255,255,1) 14%, rgba(209,209,209,1) 49%, rgba(255,255,255,1) 84%, rgba(255,255,255,1) 100%);
-	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(6%, rgba(255,255,255,1)), color-stop(14%, rgba(255,255,255,1)), color-stop(49%, rgba(209,209,209,1)), color-stop(84%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
-	background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 6%, rgba(255,255,255,1) 14%, rgba(209,209,209,1) 49%, rgba(255,255,255,1) 84%, rgba(255,255,255,1) 100%);
-	background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 6%, rgba(255,255,255,1) 14%, rgba(209,209,209,1) 49%, rgba(255,255,255,1) 84%, rgba(255,255,255,1) 100%);
-	background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 6%, rgba(255,255,255,1) 14%, rgba(209,209,209,1) 49%, rgba(255,255,255,1) 84%, rgba(255,255,255,1) 100%);
-	background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 6%, rgba(255,255,255,1) 14%, rgba(209,209,209,1) 49%, rgba(255,255,255,1) 84%, rgba(255,255,255,1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=0 );
-}
 
-.comment
-{
-	box-shadow: 1px 1px 5px #888888;
-	width: 90%;
-	padding-left: 10px;
-	margin-left: 40px !important;
+<div class="mainDiv">
 
-}
-.reply
-{
-	margin-left: 60px !important;	
-}
-
-.replyButton
-{
-	float:right;
-	margin: 5px 4.5% 0 0;
-}
-.info
-{
-	font-style: italic;
-	float:right;
-	font-size: 90%;
-}
-
-.replyTextArea
-{
-	resize: none;
-	position: relative;
-	max-width: 80%;
-	height: 100px;
-	width: 80%;
-	left: 5%;
-}
-
-.commentForm
-{
-	resize: none;
-	position: relative;
-	max-width: 80%;
-	height: 100px;
-	width: 80%;
-	left: 5%;
-
-}
-
-.commentButton
-{
-	float:right;
-	margin: -30px 4.5% 0 0;
-	top:10px;
-}
-
-.likeButton
-{
-	float:right;
-	margin: 5px 35px 0 0;
-	top:10px;
-}
-
-.unlikeButton
-{
-	float:right;
-	margin: 5px 35px 0 0;
-	top:10px;
-}
-</style>
-
-<div class="mainDiv" style="width: 100%; height: 100%;">
 	<h2>{TITLE}</h2>
 	<p>{CONTENT}</p>
 	<br><br>
 	<!-- BEGIN comment_list -->
-		<div class ="comment">
-			<p><a href="">{COMMENT_USERNAME}</a> : {COMMENT_CONTENT}</p>
+<!-- 		<p class = "profilePic">{PICTURE}</p> -->
+<!-- 	<img src="{SITE_URL}/{PICTURE}" alt="NOT" class = "profilePic" height="42" width="42"> -->
 
+<div class="row">
+		<div class ="comment" id="{COMMENT_ID}">
+			<p><a href="">{COMMENT_USERNAME}</a> : {COMMENT_CONTENT}</p>
+			<div id = "divProfilePic"><a href = "{SITE_URL}/article/profile/id/{COMMENT_USERNAME}"><img src="{SITE_URL}/{PICTURE}" alt="NOT" class = "profilePic"></a></div>
 			<!-- BEGIN reply_list -->
 			<div class ="reply">
 				<p><a href="">#{REPLY_USERNAME}</a>: {REPLY_CONTENT} </p>
-				<td width="25%"><a href="{SITE_URL}/article/delete_reply/id/{ID}" title="Delete" class="delete_state"><button >Delete</button></a></td>
+				<td width="25%"><a href="{SITE_URL}/article/delete_reply/id/{ID}" title="Delete" class="delete"><button >Delete</button></a></td>
 				<td width="25%"><a href="{SITE_URL}/article/edit_reply/id/{REPLY_ID}" title="Edit" class="edit_state"><button >Edit</button></a></td>
 			</div>
 			<!-- END reply_list -->
@@ -167,33 +149,86 @@ $(document).ready(function(){
 			<button id ="reply_{COMMENT_ID}" onclick = "showReply({COMMENT_ID})">Reply</button>
 			<td width="25%"><a href="{SITE_URL}/article/delete_comment/id/{COMMENT_ID}" title="Delete" class="delete_state"><button onclick="myFunction()">Delete</button></a></td>
 		</div>
-
-		<button type="button" id="downVoteBtn" style = "float:right;margin: 5px 10px 0 0;">Down</button>
-		<button type="button" id="upVoteBtn" style = "float:right;margin: 5px 10px 0 0;">Up</button>
+		<button name ='unlikeButton' type="button" id="{COMMENT_ID}" class = "downVoteBtn" value="{ID}" style = "float:right;margin: 5px 10px 0 0;"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+		<button name = 'likeButton' type="button" id="{COMMENT_ID}" class = "upVoteBtn" value="{ID}"  style = "float:right;margin: 5px 10px 0 0;"><span class="glyphicon glyphicon-thumbs-up"></span></button>
+		<p id = "{COMMENT_ID}" class = "voteState"> 
+			Like : <span class="likeCount" id="likeCount{COMMENT_ID}">{RATING}</span> 
+		</p>
 		<br><br><br><br>
 		<div id="replyForm_{COMMENT_ID}" style="display:none;" >
 			<form action="{SITE_URL}/article/post_reply/id/{COMMENT_ID}" method="POST">
 				<input type="number" name="id" value="{ID}" hidden="true">	
 				<textarea name="reply" placeholder="Enter reply here..." id="textarea" class="replyTextArea"></textarea>
-			  	<input type="submit" value="Post Reply" style="position: relative; right:-40px;top : -10px;">
+			  	<input type="submit" value="Post Reply" id = 'postReplyButton' class = 'fa fa-reply'>
 			</form>
 		</div>
 
 	<!-- END comment_list -->
 
-	<br><br><br><br><br><br>
+	<br>
 	<!-- BEGIN comment_form -->
 	<div id="commentFormDiv">
 	<form method="POST" action="{SITE_URL}/article/comment/id/{ID}">
-	<textarea name = "comment"  placeholder="Enter comment here..." style="max-width: 95%; height: 100px;" class ="commentForm"></textarea><br/>
+	<textarea name = "comment"  placeholder="Enter comment here..." id = 'commentBox' class ="commentForm"></textarea><br/>
 	<input type="submit" name="submit" value="Comment" class="commentButton" />
 	</form><br>
 	</div>
 	<!-- END comment_form -->
 
-	<a href ="{SITE_URL}/article/list" class = "">Back</a>
-	<td width="25%"><a href="{SITE_URL}/article/delete_question/id/{ID}" title="Delete" class="delete_state"><button onclick="myFunction()">Delete</button></a></td>
 
+	<a href ="{SITE_URL}/article/list" class = "">Back</a>
+	<a href="{SITE_URL}/article/delete_question/id/{ID}" title="Delete" class="delete_all" >Delete</a>
+
+<div class="container">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+	<div class="row">
+	<!-- Contenedor Principal -->
+    <div class="comments-container">
+		<h1>Comentarios <a href="http://creaticode.com">creaticode.com</a></h1>
+
+		<ul id="comments-list" class="comments-list">
+			<li>
+				<div class="comment-main-level">
+					<!-- Avatar -->
+					<div class="comment-avatar"><div id = "divProfilePic"><a href = "{SITE_URL}/article/profile/id/{COMMENT_USERNAME}"><img src="{SITE_URL}/{PICTURE}" alt="NOT" class = "profilePic"></a></div></div>
+					<!-- Contenedor del Comentario -->
+					<div class="comment-box">
+						<div class="comment-head">
+							<h6 class="comment-name by-author"><a href="http://creaticode.com/blog">{COMMENT_USERNAME}</a></h6>
+							<span>hace 20 minutos</span>
+							<i class="fa fa-reply"></i>
+							<i class="fa fa-heart"></i>
+						</div>
+						<div class="comment-content">
+						{COMMENT_CONTENT}
+						</div>
+					</div>
+				</div>
+				<!-- Respuestas de los comentarios -->
+				<ul class="comments-list reply-list">
+					<li>
+						<!-- Avatar -->
+						<div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
+						<!-- Contenedor del Comentario -->
+						<div class="comment-box">
+							<div class="comment-head">
+								<h6 class="comment-name"><a href="http://creaticode.com/blog">#{REPLY_USERNAME}</a></h6>
+								<i class="fa fa-reply"></i>
+
+							</div>
+							<div class="comment-content">
+							{REPLY_CONTENT} 
+							</div>
+						</div>
+					</li>
+
+		</ul>
+	</div>
+	</div>
+</div>
 
 </div>
-<p class ="info">Published on:{DATE} by <a href="dasda">{ID}</a></p>
+
+<p class ="info">Published on:{DATE} by <a href="dasda">{COMMENT_USERNAME}</a></p>
+
+

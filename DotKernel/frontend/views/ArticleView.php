@@ -49,6 +49,8 @@ class Article_View extends View
 	// The second parameter "data" stores the data we want to load into our tpl file in order to be displayed.
 	public function showAllArticles($templateFile="",$data,$views,$comments)
 	{
+
+		//Zend_Debug::dump
 		// if our tpl file exists set it 
 		if($templateFile !="") $this->templateFile = $templateFile;
 		$this->tpl->setFile('tpl_main','article/'.$this->templateFile.".tpl");
@@ -83,29 +85,116 @@ class Article_View extends View
 		// data stores the data we want to display
 		// commentList stores the commentList 
 		// userId stores the userId, if userId it's not equal to NULL we have a user logged.
-		public function showArticle($templateFile="",$data,$commentList,$replyList, $userId=null)
-		{
+		public function showArticle($templateFile="",$data,$commentList,$replyList, $userId,$vote,$profilePicture)
+		{	
+
+			// Zend_Debug::dump($profilePicture);
+			// exit();
+			//$dislike = 0; 
+			//$this->tpl->setVar(strtoupper($k),$v);
+			//Zend_Debug::dump($profilePicture);
+			//Zend_Debug::dump($vote);
+			//exit();
+			//Zend_Debug::dump($data[0]);
+			//Zend_Debug::dump($data[1]);
+			//exit();
 			if($templateFile !="") $this->templateFile = $templateFile;
 			$this->tpl->setFile('tpl_main','article/'.$this->templateFile.".tpl");
 			$this->tpl->setBlock('tpl_main','comment_form','comment_form_block');
+			// $this->tpl->setBlock('comment_form','comment_like','comment_like_block');
 			$this->tpl->setBlock('tpl_main','comment_list','comment_list_block');
 			$this->tpl->setBlock('comment_list','reply_list','reply_list_block');
-				foreach ($data as $key => $value) 
+			//$this->tpl->setBlock('comment_list','picture_list','picture_list_block');
+
+			$this->tpl->parse("comment_form_block","comment_form",true);
+		//	$this->tpl->parse("comment_form_block","comment_form",true);
+
+
+
+			//	Zend_Debug::dump($profilePicture);
+				//Zend_Debug::dump($vote);
+				//Zend_Debug::dump($profilePicture);
+
+				// foreach ($profilePicture as $pictureKey => $pictureValue)
+				// {	
+
+				// 	// Zend_Debug::dump((strtoupper("picture" . $pictureKey) . " " .  $pictureValue));	
+				// 	//$this->tpl->setVar(strtoupper($pictureKey),$pictureValue);
+				// 	$this->tpl->setVar('PICTURE',$pictureValue);
+
+				// 	Zend_Debug::dump('PICTURE' . " : " .  $pictureValue);
+				// 	$this->tpl->parse("picture_list_block","picture_list",true);
+	
+
+				// }
+
+
+
+				foreach ($data as $dataKey => $dataValue) 
 				{
-					foreach ($value as $k => $v) 
+
+					foreach ($dataValue[0] as $key => $value)
 					{
-						$this->tpl->setVar(strtoupper($k),$v);
+						$this->tpl->setVar(strtoupper($key),$value);
 					}
-					
-					$this->tpl->parse("comment_form_block","comment_form",true);
+
 				}
+
+			
+				// foreach ($profilePicture as $pictureKey => $pictureValue)
+				// {	
+
+				// 	// Zend_Debug::dump((strtoupper("picture" . $pictureKey) . " " .  $pictureValue));	
+				// 	//$this->tpl->setVar(strtoupper($pictureKey),$pictureValue);
+				// 	$this->tpl->setVar('PICTURE',$pictureValue);
+
+				// 	Zend_Debug::dump('PICTURE' . " : " .  $pictureValue);
+				// 	$this->tpl->parse("picture_list_block","picture_list",true);
+	
+				// }
+
 				foreach ($commentList as $comment) 
 				{
+					foreach ($profilePicture as $pictureKey => $pictureValue)
+					{	
+
+						if($pictureKey == $comment['id'])
+							{								
+									//Zend_Debug::dump($pictureKey . "  " . $pictureValue);	
+									$this->tpl->setVar('PICTURE',$pictureValue);
+							}
+					// Zend_Debug::dump((strtoupper("picture" . $pictureKey) . " " .  $pictureValue));	
+					//$this->tpl->setVar(strtoupper($pictureKey),$pictureValue);
+					///$this->tpl->setVar('PICTURE' . $pictureKey,$pictureValue);
+
+					//Zend_Debug::dump('PICTURE' . $pictureKey . " : " .  $pictureValue);
+					//$this->tpl->parse("picture_list_block","picture_list",true);
+	
+					}
 
 					foreach ($comment as $key => $value)
 					{
 						$this->tpl->setVar(strtoupper('COMMENT_' . $key),$value);
-						//$this->tpl->setVar(strtoupper('REPLY_'.$key), $value);
+					}
+
+				
+					if(array_key_exists($comment['id'], $vote))
+					{
+						foreach ($vote as $voteKey => $voteValue)
+						{
+								if($voteKey == $comment['id'])
+								{
+									if($voteValue > 0)
+									{
+										//Zend_Debug::dump((strtoupper($voteKey) . " " .  $voteValue));
+										$this->tpl->setVar('RATING',$voteValue);
+
+									}
+								}
+						}
+					}else
+					{
+									$this->tpl->setVar('RATING',0);
 					}
 
 					$currentReplyList = $this->_getReplyList($replyList, $comment['id']);
@@ -131,6 +220,7 @@ class Article_View extends View
 						}
 					}
 				}
+
 		}
 
 	// set the tpl file and display it .
@@ -139,6 +229,7 @@ class Article_View extends View
 		if($templateFile !="") $this->templateFile = $templateFile;
 		$this->tpl->setFile('tpl_main','article/'.$this->templateFile.".tpl");
 	}
+
 
 	public function showDeleteReplyPage($templateFile = '', $data)
     {
@@ -156,5 +247,27 @@ class Article_View extends View
         }
          
     } 
+
+
+	public function showProfileInfo($templateFile="",$userData)
+	{
+
+
+		//Zend_Debug::dump($userData);
+		//exit();
+		if($templateFile !="") $this->templateFile = $templateFile;
+		$this->tpl->setFile('tpl_main','article/'.$this->templateFile.".tpl");
+		//$this->tpl->setBlock('tpl_main','profile_view','profile_view_block');
+		Zend_Debug::dump($userData);
+		foreach ($userData as $userDataKey => $userDataValue)
+		{
+			Zend_Debug::dump($userDataKey);
+			$this->tpl->setVar(strtoupper('USER_' . $userDataKey),$userDataValue);
+		}
+
+		//$this->tpl->parse("profile_view_block","profile_view",true);
+
+	}
+
 
 }

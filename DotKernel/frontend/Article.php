@@ -12,7 +12,15 @@ class Article extends Dot_Model
 						->order('question.date DESC');
 		$result = $this->db->fetchAll($select);
 		return $result;
+	}
 
+		public function getVoteList()
+	{
+
+		 $select = $this->db->select()
+                            ->from('vote');
+        $result = $this->db->fetchAll($select);
+        return $result;
 	}
 
 	
@@ -28,6 +36,7 @@ class Article extends Dot_Model
 		$result = $this->db->fetchAll($select);
 
 		// return $result ; 
+		//$result['likes']=
 		return $result;
 	}
 
@@ -61,14 +70,22 @@ class Article extends Dot_Model
 	{	
 		// select all from table "comment" where questionId is equal to "questionId"
 		// we want to get all comments from table user where userId = id from table user, we use joinLeft .
+
 		$select = $this->db->select()
 							->from('comment')
 							->where('questionId = ?',  $questionId)
 							//->where('parent = ?', 0)
 							->joinLeft("user","comment.userId=user.id",["username"=>"username"])
+							//->joinLeft("user","comment.userId=user.id",["picture"=>"picture"])
 							;
 		$result = $this->db->fetchAll($select);
+
+		//Zend_Debug::dump($result);
+		//exit();
 		return $result;
+
+		//Zend_Debug::dump($result);
+		//exit();
 	}
 
 	// post a question into table "question" ; 
@@ -116,16 +133,51 @@ class Article extends Dot_Model
 
 	public function searchQuestion($searchString)
 	{
-		//var_dump($searchString);
-		//exit();
-		// $select from table "question" where id = $id ; 
-		$select = $this->db->select()
-							->from("question")
-							->where('title LIKE ?', '%' . $searchString .'%')
-							;
-		$result = $this->db->fetchAll($select);
-		return $result;
+		$countResultByTitle = NULL ;
+		$countResultByContent = NULL;
+		$countSearchString = 3;
+			
+		if(strlen($searchString) > $countSearchString)
+		{
+
+			$selectByTitle = $this->db->select()
+									  ->from("question")
+									  ->where('title LIKE ?', '%' . $searchString .'%')
+									;
+			$resultByTitle = $this->db->fetchAll($selectByTitle);
+
+
+			$selectByContent = $this->db->select()
+									->from("question")
+									->where('content LIKE ?', '%' . $searchString .'%')
+									;
+			$resultByContent = $this->db->fetchAll($selectByContent);
+
+
+			if(count($resultByTitle) > 0)
+			{
+				$countResultByTitle = count($countResultByTitle);
+			}
+			elseif (count($resultByContent) > 0)
+			{
+				$countResultByContent = count($countResultByContent);
+			}
+				// 
+			if($countResultByContent > $countResultByTitle)
+			{
+				return $resultByContent;
+			}
+			else
+			{
+				return $resultByTitle;
+			}
+		}
+		else
+		{
+			var_dump("Please search by at least one key word !");
+		}
 	}
+
 
 	public function getInfo()
 	{
@@ -150,7 +202,7 @@ class Article extends Dot_Model
 			}
 		}	
 
-		return array($views, $comments);
+		return array($views, $comments);	
 	}
 
 
@@ -162,8 +214,8 @@ class Article extends Dot_Model
 		$resultUserName = $this->db->fetchAll($selectUserName);
 
 		return $resultUserName;
-		//var_dump($resultUserName);
-		//exit();
+		var_dump($resultUserName);
+		exit();
 	}
 
 	public function registerView($questionId)
@@ -172,6 +224,7 @@ class Article extends Dot_Model
 		$where = array('id = ?' => $questionId);; 
 		$this->db->update('question', $data, $where);
 	}
+
 
 	public function deleteCommentById($id , $userId)
 	{
@@ -187,6 +240,7 @@ class Article extends Dot_Model
 				];
 	    $this->db->delete('question', $data);
 	}
+
 
 	public function deleteReply($id)
     {
@@ -223,5 +277,158 @@ class Article extends Dot_Model
 
 	    return $result;
 	}  
+
+
+  public function registerVote($data)
+    {
+        $update = $this->db->insert('vote', $data);
+
+        return 'succes';
+    }
+
+
+   public function updateVote($data, $id)
+    {
+        $update = $this->db->update('vote', $data, 'id = ' . $id);
+
+        return 'succes';
+    }
+ 
+
+   public function checkVotes($commentId, $userId)
+    {
+        $select = $this->db->select()
+                            ->from('vote')
+                            ->where('commentId=?', $commentId)
+                            ->where('userId=?', $userId);
+        $result = $this->db->fetchRow($select);
+        return $result;
+    }
+
+
+    public function getRatings()
+    {
+
+    	//echo "<pre>";
+
+   		$selectLike = 'SELECT *,SUM(`vote`) as `voteCount` FROM `vote` GROUP BY `commentId`';
+
+		$result = $this->db->fetchAll($selectLike);
+
+		$finalData = [];
+		foreach ($result as $key => $value)
+		{
+			$finalData[$value['commentId']] = $value['voteCount'];
+		}
+		return $finalData;
+    }
+
+
+  //    public function getRatings()
+  //   {
+
+  //   	//echo "<pre>";
+
+  //  		$selectLike = 'SELECT *,SUM(`vote`) as `voteCount` FROM `vote` GROUP BY `commentId`';
+
+		// $result = $this->db->fetchAll($selectLike);
+
+		// $finalData = [];
+		// foreach ($result as $key => $value)
+		// {
+		// 	$finalData[$value['commentId']] = $value['voteCount'];
+		// }
+		// return $finalData;
+  //   }
+	
+    	public function getCommentProfilePictureById($questionId)
+	{
+		$select = $this->db->select()
+							->from('comment')
+							->where('questionId = ?', $questionId)
+							->joinLeft("user","comment.userId=user.id",["picture"=>"picture"])
+							;
+		$result = $this->db->fetchAll($select);
+
+		$finalData = [];
+		foreach ($result as $key => $value)
+		{
+			$finalData[$value['id']] = $value['picture'];
+		}
+
+		//Zend_Debug::dump($finalData);
+		//exit();
+		return $finalData;
+
+	}
+
+
+
+	public function getUserInfo($username)
+	{
+
+		$finalData = [];
+		$now = time();
+		var_dump($now);
+		$selectUserInfo = $this->db->select()
+									->from('user')
+									->where('username = ?',$username);
+		$resultUserInfo = $this->db->fetchAll($selectUserInfo);
+
+		
+		//return $resultUserInfo;
+
+
+		foreach ($resultUserInfo as $resultKey => $resultValue)
+		{
+			foreach ($resultValue as $key => $value)
+			{
+				if($key != 'password')
+				{
+					$finalData[$key] = $value;
+				}
+
+				if($key == 'dateCreated')
+				{
+					$datePassed = self::getTimePassed($value);
+					//Zend_Debug::dump($datePassed);
+					$finalData[$key] = 	$datePassed; //$now - strtotime($value);
+				}
+			}
+		}
+		return $finalData;
+
+
+	}
+
+
+	public function getTimePassed($date1)
+	{
+		$date2 = date('Y-m-d G:i:s');
+
+		$diff = abs(strtotime($date2) - strtotime($date1));
+		$years = floor($diff / (365*60*60*24));
+		$months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+		$days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+		$datePassed = "Years : " . $years . " months : " . $months . "  days " . $days;
+
+
+		if($years > 0)
+		{
+			$datePassed = "Years : " . $years . " months : " . $months . "  days " . $days;
+
+		}elseif ($months>0)
+		{
+			$datePassed = "Months : " . $months . "  days " . $days;
+
+		}elseif ($days>0)
+		{
+			$datePassed = "Days " . $days;
+		}
+
+
+
+		return $datePassed;
+	}
 
 }
