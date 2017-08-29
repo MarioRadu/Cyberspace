@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="{SITE_URL}/externals/bootstrap/css/stylesheet.css">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script>
@@ -12,6 +13,19 @@ function showReply(commentId)
 	$('#textarea').val('');
 	$("div #commentFormDiv").hide();
 }
+
+function editReply(replyId,replyContent)
+{	
+	alert(replyContent);
+	$("div #editForm_" + replyId).show();
+	$('#replyTextArea').val(replyContent);
+	$("div #commentFormDiv").hide();
+}
+
+
+
+
+
 function myFunction() 
 {
     confirm("Your comment will be permanently canceled !");
@@ -130,22 +144,29 @@ $(document).ready(function()
 	<p>{CONTENT}</p>
 	<br><br>
 	<!-- BEGIN comment_list -->
-<!-- 		<p class = "profilePic">{PICTURE}</p> -->
-<!-- 	<img src="{SITE_URL}/{PICTURE}" alt="NOT" class = "profilePic" height="42" width="42"> -->
-
 
 		<div class ="comment" id="{COMMENT_ID}">
 			<p><a href="">{COMMENT_USERNAME}</a> : {COMMENT_CONTENT}</p>
-			<div id = "divProfilePic"><a href = "{SITE_URL}/article/profile/id/{COMMENT_USERNAME}"><img src="{SITE_URL}/{PICTURE}" alt="NOT" class = "profilePic"></a></div>
+			<div id = "divProfilePic" style="position: relative;left:-110px;"><a href = "{SITE_URL}/article/profile/id/{COMMENT_USERNAME}"><img src="{SITE_URL}/{PICTURE}" alt="NOT" class = "profilePic"></a></div>
 			<!-- BEGIN reply_list -->
 			<div class ="reply">
-				<p><a href="">#{REPLY_USERNAME}</a>: {REPLY_CONTENT} </p>
+				<div id ='divReplyPicture'><a href = "{SITE_URL}/article/profile/id/{REPLY_USERNAME}"><img src="{SITE_URL}/{REPLY_PICTURE}" alt="NOT" class = "profilePic"></a></div>
+				<p><a href="">#{REPLY_USERNAME}</a>: {REPLY_CONTENT} <button type="button" onclick = "editReply({REPLY_ID},'{REPLY_CONTENT}')">Edit {REPLY_ID}</button>
+				<button type="button"><a href ="{SITE_URL}/article/delete_reply/id/{REPLY_ID}/questionId/{ID}">Delete {REPLY_ID}</a></button></p>
+				
+					<div id="editForm_{REPLY_ID}" style="display:none;" >
+					<form action="{SITE_URL}/article/edit_reply/id/{COMMENT_ID}" method="POST">
+					<input type="number" name="id" value="{ID}" hidden="true">	
+					<textarea name="reply" placeholder="Enter reply here..." id="replyTextArea" class="replyTextArea"></textarea>
+			  		<input type="submit" value="Edit reply" id = 'postReplyButton' class = 'fa fa-reply'>
+					</form>
+		</div>
 			</div>
 			<!-- END reply_list -->
 		</div>
 		<div class = "replyButton">
 			<button id ="reply_{COMMENT_ID}" onclick = "showReply({COMMENT_ID})">Reply</button>
-			<td width="25%"><a href="{SITE_URL}/article/delete_comment/id/{COMMENT_ID}" title="Delete" class="delete_state"><button onclick="myFunction()">Delete</button></a></td>
+			<td width="25%"><a href="{SITE_URL}/article/delete_comment/id/{COMMENT_ID}/questionId/{ID}" title="Delete" class="delete_state"><button onclick="myFunction()">Delete</button></a></td>
 		</div>
 		<button name ='unlikeButton' type="button" id="{COMMENT_ID}" class = "downVoteBtn" value="{ID}" style = "float:right;margin: 5px 10px 0 0;"><span class="glyphicon glyphicon-thumbs-down"></span></button>
 		<button name = 'likeButton' type="button" id="{COMMENT_ID}" class = "upVoteBtn" value="{ID}"  style = "float:right;margin: 5px 10px 0 0;"><span class="glyphicon glyphicon-thumbs-up"></span></button>
