@@ -127,21 +127,30 @@ class Article extends Dot_Model
 	}
 
 
-		public function editReply($questionId,$userId,$reply)
+		public function editReply($replyId,$questionId,$userId,$replyUserName,$reply)
 	{
-		//var_dump($userId);
-		//Zend_Debug::dump($questionId);
-		//Zend_Debug::dump($userId);
-		//Zend_Debug::dump($reply);
-		//exit();
 
-		$where = array('userId'=>$userId,'content'=>$reply,'parent'=>$questionId);
-		$dataToBeInserted = array('userId'=>$userId,'content'=>$reply,'parent'=>$questionId);
+		// $selectUserId = $this->db->select()
+		// 						 ->from('user')
+		// 						 ->where('id =?', $userId);
+		// 						 ;
+		// $resultUserId = $this->db->fetchRow($selectUserId);
+
+		// Zend_Debug::dump($resultUserId);
+		// exit();
+		Zend_Debug::dump("reply id :" . $replyId);
+		Zend_Debug::dump("questionId :" . $questionId);
+		Zend_Debug::dump("userId :" . $userId);
+		Zend_Debug::dump("replyUserName :" . $replyUserName);
+		Zend_Debug::dump("reply :" . $reply);
+		exit();
+
+		$where = array('userId'=>$userId,'parent'=>$questionId,'id'=>$replyId);
+		$dataToBeInserted = array('content'=>$reply,);
 	 	$save = $this->db->update("comment",$dataToBeInserted,$where);
-		//var_dump($dataToBeInserted);
-		//exit();
-		//var_dump($save);
-		//exit;
+
+	 	var_dump("EDIT REPLY FUNCTION");
+		
 	}
 
 

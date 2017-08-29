@@ -288,25 +288,28 @@ switch ($registry->requestAction)
 
     case 'edit_reply':
     	
-    	var_dump("EDIT REPLY");
- 
     	$id = $registry->request['id'];
 
 		if(isset($session->user->id))
 		{	
-
-
-			//var_dump($_POST);
 			$userId = $session->user->id;
 		    $questionId = (isset($registry->request['id'])) ? $registry->request['id'] : '';
+
 			 if($_SERVER['REQUEST_METHOD']=='POST')
 			 	{
+
+
+			 		//Zend_Debug::dump($_POST);
+
+			 		//exit();
 			 		$redirectId = $_POST['id'];
 			 		$reply = $_POST['reply'];
-			 		$articleModel->editReply($questionId,$userId,$reply);
+			 		$replyId = $_POST['replyId'];
+			 		$replyUserName = $_POST['replyUserName'];
+			 		$articleModel->editReply($replyId,$questionId,$userId,$replyUserName,$reply);
 			 		//var_dump($userId);
-			// 		//exit;
-			 		header("Location: " . $baseUrl . "/article/show_article/id/" . $redirectId);
+			 		//exit;
+			 		//header("Location: " . $baseUrl . "/article/show_article/id/" . $redirectId);
 
 				}
 		}
