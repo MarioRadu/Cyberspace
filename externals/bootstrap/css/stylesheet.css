@@ -152,6 +152,13 @@ input[type=text]:focus {
 }
 
 
+#divReplyPicture
+{
+     /*position:relative;*/
+    /* left:110px
+     margin-top:65px;*/
+}
+
 @-ms-keyframes wiggle
 {
     0%{ -ms-transform:rotate(10deg); }

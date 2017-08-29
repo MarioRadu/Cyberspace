@@ -34,16 +34,30 @@ switch ($registry->requestAction)
 
 
 		//$test = $articleModel->getAllVotes();
+		//$replyUserPicture = $articleModel->getReplyProfilePictureById($id);
+
+		//Zend_Debug::dump($replyUserPicture);
+	//	exit();
 		$allVotes = $articleModel->getRatings();
 		$articleData[] = $articleModel->getArticleById($id);
 		$questionId = (isset($registry->request['id'])) ? $registry->request['id'] : NULL;
 		$commentList = $articleModel->getCommentListByQuestionId($questionId);
-		$profilePicture = $articleModel->getCommentProfilePictureById($questionId);
 
 		//Zend_Debug::dump($commentList);
 		//exit();
 
+		$profilePicture = $articleModel->getCommentProfilePictureById($questionId);
+		//$replyProfilePicture = $articleModel->getReplyProfilePictureByCommentId(226);
 		$replyList = $articleModel->getReplyListByQuestionId($questionId);
+
+		//$replyProfilePicture = $articleModel->getReplyProfilePictureByCommentId($replyList);
+
+
+		//Zend_Debug::dump($replyList['replyList']);
+		//exit();
+
+
+
 		$articleView->showArticle("article_pages",$articleData,$commentList,$replyList, $userId,$allVotes,$profilePicture);	
 	break;
 	case 'add' :
@@ -218,17 +232,34 @@ switch ($registry->requestAction)
 
 	case "delete_comment":
 
-		$questionId = (isset($registry->request['id'])) ? $registry->request['id'] : '';
+
+		$id = (isset($registry->request['id'])) ? $registry->request['id'] : NULL;
+		$questionId = (isset($registry->request['questionId'])) ? $registry->request['questionId'] : NULL;
 		$userId = $session->user->id;
-		$baseUrl = $registry->configuration->website->params->url;
-		$articleModel->deleteCommentById($registry->request['id'],$userId);
-		header("Location: " . $baseUrl . "/article/list");
+
+		$articleModel->deleteCommentById($id,$userId);
+
+		header("Location: " . $baseUrl . "/article/show_article/id/" . $questionId);
+
 		break;
+
 	case "delete_question":
-		$userId = $session->user->id;
-		$baseUrl = $registry->configuration->website->params->url;
-		$articleModel->deleteQuestionById($registry->request['id'],$userId);
-		header("Location: " . $baseUrl . "/article/list" );
+
+		
+		if(isset($session->user->id))
+		{
+			$userId = $session->user->id;
+			$id = (isset($registry->request['id'])) ? $registry->request['id'] : NULL;
+
+			$articleModel->deleteQuestionById($id,$userId);
+			header("Location: " . $baseUrl . "/article/list" );
+		}
+		else
+		{
+			header("Location: " . $baseUrl . "/article/list" );
+		}
+		//$articleModel->deleteQuestionById($registry->request['id'],$userId);
+		//header("Location: " . $baseUrl . "/article/list" );
 		break;
 
 
@@ -239,22 +270,45 @@ switch ($registry->requestAction)
 			//exit();
 			$userId = $session->user->id;
 			$replyId = (isset($registry->request['id'])) ? $registry->request['id'] : NULL;
+			$questionId = (isset($registry->request['questionId'])) ? $registry->request['questionId'] : NULL;
 			//$replyComment = (isset($registry->request['question'])) ? $registry->request['question'] : 'nunu';
 			$reply = $articleModel->deleteReplyByReplyId($replyId,$userId);
-
+			header("Location: " . $baseUrl . "/article/show_article/id/" . $questionId);
 		}
 		else
 		{
 			$registry->session->message['txt'] = 'Please Login !';
 			$registry->session->message['type'] = 'error';
+			header("Location: " . $baseUrl . "/article/login");
+
 		}
-
-
-		//var_dump($replyComment);
-		//exit("DASDADADA");
-		
-		///	header("Location: " . $baseUrl . "/article/show_article/id/" );
 
         break;
 
+
+    case 'edit_reply':
+    	
+    	var_dump("EDIT REPLY");
+ 
+    	$id = $registry->request['id'];
+
+		if(isset($session->user->id))
+		{	
+
+
+			//var_dump($_POST);
+			$userId = $session->user->id;
+		    $questionId = (isset($registry->request['id'])) ? $registry->request['id'] : '';
+			 if($_SERVER['REQUEST_METHOD']=='POST')
+			 	{
+			 		$redirectId = $_POST['id'];
+			 		$reply = $_POST['reply'];
+			 		$articleModel->editReply($questionId,$userId,$reply);
+			 		//var_dump($userId);
+			// 		//exit;
+			 		header("Location: " . $baseUrl . "/article/show_article/id/" . $redirectId);
+
+				}
+		}
+		break;
 }
