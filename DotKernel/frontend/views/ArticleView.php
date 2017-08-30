@@ -49,23 +49,17 @@ class Article_View extends View
 	// The second parameter "data" stores the data we want to load into our tpl file in order to be displayed.
 	public function showAllArticles($templateFile="",$data,$views,$comments)
 	{
-
-		//Zend_Debug::dump
 		// if our tpl file exists set it 
 		if($templateFile !="") $this->templateFile = $templateFile;
 		$this->tpl->setFile('tpl_main','article/'.$this->templateFile.".tpl");
 		// in ou tpl file we must have a article_list block, in order to set it .
 		$this->tpl->setBlock('tpl_main','article_list','article_list_block');
 
-		// Zend_Debug::dump($data);exit();
 		// for each value in our "data" array set to upper the key .
-		//var_dump($username);
-		//exit();
 		foreach ($data as $key => $value) 
 		{
 			foreach ($value as $key => $value) 
 			{
-				//$this->tpl->setVar(strtoupper($key),$value);
 				$this->tpl->setVar(strtoupper($key),substr($value, 0, 205));
 				if($key == 'content')
 				{
@@ -75,7 +69,6 @@ class Article_View extends View
 			// parse the block with the value "true" in order to repeat it,if we have to . 
 		 	$this->tpl->parse("article_list_block","article_list",true);
 		}
-	//	exit();
 	}
 
 
@@ -88,39 +81,13 @@ class Article_View extends View
 		public function showArticle($templateFile="",$data,$commentList,$replyList, $userId,$vote,$profilePicture)
 		{	
 
-			//Zend_Debug::dump($replyList);
-
 			if($templateFile !="") $this->templateFile = $templateFile;
 			$this->tpl->setFile('tpl_main','article/'.$this->templateFile.".tpl");
 			$this->tpl->setBlock('tpl_main','comment_form','comment_form_block');
-			// $this->tpl->setBlock('comment_form','comment_like','comment_like_block');
 			$this->tpl->setBlock('tpl_main','comment_list','comment_list_block');
 			$this->tpl->setBlock('comment_list','reply_list','reply_list_block');
-			//$this->tpl->setBlock('comment_list','picture_list','picture_list_block');
 
 			$this->tpl->parse("comment_form_block","comment_form",true);
-		//	$this->tpl->parse("comment_form_block","comment_form",true);
-
-
-
-			//	Zend_Debug::dump($profilePicture);
-				//Zend_Debug::dump($vote);
-				//Zend_Debug::dump($profilePicture);
-
-				// foreach ($profilePicture as $pictureKey => $pictureValue)
-				// {	
-
-				// 	// Zend_Debug::dump((strtoupper("picture" . $pictureKey) . " " .  $pictureValue));	
-				// 	//$this->tpl->setVar(strtoupper($pictureKey),$pictureValue);
-				// 	$this->tpl->setVar('PICTURE',$pictureValue);
-
-				// 	Zend_Debug::dump('PICTURE' . " : " .  $pictureValue);
-				// 	$this->tpl->parse("picture_list_block","picture_list",true);
-	
-
-				// }
-
-
 
 				foreach ($data as $dataKey => $dataValue) 
 				{
@@ -132,19 +99,6 @@ class Article_View extends View
 
 				}
 
-			
-				// foreach ($profilePicture as $pictureKey => $pictureValue)
-				// {	
-
-				// 	// Zend_Debug::dump((strtoupper("picture" . $pictureKey) . " " .  $pictureValue));	
-				// 	//$this->tpl->setVar(strtoupper($pictureKey),$pictureValue);
-				// 	$this->tpl->setVar('PICTURE',$pictureValue);
-
-				// 	Zend_Debug::dump('PICTURE' . " : " .  $pictureValue);
-				// 	$this->tpl->parse("picture_list_block","picture_list",true);
-	
-				// }
-
 				foreach ($commentList as $comment) 
 				{
 					foreach ($profilePicture as $pictureKey => $pictureValue)
@@ -152,16 +106,8 @@ class Article_View extends View
 
 						if($pictureKey == $comment['id'])
 							{								
-									//Zend_Debug::dump($pictureKey . "  " . $pictureValue);	
 									$this->tpl->setVar('PICTURE',$pictureValue);
 							}
-					// Zend_Debug::dump((strtoupper("picture" . $pictureKey) . " " .  $pictureValue));	
-					//$this->tpl->setVar(strtoupper($pictureKey),$pictureValue);
-					///$this->tpl->setVar('PICTURE' . $pictureKey,$pictureValue);
-
-					//Zend_Debug::dump('PICTURE' . $pictureKey . " : " .  $pictureValue);
-					//$this->tpl->parse("picture_list_block","picture_list",true);
-	
 					}
 
 					foreach ($comment as $key => $value)
@@ -178,7 +124,6 @@ class Article_View extends View
 								{
 									if($voteValue > 0)
 									{
-										//Zend_Debug::dump((strtoupper($voteKey) . " " .  $voteValue));
 										$this->tpl->setVar('RATING',$voteValue);
 
 									}
@@ -244,20 +189,13 @@ class Article_View extends View
 	public function showProfileInfo($templateFile="",$userData)
 	{
 
-
-		//Zend_Debug::dump($userData);
-		//exit();
 		if($templateFile !="") $this->templateFile = $templateFile;
 		$this->tpl->setFile('tpl_main','article/'.$this->templateFile.".tpl");
-		//$this->tpl->setBlock('tpl_main','profile_view','profile_view_block');
-		Zend_Debug::dump($userData);
+
 		foreach ($userData as $userDataKey => $userDataValue)
 		{
 			$this->tpl->setVar(strtoupper('USER_' . $userDataKey),$userDataValue);
 		}
-
-		//$this->tpl->parse("profile_view_block","profile_view",true);
-
 	}
 
 

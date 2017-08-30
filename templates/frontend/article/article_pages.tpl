@@ -16,7 +16,7 @@ function showReply(commentId)
 
 function editReply(replyId,replyContent)
 {	
-	alert(replyContent);
+	//alert(replyContent);
 	$("div #editForm_" + replyId).show();
 	$('#replyTextArea').val(replyContent);
 	$("div #commentFormDiv").hide();
@@ -157,7 +157,6 @@ $(document).ready(function()
 					<div class="comment-box">
 						<div class="comment-head">
 							<h6 class="comment-name by-author"><a href="http://creaticode.com/blog">{COMMENT_USERNAME}</a></h6>
-							<span>hace 20 minutos</span>
 							<i class="fa fa-reply"></i>
 							<i class="fa fa-heart"></i>
 						</div>
@@ -185,14 +184,16 @@ $(document).ready(function()
 							</div>
 						</div>
 					</li>
+				<button id="buttonReply" type="button" onclick = "editReply({REPLY_ID},'{REPLY_CONTENT}')">Edit {REPLY_ID}</button>
+				<button id="buttonDelete" type="button"><a href ="{SITE_URL}/article/delete_reply/id/{REPLY_ID}/questionId/{ID}">Delete {REPLY_ID}</a></button></p>
+
 				</ul>	
-				
-				<p><a href="">#{REPLY_USERNAME}</a>: {REPLY_CONTENT} <button type="button" onclick = "editReply({REPLY_ID},'{REPLY_CONTENT}')">Edit {REPLY_ID}</button>
-				<button type="button"><a href ="{SITE_URL}/article/delete_reply/id/{REPLY_ID}/questionId/{ID}">Delete {REPLY_ID}</a></button></p>
-				
+
 					<div id="editForm_{REPLY_ID}" style="display:none;" >
 					<form action="{SITE_URL}/article/edit_reply/id/{COMMENT_ID}" method="POST">
-					<input type="number" name="id" value="{ID}" hidden="true">	
+					<input type="number" name="id" value="{ID}" hidden="true">
+					<input type="number" name="replyId" value="{REPLY_ID}" hidden="true">
+					<input type="text" name="replyUserName" value="{REPLY_USERNAME}" hidden="true">	
 					<textarea name="reply" placeholder="Enter reply here..." id="replyTextArea" class="replyTextArea"></textarea>
 			  		<input type="submit" value="Edit reply" id = 'postReplyButton' class = 'fa fa-reply'>
 					</form>
@@ -230,47 +231,6 @@ $(document).ready(function()
 	</form><br>
 	</div>
 	<!-- END comment_form -->
-
-	<div class="comments-container">
-		<ul id="comments-list" class="comments-list">
-			<li>
-				<div class="comment-main-level">
-					<!-- Avatar -->
-					<div class="comment-avatar"><div id = "divProfilePic"><a href = "{SITE_URL}/article/profile/id/{COMMENT_USERNAME}"><img src="{SITE_URL}/{PICTURE}" alt="NOT" class = "profilePic"></a></div></div>
-					<!-- Contenedor del Comentario -->
-					<div class="comment-box">
-						<div class="comment-head">
-							<h6 class="comment-name by-author"><a href="http://creaticode.com/blog">{COMMENT_USERNAME}</a></h6>
-							<span>hace 20 minutos</span>
-							<i class="fa fa-reply"></i>
-							<i class="fa fa-heart"></i>
-						</div>
-						<div class="comment-content">
-						{COMMENT_CONTENT}
-						</div>
-					</div>
-				</div>
-				<!-- Respuestas de los comentarios -->
-				<ul class="comments-list reply-list">
-					<li>
-						<!-- Avatar -->
-						<div class="comment-avatar"><div id ='divReplyPicture'><a href = "{SITE_URL}/article/profile/id/{REPLY_USERNAME}"><img src="{SITE_URL}/{REPLY_PICTURE}" alt="NOT" class = "profilePic"></a></div></div>
-						<!-- Contenedor del Comentario -->
-						<div class="comment-box">
-							<div class="comment-head">
-								<h6 class="comment-name"><a href="http://creaticode.com/blog">#{REPLY_USERNAME}</a></h6>
-								<i class="fa fa-reply"></i>
-
-							</div>
-							<div class="comment-content">
-							{REPLY_CONTENT} 
-							</div>
-						</div>
-					</li>
-				</ul>	
-		</ul>
-	</div>
-	</div>
 
 
 	<a href ="{SITE_URL}/article/list" class = "">Back</a>

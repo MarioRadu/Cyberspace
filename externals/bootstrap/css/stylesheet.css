@@ -45,7 +45,7 @@ input[type=text]:focus {
 }
 .reply
 {
-    margin-left: 60px !important;   
+    margin-left: -28px !important;   
 }
 
 .replyButton
