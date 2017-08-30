@@ -124,6 +124,22 @@ class Article extends Dot_Model
 	}
 
 
+
+	public function editComment($comment,$commentId,$userId)
+	{
+		$select = $this->db->select()
+							->from('comment')
+							->where('id = ?', $commentId)
+							;
+
+		$result = $this->db->fetchRow($select);
+		$data = ['content'=>$comment];
+		$where = array('id = ?' => $commentId,'userId = ?' =>$userId);
+
+		$this->db->update('comment', $data, $where);
+	}
+
+
 	public function searchQuestion($searchString)
 	{
 		$countResultByTitle = NULL ;

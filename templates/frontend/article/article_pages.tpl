@@ -18,12 +18,19 @@ function editReply(replyId,replyContent)
 {	
 	//alert(replyContent);
 	$("div #editForm_" + replyId).show();
-	$('#replyTextArea').val(replyContent);
+	$('#commentTextArea').val(replyContent);
 	$("div #commentFormDiv").hide();
 }
 
 
-
+function editComment(commentId,commentContent)
+{	
+	//alert(commentContent);
+	//alert(commentId);
+	$("div #editCommentForm_" + commentId).show();
+	$('#commentTextArea').val(commentContent);
+	$("div #commentFormDiv").hide();
+}
 
 
 function myFunction() 
@@ -31,17 +38,6 @@ function myFunction()
     confirm("Your comment will be permanently canceled !");
 }
 
-
-
-function incrementInput(id)
-{
-    document.getElementById(id).value++;
-}
-
-function incrementInput(id)
-{
-    document.getElementById(id).value++;
-}
 
 function voteRequest(action,buttonId,questionId,buttonClass)
 {
@@ -139,14 +135,14 @@ $(document).ready(function()
 
 
 <div class="mainDiv">
-<!-- COMMENTRAIUUUUUUssssssssssssssssssssss -->
+<!-- COMMENTRAIUUUUUUssssssssssssssssssssssdadadad -->
 	<h2>{TITLE}</h2>
 	<p>{CONTENT}</p>
 	<br><br>
 	<!-- BEGIN comment_list -->
 
 		<div class ="comment" id="{COMMENT_ID}">
-			<p><a href="">{COMMENT_USERNAME}</a> : {COMMENT_CONTENT}</p>
+			<p><a href="">{COMMENT_USERNAME}</a> : {COMMENT_CONTENT} {COMMENT_ID}</p>
 			<div id = "divProfilePic" style="position: relative;left:-110px;"><a href = "{SITE_URL}/article/profile/id/{COMMENT_USERNAME}"><img src="{SITE_URL}/{PICTURE}" alt="NOT" class = "profilePic"></a></div>
 			<!-- BEGIN reply_list -->
 			<div class ="reply">
@@ -155,20 +151,31 @@ $(document).ready(function()
 				<button type="button"><a href ="{SITE_URL}/article/delete_reply/id/{REPLY_ID}/questionId/{ID}">Delete {REPLY_ID}</a></button></p>
 				
 					<div id="editForm_{REPLY_ID}" style="display:none;" >
-					<form action="{SITE_URL}/article/edit_reply/id/{COMMENT_ID}" method="POST">
-					<input type="number" name="id" value="{ID}" hidden="true">
-					<input type="number" name="replyId" value="{REPLY_ID}" hidden="true">
-					<input type="text" name="replyUserName" value="{REPLY_USERNAME}" hidden="true">	
-					<textarea name="reply" placeholder="Enter reply here..." id="replyTextArea" class="replyTextArea"></textarea>
-			  		<input type="submit" value="Edit reply" id = 'postReplyButton' class = 'fa fa-reply'>
-					</form>
-		</div>
+						<form action="{SITE_URL}/article/edit_reply/id/{COMMENT_ID}" method="POST">
+							<input type="number" name="id" value="{ID}" hidden="true">
+							<input type="number" name="replyId" value="{REPLY_ID}" hidden="true">
+							<input type="text" name="replyUserName" value="{REPLY_USERNAME}" hidden="true">	
+							<textarea name="reply" placeholder="Enter reply here..." id="replyTextArea" class="replyTextArea"></textarea>
+			  				<input type="submit" value="Edit reply" id = 'postReplyButton' class = 'fa fa-reply'>
+						</form>
+					</div>
 			</div>
 			<!-- END reply_list -->
+
+					<div id="editCommentForm_{COMMENT_ID}" style="display:none;" >
+						<form action="{SITE_URL}/article/edit_comment/id/{COMMENT_ID}" method="POST">
+							<input type="number" name="id" value="{ID}" hidden="true">
+							<input type="number" name="commentId" value="{COMMENT_ID}" hidden="true">
+							<input type="text" name="commentUserName" value="{COMMENT_USERNAME}" hidden="true">	
+							<textarea name="comment" placeholder="Edit comment..." id="replyTextArea" class="replyTextArea"></textarea>
+			  				<input type="submit" value="Save" id = 'postReplyButton' class = 'fa fa-reply'>
+						</form>
+					</div>
 		</div>
 		<div class = "replyButton">
 			<button id ="reply_{COMMENT_ID}" onclick = "showReply({COMMENT_ID})">Reply</button>
 			<a href="{SITE_URL}/article/delete_comment/id/{COMMENT_ID}/questionId/{ID}" title="Delete" class="delete_state"><button onclick="myFunction()">Delete</button></a>
+			<button onclick="editComment({COMMENT_ID},'{COMMENT_CONTENT}')">Edit Comment</button>
 		</div>
 		<button name ='unlikeButton' type="button" id="{COMMENT_ID}" class = "downVoteBtn" value="{ID}" style = "float:right;margin: 5px 10px 0 0;"><span class="glyphicon glyphicon-thumbs-down"></span></button>
 		<button name = 'likeButton' type="button" id="{COMMENT_ID}" class = "upVoteBtn" value="{ID}"  style = "float:right;margin: 5px 10px 0 0;"><span class="glyphicon glyphicon-thumbs-up"></span></button>
@@ -176,11 +183,19 @@ $(document).ready(function()
 			Like : <span class="likeCount" id="likeCount{COMMENT_ID}">{RATING}</span> 
 		</p>
 		<br><br><br><br>
+
 		<div id="replyForm_{COMMENT_ID}" style="display:none;" >
 			<form action="{SITE_URL}/article/post_reply/id/{COMMENT_ID}" method="POST">
 				<input type="number" name="id" value="{ID}" hidden="true">	
 				<textarea name="reply" placeholder="Enter reply here..." id="textarea" class="replyTextArea"></textarea>
 			  	<input type="submit" value="Post Reply" id = 'postReplyButton' class = 'fa fa-reply'>
+			</form>
+		</div>
+		<div id="editComment_{COMMENT_ID}" style="display:none;" >
+			<form action="{SITE_URL}/article/edit_comment/id/{COMMENT_ID}" method="POST">
+				<input type="number" name="id" value="{ID}" hidden="true">	
+				<textarea name="reply" placeholder="Edit comment..." id="textarea" class="replyTextArea"></textarea>
+			  	<input type="submit" value="Save" id = 'postReplyButton' class = 'fa fa-reply'>
 			</form>
 		</div>
 
