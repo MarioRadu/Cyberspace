@@ -144,12 +144,26 @@ input[type=text]:focus {
 
 #divProfilePic
 {
+<<<<<<< HEAD
    position: relative;
     left:-110px;
     margin-top:-65px;
+=======
+    position: relative;
+    left:-110px;
+    margin-top:-65px;
+    /*float:left;*/
+>>>>>>> 51a54dc2a3fed51714d0bbd9f59c7566c725eeca
     /*background-color: #fff;*/
 }
 
+
+#divReplyPicture
+{
+     /*position:relative;*/
+    /* left:110px
+     margin-top:65px;*/
+}
 
 @-ms-keyframes wiggle
 {

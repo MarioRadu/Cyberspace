@@ -88,16 +88,8 @@ class Article_View extends View
 		public function showArticle($templateFile="",$data,$commentList,$replyList, $userId,$vote,$profilePicture)
 		{	
 
-			// Zend_Debug::dump($profilePicture);
-			// exit();
-			//$dislike = 0; 
-			//$this->tpl->setVar(strtoupper($k),$v);
-			//Zend_Debug::dump($profilePicture);
-			//Zend_Debug::dump($vote);
-			//exit();
-			//Zend_Debug::dump($data[0]);
-			//Zend_Debug::dump($data[1]);
-			//exit();
+			//Zend_Debug::dump($replyList);
+
 			if($templateFile !="") $this->templateFile = $templateFile;
 			$this->tpl->setFile('tpl_main','article/'.$this->templateFile.".tpl");
 			$this->tpl->setBlock('tpl_main','comment_form','comment_form_block');
@@ -261,7 +253,6 @@ class Article_View extends View
 		Zend_Debug::dump($userData);
 		foreach ($userData as $userDataKey => $userDataValue)
 		{
-			Zend_Debug::dump($userDataKey);
 			$this->tpl->setVar(strtoupper('USER_' . $userDataKey),$userDataValue);
 		}
 
