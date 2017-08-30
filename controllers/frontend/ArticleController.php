@@ -32,31 +32,12 @@ switch ($registry->requestAction)
 
 		}
 
-
-		//$test = $articleModel->getAllVotes();
-		//$replyUserPicture = $articleModel->getReplyProfilePictureById($id);
-
-		//Zend_Debug::dump($replyUserPicture);
-	//	exit();
 		$allVotes = $articleModel->getRatings();
 		$articleData[] = $articleModel->getArticleById($id);
 		$questionId = (isset($registry->request['id'])) ? $registry->request['id'] : NULL;
 		$commentList = $articleModel->getCommentListByQuestionId($questionId);
-
-		//Zend_Debug::dump($commentList);
-		//exit();
-
 		$profilePicture = $articleModel->getCommentProfilePictureById($questionId);
-		//$replyProfilePicture = $articleModel->getReplyProfilePictureByCommentId(226);
 		$replyList = $articleModel->getReplyListByQuestionId($questionId);
-
-		//$replyProfilePicture = $articleModel->getReplyProfilePictureByCommentId($replyList);
-
-
-		//Zend_Debug::dump($replyList['replyList']);
-		//exit();
-
-
 
 		$articleView->showArticle("article_pages",$articleData,$commentList,$replyList, $userId,$allVotes,$profilePicture);	
 	break;
@@ -112,8 +93,6 @@ switch ($registry->requestAction)
 
 	case "post_reply" :
 
-		//Zend_Debug::dump($_POST);
-		//exit();
 		$id = $registry->request['id'];
 
 		if(isset($session->user->id))
@@ -125,8 +104,7 @@ switch ($registry->requestAction)
 					$redirectId = $_POST['id'];
 					$reply = $_POST['reply'];
 					$articleModel->postReply($questionId,$userId,$reply);
-					//var_dump($userId);
-					//exit;
+
 					header("Location: " . $baseUrl . "/article/show_article/id/" . $redirectId);
 
 				}
@@ -166,7 +144,6 @@ switch ($registry->requestAction)
 		case 'vote':
 
 
-		//	Zend_Debug::dump($_POST);
 			$register = 'aa';
 			$update = 'ss';
 			$id = $registry->request['id'];
@@ -175,8 +152,6 @@ switch ($registry->requestAction)
 			{
 				if(isset($session->user->id))
 				{	
-
-					// Zend_Debug::dump($_POST);exit;
 					$userId = $session->user->id;
 
 					$vote = [];
@@ -191,11 +166,7 @@ switch ($registry->requestAction)
               	 	{
               	 		$vote['vote'] = -1;
               	 	}
-               		//$vote['vote'] = ($_POST['action'] == 'up') ? 1 : -1;
 
-
-               		//Zend_Debug::dump($vote);
-               		//exit();
 					$checkVote = $articleModel->checkVotes($vote['commentId'], $vote['userId']);
 
 
@@ -222,10 +193,6 @@ switch ($registry->requestAction)
 			$username = $id;
 
 			$userInfo = $articleModel->getUserInfo($username);
-
-			//exit();
-			//Zend_Debug::dump($userInfo);
-			//exit();
 			$articleView->showProfileInfo("profileView",$userInfo);
 
 			break;
@@ -258,20 +225,16 @@ switch ($registry->requestAction)
 		{
 			header("Location: " . $baseUrl . "/article/list" );
 		}
-		//$articleModel->deleteQuestionById($registry->request['id'],$userId);
-		//header("Location: " . $baseUrl . "/article/list" );
-		break;
+	break;
 
 
 	case 'delete_reply':
 
 		if(isset($session->user->id))
 		{
-			//exit();
 			$userId = $session->user->id;
 			$replyId = (isset($registry->request['id'])) ? $registry->request['id'] : NULL;
 			$questionId = (isset($registry->request['questionId'])) ? $registry->request['questionId'] : NULL;
-			//$replyComment = (isset($registry->request['question'])) ? $registry->request['question'] : 'nunu';
 			$reply = $articleModel->deleteReplyByReplyId($replyId,$userId);
 			header("Location: " . $baseUrl . "/article/show_article/id/" . $questionId);
 		}
@@ -288,26 +251,20 @@ switch ($registry->requestAction)
 
     case 'edit_reply':
     	
-    	var_dump("EDIT REPLY");
- 
     	$id = $registry->request['id'];
 
 		if(isset($session->user->id))
 		{	
-
-
-			//var_dump($_POST);
 			$userId = $session->user->id;
-		    $questionId = (isset($registry->request['id'])) ? $registry->request['id'] : '';
+
 			 if($_SERVER['REQUEST_METHOD']=='POST')
 			 	{
 			 		$redirectId = $_POST['id'];
 			 		$reply = $_POST['reply'];
-			 		$articleModel->editReply($questionId,$userId,$reply);
-			 		//var_dump($userId);
-			// 		//exit;
+			 		$replyId = $_POST['replyId'];
+			 		//$replyUserName = $_POST['replyUserName'];
+			 		$articleModel->editReply($reply,$replyId,$userId);
 			 		header("Location: " . $baseUrl . "/article/show_article/id/" . $redirectId);
-
 				}
 		}
 		break;

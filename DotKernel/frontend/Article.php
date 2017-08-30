@@ -34,9 +34,7 @@ class Article extends Dot_Model
 
 		// store in $result all the data from the database ;
 		$result = $this->db->fetchAll($select);
-
-		// return $result ; 
-		//$result['likes']=
+		
 		return $result;
 	}
 
@@ -69,7 +67,7 @@ class Article extends Dot_Model
 	public function getCommentListByQuestionId($questionId)
 	{	
 		// select all from table "comment" where questionId is equal to "questionId"
-		// we want to get all comments from table user where userId = id from table user, we use joinLeft .
+		// we want to get all comments from table user where userId = id, we use joinLeft .
 
 		$select = $this->db->select()
 							->from('comment')
@@ -80,15 +78,9 @@ class Article extends Dot_Model
 							;
 		$result = $this->db->fetchAll($select);
 
-		//Zend_Debug::dump($result);
-		//exit();
 		return $result;
-
-		//Zend_Debug::dump($result);
-		//exit();
 	}
 
-	// post a question into table "question" ; 
 	public function postQuestion($data,$userId)
 	{
 		$title = $data['title'];
@@ -99,15 +91,10 @@ class Article extends Dot_Model
 
 	public function getReplyListByQuestionId($questionId)
 	{
-		//var_dump("ajuns in reply list" . $questionId);
-		//exit();
 		$select = $this->db->select()
 							->from('comment')
 							->where("parent <> 0")
 							->joinLeft("user","comment.userId=user.id",array("username"=>"username",'picture'=>'picture'));
-					//		->join(array('l' => 'line_items'),
-                   // 'p.product_id = l.product_id');
-							//->joinLeft("user","comment.userId=user.id",["picture"=>"picture"])
 							;
 		$result = $this->db->fetchAll($select);
 
@@ -116,35 +103,25 @@ class Article extends Dot_Model
 
 	public function postReply($questionId,$userId,$reply)
 	{
-		//var_dump($userId);
-	
+
 		$dataToBeInserted = array('userId'=>$userId,'content'=>$reply,'parent'=>$questionId);
 	 	$save = $this->db->insert("comment",$dataToBeInserted);
-		//var_dump($dataToBeInserted);
-		//exit();
-		//var_dump($save);
-		//exit;
 	}
 
 
-		public function editReply($questionId,$userId,$reply)
+	public function editReply($reply,$replyId,$userId)
 	{
-		//var_dump($userId);
-		//Zend_Debug::dump($questionId);
-		//Zend_Debug::dump($userId);
-		//Zend_Debug::dump($reply);
-		//exit();
+		$select = $this->db->select()
+							->from('comment')
+							->where('id = ?', $replyId)
+							;
 
-		$where = array('userId'=>$userId,'content'=>$reply,'parent'=>$questionId);
-		$dataToBeInserted = array('userId'=>$userId,'content'=>$reply,'parent'=>$questionId);
-	 	$save = $this->db->update("comment",$dataToBeInserted,$where);
-		//var_dump($dataToBeInserted);
-		//exit();
-		//var_dump($save);
-		//exit;
+		$result = $this->db->fetchRow($select);
+		$data = ['content'=>$reply];
+		$where = array('id = ?' => $replyId,'userId = ?' =>$userId);
+
+		$this->db->update('comment', $data, $where);
 	}
-
-
 
 
 	public function searchQuestion($searchString)
@@ -251,23 +228,16 @@ class Article extends Dot_Model
 								;
 		$resultReply = $this->db->fetchAll($selectReply);
 
-
-		//Zend_Debug::dump($resultReply);
-		//exit();
 		foreach ($resultReply as $replyKey => $replyValue)
 		{	
 			
 			foreach ($replyValue as $key => $value)
 			{
-				// Zend_Debug::dump($key);
-				// Zend_Debug::dump($value);
-
 				if($key == 'id')
 				{
 					$data = ['id = ?'=>$value,'userId = ?'=>$userId];
 
 					 $this->db->delete('comment', $data);
-					//Zend_Debug::dump($data);
 				}
 			}
 		}
@@ -291,19 +261,14 @@ class Article extends Dot_Model
     public function deleteReplyByReplyId($id,$userId)
    	{
 
-		//Zend_Debug::dump("ID : " . $id);
 		$select = $this->db->select()
 							->from('comment')
 							->where('id = ?', $id)
 							;
 
 		$result = $this->db->fetchRow($select);
-		//Zend_Debug::dump($result['id']);
-
 
 		$data = ['id = ?'=> $result['id'],'userId = ?' => $userId];
-
-		Zend_Debug::dump($data);
 
 		$delete = $this->db->delete('comment',$data);
 
@@ -352,8 +317,6 @@ class Article extends Dot_Model
     public function getRatings()
     {
 
-    	//echo "<pre>";
-
    		$selectLike = 'SELECT *,SUM(`vote`) as `voteCount` FROM `vote` GROUP BY `commentId`';
 
 		$result = $this->db->fetchAll($selectLike);
@@ -382,39 +345,8 @@ class Article extends Dot_Model
 			$finalData[$value['id']] = $value['picture'];
 		}
 
-		//Zend_Debug::dump($finalData);
-		//exit();
 		return $finalData;
-
 	}
-
-	public function getReplyProfilePictureByCommentId($commentId)
-	{
-
-		//Zend_Debug::dump($commentId);
-		//exit();
-
-		// $select = $this->db->select()
-		// 					->from('comment')
-		// 					->where('parent = ?', $commentId)
-		// 					->joinLeft("user","comment.userId=user.id",["picture"=>"picture"])
-		// 					;
-		// $result = $this->db->fetchAll($select);
-
-		// $finalData = [];
-		// foreach ($result as $key => $value)
-		// {
-		// 	$finalData[$value['id']] = $value['picture'];
-		// }
-		// return $finalData;
-
-	}
-
-
-
-
-
-
 
 	public function getUserInfo($username)
 	{
@@ -426,10 +358,6 @@ class Article extends Dot_Model
 									->from('user')
 									->where('username = ?',$username);
 		$resultUserInfo = $this->db->fetchAll($selectUserInfo);
-
-		
-		//return $resultUserInfo;
-
 
 		foreach ($resultUserInfo as $resultKey => $resultValue)
 		{
@@ -443,8 +371,7 @@ class Article extends Dot_Model
 				if($key == 'dateCreated')
 				{
 					$datePassed = self::getTimePassed($value);
-					//Zend_Debug::dump($datePassed);
-					$finalData[$key] = 	$datePassed; //$now - strtotime($value);
+					$finalData[$key] = 	$datePassed; 
 				}
 			}
 		}
@@ -477,9 +404,6 @@ class Article extends Dot_Model
 		{
 			$datePassed = "Days " . $days;
 		}
-
-
-
 		return $datePassed;
 	}
 

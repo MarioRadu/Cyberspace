@@ -16,7 +16,7 @@ function showReply(commentId)
 
 function editReply(replyId,replyContent)
 {	
-	alert(replyContent);
+	//alert(replyContent);
 	$("div #editForm_" + replyId).show();
 	$('#replyTextArea').val(replyContent);
 	$("div #commentFormDiv").hide();
@@ -156,7 +156,9 @@ $(document).ready(function()
 				
 					<div id="editForm_{REPLY_ID}" style="display:none;" >
 					<form action="{SITE_URL}/article/edit_reply/id/{COMMENT_ID}" method="POST">
-					<input type="number" name="id" value="{ID}" hidden="true">	
+					<input type="number" name="id" value="{ID}" hidden="true">
+					<input type="number" name="replyId" value="{REPLY_ID}" hidden="true">
+					<input type="text" name="replyUserName" value="{REPLY_USERNAME}" hidden="true">	
 					<textarea name="reply" placeholder="Enter reply here..." id="replyTextArea" class="replyTextArea"></textarea>
 			  		<input type="submit" value="Edit reply" id = 'postReplyButton' class = 'fa fa-reply'>
 					</form>
