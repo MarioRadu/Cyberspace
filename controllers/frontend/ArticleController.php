@@ -268,4 +268,26 @@ switch ($registry->requestAction)
 				}
 		}
 		break;
+
+	case 'edit_comment':
+
+		$id = $registry->request['id'];
+
+		if(isset($session->user->id))
+		{	
+			$userId = $session->user->id;
+
+			 if($_SERVER['REQUEST_METHOD']=='POST')
+			 	{
+			 		$redirectId = $_POST['id'];
+			 	    $comment = $_POST['comment'];
+			 		$commentId = $_POST['commentId'];
+			 		// //$replyUserName = $_POST['replyUserName'];
+			 		$articleModel->editComment($comment,$commentId,$userId);
+			 		// var_dump("ACIIC");
+			 		Zend_Debug::dump($_POST);
+			 		exit();
+			 		//header("Location: " . $baseUrl . "/article/show_article/id/" . $redirectId);
+				}
+		}
 }
