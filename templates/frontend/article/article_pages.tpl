@@ -168,7 +168,7 @@ $(document).ready(function()
 		</div>
 		<div class = "replyButton">
 			<button id ="reply_{COMMENT_ID}" onclick = "showReply({COMMENT_ID})">Reply</button>
-			<td width="25%"><a href="{SITE_URL}/article/delete_comment/id/{COMMENT_ID}/questionId/{ID}" title="Delete" class="delete_state"><button onclick="myFunction()">Delete</button></a></td>
+			<a href="{SITE_URL}/article/delete_comment/id/{COMMENT_ID}/questionId/{ID}" title="Delete" class="delete_state"><button onclick="myFunction()">Delete</button></a>
 		</div>
 		<button name ='unlikeButton' type="button" id="{COMMENT_ID}" class = "downVoteBtn" value="{ID}" style = "float:right;margin: 5px 10px 0 0;"><span class="glyphicon glyphicon-thumbs-down"></span></button>
 		<button name = 'likeButton' type="button" id="{COMMENT_ID}" class = "upVoteBtn" value="{ID}"  style = "float:right;margin: 5px 10px 0 0;"><span class="glyphicon glyphicon-thumbs-up"></span></button>
