@@ -26,6 +26,7 @@ class Article extends Dot_Model
 	
 	public function getArticleById($id)
 	{
+		//self::getUserLikes($id,2);
 		// $select from table "question" where id = $id ; 
 		$select = $this->db->select()
 							->from("question")
@@ -163,23 +164,20 @@ class Article extends Dot_Model
 			$resultByContent = $this->db->fetchAll($selectByContent);
 
 
-			if(count($resultByTitle) > 0)
-			{
-				$countResultByTitle = count($countResultByTitle);
-			}
-			elseif (count($resultByContent) > 0)
-			{
-				$countResultByContent = count($countResultByContent);
-			}
-				// 
-			if($countResultByContent > $countResultByTitle)
-			{
-				return $resultByContent;
-			}
-			else
+			//
+
+			if(count($resultByTitle)>count($resultByContent))
 			{
 				return $resultByTitle;
 			}
+			elseif(count($resultByContent)>count($resultByTitle))
+			{
+				return $resultByContent;
+			}elseif (count($resultByContent) == count($resultByTitle))
+			{
+				return $resultByContent;
+			}
+
 		}
 		else
 		{
@@ -261,6 +259,9 @@ class Article extends Dot_Model
 			$commentData = ['id = ?'=>$id,'userId = ?'=>$userId];
 	   	    $this->db->delete('comment', $commentData);
 
+	   	   	$data = array('comments' => new Zend_Db_Expr('comments - 1')); 
+			$where = array('id = ?' => $id);; 
+			$this->db->update('question', $data, $where);
 	}
 
 
@@ -423,4 +424,20 @@ class Article extends Dot_Model
 		return $datePassed;
 	}
 
+
+	/// functie cu care selectezi din db fiecare comentariu la care a dat like userId loggat .  
+
+	public function getUserLikes($questionId,$userId)
+	{	
+
+		$finalData = [];
+
+		$select = $this->db->select()
+							->from('vote')
+							->where('questionId =?', $questionId)
+							->where('userId =?', $userId);							
+
+		$result = $this->db->fetchAll($select);
+		return $result;
+	}
 }

@@ -78,9 +78,12 @@ class Article_View extends View
 		// data stores the data we want to display
 		// commentList stores the commentList 
 		// userId stores the userId, if userId it's not equal to NULL we have a user logged.
-		public function showArticle($templateFile="",$data,$commentList,$replyList, $userId,$vote,$profilePicture)
+		public function showArticle($templateFile="",$data,$commentList,$replyList, $userId,$vote,$profilePicture,$setVotes)
 		{	
 
+			//Zend_Debug::dump($vote);
+		    Zend_Debug::dump($setVotes);
+			///exit();
 			if($templateFile !="") $this->templateFile = $templateFile;
 			$this->tpl->setFile('tpl_main','article/'.$this->templateFile.".tpl");
 			$this->tpl->setBlock('tpl_main','comment_form','comment_form_block');
@@ -122,16 +125,18 @@ class Article_View extends View
 						{
 								if($voteKey == $comment['id'])
 								{
-									if($voteValue > 0)
-									{
-										$this->tpl->setVar('RATING',$voteValue);
-
+									//Zend_Debug::dump("VOTE : " . $voteValue);
+									if($voteValue != NULL)
+									{	
+									   $this->tpl->setVar('BUTTON_DISABLED',"disabled");
+									   $this->tpl->setVar('RATING',$voteValue);
 									}
 								}
 						}
 					}else
 					{
-									$this->tpl->setVar('RATING',0);
+									//$this->tpl->setVar('RATING',0);
+									$this->tpl->setVar('BUTTON_ENABLED',"false");
 					}
 
 					$currentReplyList = $this->_getReplyList($replyList, $comment['id']);

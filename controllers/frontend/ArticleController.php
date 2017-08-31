@@ -20,15 +20,19 @@ switch ($registry->requestAction)
 		$info = $articleModel->getInfo();
 		$list = $articleModel->getArticleList();
 		$articleView->showAllArticles("articleList",$list,$info[0],$info[1]);
-
 		break;
-	break;
+
 	case 'show_article':
+
+
+
+
 		$id = $registry->request['id'];
 		if(isset($session->user->id))
 		{
 			$userId = $session->user->id;
 			$articleModel->registerView($id);
+			$setVotes = $articleModel->getUserLikes($id,$userId);
 
 		}
 
@@ -39,7 +43,8 @@ switch ($registry->requestAction)
 		$profilePicture = $articleModel->getCommentProfilePictureById($questionId);
 		$replyList = $articleModel->getReplyListByQuestionId($questionId);
 
-		$articleView->showArticle("article_pages",$articleData,$commentList,$replyList, $userId,$allVotes,$profilePicture);	
+		$articleView->showArticle("article_pages",$articleData,$commentList,$replyList, $userId,$allVotes,$profilePicture,$setVotes);
+			
 	break;
 	case 'add' :
 		$articleView->postComment("addArticle");
@@ -285,9 +290,9 @@ switch ($registry->requestAction)
 			 		// //$replyUserName = $_POST['replyUserName'];
 			 		$articleModel->editComment($comment,$commentId,$userId);
 			 		// var_dump("ACIIC");
-			 		Zend_Debug::dump($_POST);
-			 		exit();
-			 		//header("Location: " . $baseUrl . "/article/show_article/id/" . $redirectId);
+			 		//Zend_Debug::dump($_POST);
+			 		//exit();
+			 		header("Location: " . $baseUrl . "/article/show_article/id/" . $redirectId);
 				}
 		}
 }
