@@ -63,13 +63,20 @@ class Article extends Dot_Model
 		$this->db->update("question", $data, $where);
 	}
 
+	/*
+	.
+	.
+	.
+	.
+	.
+	.
 
+	*/
 	//get all comments from a question by questionId
-	public function getCommentListByQuestionId($questionId)
+	public function getCommentListByQuestionId($questionId, $userId = '')
 	{	
 		// select all from table "comment" where questionId is equal to "questionId"
 		// we want to get all comments from table user where userId = id, we use joinLeft .
-
 		$select = $this->db->select()
 							->from('comment')
 							->where('questionId = ?',  $questionId)
@@ -78,8 +85,25 @@ class Article extends Dot_Model
 							//->joinLeft("user","comment.userId=user.id",["picture"=>"picture"])
 							;
 		$result = $this->db->fetchAll($select);
-
-		return $result;
+		
+		// Zend_Debug::dump($result);die;
+		$done = [];
+	    foreach ($result as $separateComment) {
+				// Zend_Debug::dump($separateComment);die;
+	    	$likes = $this->getUserLikes($separateComment['id'], $userId);
+	    	// var_dump($likes);die;
+	    	if($likes != false) {
+				$separateComment['like'] = $likes;
+				$done[$separateComment['id']] = $separateComment;
+			} else {
+				$done[$separateComment['id']] = $separateComment;
+			}
+	    }
+		// if($userId != '') {
+		// 	$likes = $this->getUserLikes($questionId, $userId);
+		// }
+		// Zend_Debug::dump($done);die;
+		return $done;
 	}
 
 	public function postQuestion($data,$userId)
@@ -427,17 +451,18 @@ class Article extends Dot_Model
 
 	/// functie cu care selectezi din db fiecare comentariu la care a dat like userId loggat .  
 
-	public function getUserLikes($questionId,$userId)
+	public function getUserLikes($commentId,$userId)
 	{	
 
 		$finalData = [];
 
 		$select = $this->db->select()
-							->from('vote')
-							->where('questionId =?', $questionId)
+							->from('vote','vote')
+							->where('commentId =?', $commentId)
 							->where('userId =?', $userId);							
 
-		$result = $this->db->fetchAll($select);
+		$result = $this->db->fetchOne($select);
+		// Zend_Debug::dump($result);exit;
 		return $result;
 	}
 }

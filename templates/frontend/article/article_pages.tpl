@@ -123,6 +123,7 @@ $(document).ready(function()
    	    {
    	    	var buttonClass = $(this).attr("class");
       	 	voteRequest('up',this.id,$(this).attr('value'),buttonClass);
+      	 	// $(".upVoteBtn").unbind('click');
       	 	// $(this).attr('disabled','disabled');
       	 	//$('.downVoteBtn').attr('disabled','disabled');
   	    });
@@ -131,6 +132,7 @@ $(document).ready(function()
         {
         	var buttonClass = $(this).attr("class");
       	 	voteRequest('down',this.id,$(this).attr('value'),buttonClass);
+      	 	// $(".downVoteBtn").unbind('click');
       	 	// $(this).attr('disabled','disabled');
       	 	//$('.upVoteBtn').attr('disabled','disabled');
       	 	// /console.log("ok");
@@ -155,9 +157,7 @@ $(document).ready(function()
 		<ul id="comments-list" class="comments-list">
 			<li>
 				<div class="comment-main-level">
-					<!-- Avatar -->
 					<div class="comment-avatar"><img src="{SITE_URL}/{REPLY_PICTURE}" alt="NOT" class = "profilePic"></div>
-					<!-- Contenedor del Comentario -->
 					<div class="comment-box">
 						<div class="comment-head">
 							<h6 class="comment-name by-author"><a href="http://creaticode.com/blog">{COMMENT_USERNAME}</a></h6>
@@ -180,9 +180,10 @@ $(document).ready(function()
 				<p id = "{COMMENT_ID}" class = "voteState"> 
 					Like : <span class="likeCount" id="likeCount{COMMENT_ID}">{RATING}</span> 
 				</p>
-				<p>{BUTTON_ENABLED}</p>
-				<button name ='unlikeButton' type="button" id="{COMMENT_ID}" class = "downVoteBtn" value="{ID}" {BUTTON_DISABLED} style = "float:right;margin: 5px 10px 0 0;"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+				<!-- BEGIN likeDislike_buttons -->
+				<button name ='unlikeButton' type="button" id="{COMMENT_ID}" class = "downVoteBtn" value="{ID}" style = "float:right;margin: 5px 10px 0 0;"><span class="glyphicon glyphicon-thumbs-down"></span></button>
 				<button name = 'likeButton' type="button" id="{COMMENT_ID}" class = "upVoteBtn" value="{ID}"  style = "float:right;margin: 5px 10px 0 0;"><span class="glyphicon glyphicon-thumbs-up"></span></button>
+				<!-- END likeDislike_buttons -->
 
 			<!-- BEGIN reply_list -->
 			<div class ="reply">

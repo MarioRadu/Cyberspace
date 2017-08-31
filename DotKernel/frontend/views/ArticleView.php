@@ -78,17 +78,18 @@ class Article_View extends View
 		// data stores the data we want to display
 		// commentList stores the commentList 
 		// userId stores the userId, if userId it's not equal to NULL we have a user logged.
-		public function showArticle($templateFile="",$data,$commentList,$replyList, $userId,$vote,$profilePicture,$setVotes)
-		{	
+		public function showArticle($templateFile="",$data,$commentList,$replyList, $userId,$vote,$profilePicture)
+		{		
 
-			//Zend_Debug::dump($vote);
-		    Zend_Debug::dump($setVotes);
-			///exit();
+			// Zend_Debug::dump($commentList);
+			// exit();
+
 			if($templateFile !="") $this->templateFile = $templateFile;
 			$this->tpl->setFile('tpl_main','article/'.$this->templateFile.".tpl");
 			$this->tpl->setBlock('tpl_main','comment_form','comment_form_block');
 			$this->tpl->setBlock('tpl_main','comment_list','comment_list_block');
 			$this->tpl->setBlock('comment_list','reply_list','reply_list_block');
+			$this->tpl->setBlock('comment_list','likeDislike_buttons','likeDislike_buttons_block');
 
 			$this->tpl->parse("comment_form_block","comment_form",true);
 
@@ -104,6 +105,9 @@ class Article_View extends View
 
 				foreach ($commentList as $comment) 
 				{
+					
+					
+					
 					foreach ($profilePicture as $pictureKey => $pictureValue)
 					{	
 
@@ -118,25 +122,27 @@ class Article_View extends View
 						$this->tpl->setVar(strtoupper('COMMENT_' . $key),$value);
 					}
 
-				
+					if(isset($comment['like']))
+					{
+						$this->tpl->parse("likeDislike_buttons_block","",false);
+					}
+					else
+					{
+						$this->tpl->parse("likeDislike_buttons_block","likeDislike_buttons",false);
+					}
+
 					if(array_key_exists($comment['id'], $vote))
 					{
 						foreach ($vote as $voteKey => $voteValue)
 						{
 								if($voteKey == $comment['id'])
 								{
-									//Zend_Debug::dump("VOTE : " . $voteValue);
-									if($voteValue != NULL)
-									{	
-									   $this->tpl->setVar('BUTTON_DISABLED',"disabled");
-									   $this->tpl->setVar('RATING',$voteValue);
-									}
+									$this->tpl->setVar('RATING',$voteValue);
 								}
 						}
 					}else
 					{
-									//$this->tpl->setVar('RATING',0);
-									$this->tpl->setVar('BUTTON_ENABLED',"false");
+									$this->tpl->setVar('RATING',"0");
 					}
 
 					$currentReplyList = $this->_getReplyList($replyList, $comment['id']);
@@ -161,6 +167,7 @@ class Article_View extends View
 						$this->tpl->parse("reply_list_block","");
 						}
 					}
+
 				}
 
 		}

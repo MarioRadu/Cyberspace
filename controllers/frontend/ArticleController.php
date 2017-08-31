@@ -26,7 +26,6 @@ switch ($registry->requestAction)
 
 
 
-
 		$id = $registry->request['id'];
 		if(isset($session->user->id))
 		{
@@ -39,12 +38,13 @@ switch ($registry->requestAction)
 		$allVotes = $articleModel->getRatings();
 		$articleData[] = $articleModel->getArticleById($id);
 		$questionId = (isset($registry->request['id'])) ? $registry->request['id'] : NULL;
-		$commentList = $articleModel->getCommentListByQuestionId($questionId);
+		$commentList = $articleModel->getCommentListByQuestionId($questionId,$userId);
 		$profilePicture = $articleModel->getCommentProfilePictureById($questionId);
 		$replyList = $articleModel->getReplyListByQuestionId($questionId);
 
-		$articleView->showArticle("article_pages",$articleData,$commentList,$replyList, $userId,$allVotes,$profilePicture,$setVotes);
-			
+		$articleView->showArticle("article_pages",$articleData,$commentList,$replyList, $userId,$allVotes,$profilePicture);
+		// Zend_Debug::dump($commentList);exit;
+
 	break;
 	case 'add' :
 		$articleView->postComment("addArticle");
