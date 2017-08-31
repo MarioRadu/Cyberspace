@@ -230,53 +230,6 @@ switch ($registry->requestAction)
 
 	case 'delete_reply':
 
-
-        $replyId = (isset($registry->request['id'])) ? $registry->request['id'] : '';
-       // Zend_Debug::dump($replyId, $label=null, $echo=true);exit;
-
-        $reply = $articleModel->getReply($replyId);
-
-
-        //Zend_Debug::dump($_POST);exit();
-        if(count($_POST) > 0)
-        {
-            if(isset($_POST['confirm']) && $_POST['confirm'] == "on")
-            {
-
-                $articleModel->deleteReply($replyId);
-
-                $registry->session->message['txt'] = 'Succes';
-                $registry->session->message['type'] = 'info';
-
-            }
-            else
-            {
-                $registry->session->message['txt'] = 'Comment was not deleted';
-                $registry->session->message['type'] = 'error';
-            }
-
-           // header('Location:' . $baseUrl . '/article/show_article/id/' . $reply['postId']);
-           // exit;
-        }
-
-
-       // header('Location:' . $baseUrl . '/article/show_article/id/136');
-        // $articleView->
-        //$articleView->showDeleteReplyPage('article_pages', $reply);
-        //         }
-
-        //         if ($registry->requestAction == "delete_reply")
-            //         {
-
-
-            //             $replyList = $articleModel->getCommentReplytByCommentId($commentId);
-            //            Zend_Debug::dump($replyList, $label=null, $echo=true);exit;
-            //         }
-
-        break;
-
-	case 'delete_reply':
-
 		if(isset($session->user->id))
 		{
 			$userId = $session->user->id;
@@ -315,4 +268,26 @@ switch ($registry->requestAction)
 				}
 		}
 		break;
+
+	case 'edit_comment':
+
+		$id = $registry->request['id'];
+
+		if(isset($session->user->id))
+		{	
+			$userId = $session->user->id;
+
+			 if($_SERVER['REQUEST_METHOD']=='POST')
+			 	{
+			 		$redirectId = $_POST['id'];
+			 	    $comment = $_POST['comment'];
+			 		$commentId = $_POST['commentId'];
+			 		// //$replyUserName = $_POST['replyUserName'];
+			 		$articleModel->editComment($comment,$commentId,$userId);
+			 		// var_dump("ACIIC");
+			 		// Zend_Debug::dump($_POST);
+			 		// exit();
+			 		header("Location: " . $baseUrl . "/article/show_article/id/" . $redirectId);
+				}
+		}
 }

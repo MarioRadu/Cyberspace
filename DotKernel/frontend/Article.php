@@ -124,6 +124,22 @@ class Article extends Dot_Model
 	}
 
 
+
+	public function editComment($comment,$commentId,$userId)
+	{
+		$select = $this->db->select()
+							->from('comment')
+							->where('id = ?', $commentId)
+							;
+
+		$result = $this->db->fetchRow($select);
+		$data = ['content'=>$comment];
+		$where = array('id = ?' => $commentId,'userId = ?' =>$userId);
+
+		$this->db->update('comment', $data, $where);
+	}
+
+
 	public function searchQuestion($searchString)
 	{
 		$countResultByTitle = NULL ;
@@ -258,43 +274,6 @@ class Article extends Dot_Model
 	}
 
 
-
-	public function deleteReply($id)
-    {
-        try
-        {
-            $this->db->delete('comment', 'id='.$id);
-            return true;
-        }
-        catch (Exception $e)
-        {
-            return false;
-        }
-    }
-
-
-    public function getReply($id)
-	{
-	  $select = $this->db->select()
-	                    ->from('comment')
-	                    ->where('parent = ?', $id);
-	                    
-	                    
-	    $result = $this->db->fetchRow($select);
-       // / Zend_Debug::dump($result, $label=null, $echo=true);
-       // var_dump($result['id']);
-       // exit;
-
-
-	   	$data = ['id = ?'=> $result['id']];
-	    $this->db->delete('comment', $data);
-        // $delete = $this->db->select()
-        // 			  ->db->delete('comment','id ='.$result['id']);
-        // 			  ;
-
-	    return $result;
-	}
-
     public function deleteReplyByReplyId($id,$userId)
    	{
 
@@ -320,7 +299,6 @@ class Article extends Dot_Model
 			$registry->session->message['txt'] = "You can't delete that reply !";
 			$registry->session->message['type'] = 'error';
 		}
-
 
 	}  
 

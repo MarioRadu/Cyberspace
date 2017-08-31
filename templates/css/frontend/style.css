@@ -331,7 +331,7 @@ body {
     content: '';
     width: 2px;
     height: 100%;
-    background: #c7cacb;
+    background: #7ea1bb;
     position: absolute;
     left: 32px;
     top: 0;
@@ -356,7 +356,7 @@ body {
     content: '';
     width: 60px;
     height: 2px;
-    background: #c7cacb;
+    background: #7ea1bb;
     position: absolute;
     top: 25px;
     left: -55px;
@@ -425,6 +425,8 @@ body {
     width: 680px;
     float: right;
     position: relative;
+    margin-top: 5px;
+    margin-right: -20px;
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
     -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
     box-shadow: 0 1px 1px rgba(0,0,0,0.15);

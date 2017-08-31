@@ -31,10 +31,9 @@ input[type=text]:focus {
     background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 6%, rgba(255,255,255,1) 14%, rgba(209,209,209,1) 49%, rgba(255,255,255,1) 84%, rgba(255,255,255,1) 100%);
     background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 6%, rgba(255,255,255,1) 14%, rgba(209,209,209,1) 49%, rgba(255,255,255,1) 84%, rgba(255,255,255,1) 100%);
     background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 6%, rgba(255,255,255,1) 14%, rgba(209,209,209,1) 49%, rgba(255,255,255,1) 84%, rgba(255,255,255,1) 100%);
-    background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 6%, rgba(255,255,255,1) 14%, rgba(209,209,209,1) 49%, rgba(255,255,255,1) 84%, rgba(255,255,255,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=0 );
+   /* background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 6%, rgba(255,255,255,1) 14%, rgba(209,209,209,1) 49%, rgba(255,255,255,1) 84%, rgba(255,255,255,1) 100%);
+    /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=0 )*/;
 }
-
 .comment
 {
     box-shadow: 1px 1px 5px #888888;
@@ -67,7 +66,8 @@ input[type=text]:focus {
     max-width: 80%;
     height: 100px;
     width: 80%;
-    left: 5%;
+    margin: 10px 40px 3px 60px;
+    border-radius: 3px;
 }
 
 .commentForm
@@ -78,6 +78,7 @@ input[type=text]:focus {
     height: 100px;
     width: 80%;
     left: 5%;
+    margin: 10px;
 
 }
 
@@ -95,7 +96,7 @@ input[type=text]:focus {
     font-style: italic;
     font-size: 80%;
     float:left;
-    margin: 0 0 0 65px;
+    margin: 0 0 0 83px;
     top:10px;
 }
 
@@ -103,8 +104,8 @@ input[type=text]:focus {
 #postReplyButton
 {
     position: relative;
-    right:-40px;
-    top : -10px;
+    right:-512px;
+    padding: 2px;
 }
 
 #commentBox
@@ -144,16 +145,9 @@ input[type=text]:focus {
 
 #divProfilePic
 {
-<<<<<<< HEAD
    position: relative;
     left:-110px;
     margin-top:-65px;
-=======
-    position: relative;
-    left:-110px;
-    margin-top:-65px;
-    /*float:left;*/
->>>>>>> 51a54dc2a3fed51714d0bbd9f59c7566c725eeca
     /*background-color: #fff;*/
 }
 
