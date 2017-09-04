@@ -47,19 +47,22 @@ class Article_View extends View
 	}
 	// show all questions, we have 2 parameters. The first one stores the name of the tpl file we want to show .
 	// The second parameter "data" stores the data we want to load into our tpl file in order to be displayed.
-	public function showAllArticles($templateFile="",$data,$views,$comments)
+	public function showAllArticles($templateFile="",$data,$views,$comments,$userId = '')
 	{
+	
 		// if our tpl file exists set it 
 		if($templateFile !="") $this->templateFile = $templateFile;
 		$this->tpl->setFile('tpl_main','article/'.$this->templateFile.".tpl");
 		// in ou tpl file we must have a article_list block, in order to set it .
 		$this->tpl->setBlock('tpl_main','article_list','article_list_block');
-
 		// for each value in our "data" array set to upper the key .
+		$this->tpl->setVar('USER_USERNAME',$userId);
+
 		foreach ($data as $key => $value) 
 		{
 			foreach ($value as $key => $value) 
 			{
+		
 				$this->tpl->setVar(strtoupper($key),substr($value, 0, 205));
 				if($key == 'content')
 				{
@@ -78,9 +81,11 @@ class Article_View extends View
 		// data stores the data we want to display
 		// commentList stores the commentList 
 		// userId stores the userId, if userId it's not equal to NULL we have a user logged.
-		public function showArticle($templateFile="",$data,$commentList,$replyList, $userId,$vote,$profilePicture)
+		public function showArticle($templateFile="",$data,$commentList,$replyList, $userId,$vote,$profilePicture, $userName)
 		{	
 
+			//Zend_Debug::dump($data);
+			//exit();
 			if($templateFile !="") $this->templateFile = $templateFile;
 			$this->tpl->setFile('tpl_main','article/'.$this->templateFile.".tpl");
 			$this->tpl->setBlock('tpl_main','comment_form','comment_form_block');
@@ -88,6 +93,7 @@ class Article_View extends View
 			$this->tpl->setBlock('comment_list','reply_list','reply_list_block');
 
 			$this->tpl->parse("comment_form_block","comment_form",true);
+			$this->tpl->setVar('USER_USERNAME',$userName);
 
 				foreach ($data as $dataKey => $dataValue) 
 				{
@@ -95,6 +101,7 @@ class Article_View extends View
 					foreach ($dataValue[0] as $key => $value)
 					{
 						$this->tpl->setVar(strtoupper($key),$value);
+						//Zend_Debug::dump($value);
 					}
 
 				}

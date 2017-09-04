@@ -304,7 +304,7 @@ body {
  * Lista de Comentarios
  =======================*/
 .comments-container {
-    margin: 60px auto 15px;
+    margin: 3px 60px 15px;
     width: 768px;
 }
 
@@ -455,9 +455,9 @@ body {
     width: 610px;
 }
 .comment-box .comment-head {
-    background: #FCFCFC;
+    background: #c5dce8;
     padding: 10px 12px;
-    border-bottom: 1px solid #E5E5E5;
+    border-bottom: 1px solid #c5dce8;
     overflow: hidden;
     -webkit-border-radius: 4px 4px 0 0;
     -moz-border-radius: 4px 4px 0 0;

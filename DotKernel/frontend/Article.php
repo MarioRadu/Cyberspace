@@ -11,6 +11,33 @@ class Article extends Dot_Model
 						->joinLeft('user',"question.userId = user.id","username")
 						->order('question.date DESC');
 		$result = $this->db->fetchAll($select);
+	
+		return $result;
+	}
+	public function getQuestionUsername($id)
+	{
+		$select = $this->db->select()
+						->from('question');
+						// /->joinLeft('user','question.userId = user.id',['username'=>'username']);
+
+		$result = $this->db->fetchAll($select);
+		//Zend_Debug::dump($result); exit;
+		// var_dump($result['userId']); exit();
+
+		//$username = self::getUserNameById(12);
+
+		//Zend_Debug::dump($result); exit();
+
+
+		return $result;
+	}
+
+	public function userIdToUsername($userId)
+	{
+		$select = $this->db->select()
+						->from('user','username')
+						->where("id = ?", $userId);
+		$result = $this->db->fetchOne($select);
 		return $result;
 	}
 
@@ -29,12 +56,13 @@ class Article extends Dot_Model
 		// $select from table "question" where id = $id ; 
 		$select = $this->db->select()
 							->from("question")
-							->where("id = ?",$id)
+							//->joinLeft('user','question.userId = user.id', ['username'=>'username'])
+							->where("question.id = ?",$id)
+							->join('user','user.id = question.userId', ['username'=>'username'])
 							;
-
 		// store in $result all the data from the database ;
 		$result = $this->db->fetchAll($select);
-		
+		//Zend_Debug::dump($result); exit();
 		return $result;
 	}
 
@@ -94,7 +122,7 @@ class Article extends Dot_Model
 		$select = $this->db->select()
 							->from('comment')
 							->where("parent <> 0")
-							->joinLeft("user","comment.userId=user.id",array("username"=>"username",'picture'=>'picture'));
+							->joinLeft("user","comment.userId=user.id",array("username"=>"username",'image'=>'image'));
 							;
 		$result = $this->db->fetchAll($select);
 
@@ -220,7 +248,7 @@ class Article extends Dot_Model
 		$selectUserName = $this->db->select()
 									->from("user")
 									->where('id = ?', $id);
-		$resultUserName = $this->db->fetchAll($selectUserName);
+		$resultUserName = $this->db->fetchOne($selectUserName);
 
 		return $resultUserName;
 		var_dump($resultUserName);
@@ -351,14 +379,14 @@ class Article extends Dot_Model
 		$select = $this->db->select()
 							->from('comment')
 							->where('questionId = ?', $questionId)
-							->joinLeft("user","comment.userId=user.id",["picture"=>"picture"])
+							->joinLeft("user","comment.userId=user.id",["image"=>"image"])
 							;
 		$result = $this->db->fetchAll($select);
 
 		$finalData = [];
 		foreach ($result as $key => $value)
 		{
-			$finalData[$value['id']] = $value['picture'];
+			$finalData[$value['id']] = $value['image'];
 		}
 
 		return $finalData;
