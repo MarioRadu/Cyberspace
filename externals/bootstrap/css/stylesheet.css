@@ -67,7 +67,9 @@ input[type=text]:focus {
     height: 100px;
     width: 80%;
     margin: 10px 40px 3px 60px;
+
     border-radius: 3px;
+
 }
 
 .commentForm
@@ -79,14 +81,17 @@ input[type=text]:focus {
     width: 80%;
     left: 5%;
     margin: 10px;
+    border-radius: 8px;
+
 
 }
 
 .commentButton
 {
     float:right;
-    margin: -30px 4.5% 0 0;
+    margin: -10px 14% 0 0;
     top:10px;
+    border-radius: 8px;
 }
 
 
@@ -104,8 +109,34 @@ input[type=text]:focus {
 #postReplyButton
 {
     position: relative;
-    /*right:-512px;*/
+
+    right: -513px;
     padding: 2px;
+    border-radius: 8px;
+}
+
+#postReplyButton2
+{
+    position: relative;
+    right: -465px;
+    padding: 2px;
+    border-radius: 8px;
+}
+
+#postReplyButton3
+{
+    position: relative;
+    right: -550px;
+    padding: 2px;
+    border-radius: 8px;
+}
+
+#postCommentReplyButton
+{
+    position: relative;
+    right: -465px;
+    padding: 2px;
+    border-radius: 8px;
 }
 
 #commentBox

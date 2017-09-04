@@ -26,7 +26,7 @@
 	<!-- END top_menu_not_logged -->
 	<!-- BEGIN top_menu_logged -->
 	<li >
-		<a href="{SITE_URL}/user/account">{USERNAME}</a>
+		<a href="{SITE_URL}/user/account">{USER_USERNAME}</a>
 	</li>
 	<li >
 		<a href="{SITE_URL}/article/add_question">Add question</a>

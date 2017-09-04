@@ -19,7 +19,15 @@ switch ($registry->requestAction)
 	case 'list':
 		$info = $articleModel->getInfo();
 		$list = $articleModel->getArticleList();
-		$articleView->showAllArticles("articleList",$list,$info[0],$info[1]);
+
+
+		if(isset($session->user->id))
+		{
+			$userId = $articleModel->userIdToUsername($session->user->id);
+		}
+		
+		$articleView->showAllArticles("articleList",$list,$info[0],$info[1], $userId);
+    
 		break;
 
 	case 'show_article':
@@ -27,12 +35,17 @@ switch ($registry->requestAction)
 
 
 		$id = $registry->request['id'];
+		// Zend_Debug::dump($id);exit;
 		if(isset($session->user->id))
 		{
 			$userId = $session->user->id;
 			$articleModel->registerView($id);
-			$setVotes = $articleModel->getUserLikes($id,$userId);
 
+			$articleModel->userIdToUsername($session->user->id);
+
+
+			// 	$user= $articleModel->getQuestionUsername($session->user->id);
+			// Zend_Debug::dump($user);exit;
 		}
 
 		$allVotes = $articleModel->getRatings();
@@ -42,8 +55,8 @@ switch ($registry->requestAction)
 		$profilePicture = $articleModel->getCommentProfilePictureById($questionId);
 		$replyList = $articleModel->getReplyListByQuestionId($questionId);
 
-		$articleView->showArticle("article_pages",$articleData,$commentList,$replyList, $userId,$allVotes,$profilePicture);
-		// Zend_Debug::dump($commentList);exit;
+
+		$articleView->showArticle("article_pages",$articleData,$commentList,$replyList, $userId,$allVotes,$profilePicture, $articleModel->userIdToUsername($session->user->id));	
 
 	break;
 	case 'add' :
@@ -290,8 +303,6 @@ switch ($registry->requestAction)
 			 		// //$replyUserName = $_POST['replyUserName'];
 			 		$articleModel->editComment($comment,$commentId,$userId);
 			 		// var_dump("ACIIC");
-			 		//Zend_Debug::dump($_POST);
-			 		//exit();
 			 		header("Location: " . $baseUrl . "/article/show_article/id/" . $redirectId);
 				}
 		}
