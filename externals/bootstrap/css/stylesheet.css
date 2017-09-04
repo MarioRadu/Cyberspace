@@ -67,7 +67,9 @@ input[type=text]:focus {
     height: 100px;
     width: 80%;
     margin: 10px 40px 3px 60px;
-    border-radius: 8px;
+
+    border-radius: 3px;
+
 }
 
 .commentForm
@@ -80,6 +82,7 @@ input[type=text]:focus {
     left: 5%;
     margin: 10px;
     border-radius: 8px;
+
 
 }
 
@@ -106,6 +109,7 @@ input[type=text]:focus {
 #postReplyButton
 {
     position: relative;
+
     right: -513px;
     padding: 2px;
     border-radius: 8px;

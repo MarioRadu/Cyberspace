@@ -137,58 +137,58 @@ ul.url_pattern li { list-style: disc; padding: 10px 0px; }
 /**** Responsive ****/
 @media screen and (max-width: 1099px)
 {
-	#header-content, #footer-content, #body { width: 940px; padding-left: 15px; padding-right: 15px; }
-	div#content { width: 650px; }
+    #header-content, #footer-content, #body { width: 940px; padding-left: 15px; padding-right: 15px; }
+    div#content { width: 650px; }
 }
 @media screen and (max-width: 969px)
 {
-	#header-content, #footer-content, #body{ width: 720px; padding-left: 15px; padding-right: 15px; }
-	/****** Top Menu *********/
-	ul.menu_top li { padding: 0px 0px 0px 30px; }
-	/****** Content ******/
-	div#content { width: 495px; }
-	nav#sidebar { width: 200px; }
-	/***** Form ******/
-	ul.form li input[type="text"], ul.form li input[type="password"] { width: 300px; }
+    #header-content, #footer-content, #body{ width: 720px; padding-left: 15px; padding-right: 15px; }
+    /****** Top Menu *********/
+    ul.menu_top li { padding: 0px 0px 0px 30px; }
+    /****** Content ******/
+    div#content { width: 495px; }
+    nav#sidebar { width: 200px; }
+    /***** Form ******/
+    ul.form li input[type="text"], ul.form li input[type="password"] { width: 300px; }
 }
 @media screen and (max-width: 768px)
 {
-	#header-content, #footer-content, #body { width: auto; padding: 0px 15px; } 
-	header { height: 100px; }
-	#logo { margin-top: 25px; }
-	/****** Top Menu *********/
-	.menu_button { display: block; }
-	ul.menu_top { display: none; }
-	ul.menu_top { position: absolute; top: 100px; left: 0px; width: 100%; float: none; margin: 0px; text-align: center; -moz-box-shadow: 0px 1px 2px #838383; -webkit-box-shadow: 0px 1px 2px #838383; box-shadow: 0px 1px 2px #838383; }
-	ul.menu_top li { display: block; float: none; background: #EEF2F5; width: 100%; padding: 10px 0px; border-bottom: 1px solid #D6D6D6; }
-	ul.menu_top li a { display: block; }
-	/****** Content ******/
-	#wrapper { margin: 0px auto; }
-	#body { padding: 30px 15px; }
-	nav#sidebar { display: none; }
-	div#content { width: 100%; }
-	/***** Form ******/
-	ul.form li input[type="text"], ul.form li input[type="password"] { width: 60%; }
-	/****** Footer ******/
-	#push { height: 1px; }
-	footer { height: auto; }
-	footer ul { padding: 0px 0px 15px 0px; }
-	footer ul li { float: none; padding: 10px 0px; text-align: center; border-bottom: 1px solid #D6D6D6; }
+    #header-content, #footer-content, #body { width: auto; padding: 0px 15px; } 
+    header { height: 100px; }
+    #logo { margin-top: 25px; }
+    /****** Top Menu *********/
+    .menu_button { display: block; }
+    ul.menu_top { display: none; }
+    ul.menu_top { position: absolute; top: 100px; left: 0px; width: 100%; float: none; margin: 0px; text-align: center; -moz-box-shadow: 0px 1px 2px #838383; -webkit-box-shadow: 0px 1px 2px #838383; box-shadow: 0px 1px 2px #838383; }
+    ul.menu_top li { display: block; float: none; background: #EEF2F5; width: 100%; padding: 10px 0px; border-bottom: 1px solid #D6D6D6; }
+    ul.menu_top li a { display: block; }
+    /****** Content ******/
+    #wrapper { margin: 0px auto; }
+    #body { padding: 30px 15px; }
+    nav#sidebar { display: none; }
+    div#content { width: 100%; }
+    /***** Form ******/
+    ul.form li input[type="text"], ul.form li input[type="password"] { width: 60%; }
+    /****** Footer ******/
+    #push { height: 1px; }
+    footer { height: auto; }
+    footer ul { padding: 0px 0px 15px 0px; }
+    footer ul li { float: none; padding: 10px 0px; text-align: center; border-bottom: 1px solid #D6D6D6; }
 }
 @media screen and (max-width: 480px)
 {
-	/***** Form ******/
-	ul.form li label { float: none; line-height: 15px; margin-bottom: 5px; }
-	ul.form li label.empty { line-height: 1px; margin-bottom: 0px; }
-	ul.form li input[type="text"], ul.form li input[type="password"] { float: none; width: 100%; }
+    /***** Form ******/
+    ul.form li label { float: none; line-height: 15px; margin-bottom: 5px; }
+    ul.form li label.empty { line-height: 1px; margin-bottom: 0px; }
+    ul.form li input[type="text"], ul.form li input[type="password"] { float: none; width: 100%; }
 }
 /** custom styling Layout **//** custom styling **/
 #logo {
-	display: block;
-	margin-top: 0px;
+    display: block;
+    margin-top: 0px;
 }
 #logo img {
-	width:200px;height:160px;
+    width:200px;height:160px;
 }
 
 input[type=text] {
@@ -458,6 +458,7 @@ body {
     background: #c5dce8;
     padding: 10px 12px;
     border-bottom: 1px solid #c5dce8;
+
     overflow: hidden;
     -webkit-border-radius: 4px 4px 0 0;
     -moz-border-radius: 4px 4px 0 0;

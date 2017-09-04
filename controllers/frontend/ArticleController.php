@@ -20,22 +20,29 @@ switch ($registry->requestAction)
 		$info = $articleModel->getInfo();
 		$list = $articleModel->getArticleList();
 
+
 		if(isset($session->user->id))
 		{
 			$userId = $articleModel->userIdToUsername($session->user->id);
 		}
 		
 		$articleView->showAllArticles("articleList",$list,$info[0],$info[1], $userId);
+    
 		break;
-	break;
+
 	case 'show_article':
+
+
+
 		$id = $registry->request['id'];
 		// Zend_Debug::dump($id);exit;
 		if(isset($session->user->id))
 		{
 			$userId = $session->user->id;
 			$articleModel->registerView($id);
+
 			$articleModel->userIdToUsername($session->user->id);
+
 
 			// 	$user= $articleModel->getQuestionUsername($session->user->id);
 			// Zend_Debug::dump($user);exit;
@@ -44,11 +51,13 @@ switch ($registry->requestAction)
 		$allVotes = $articleModel->getRatings();
 		$articleData[] = $articleModel->getArticleById($id);
 		$questionId = (isset($registry->request['id'])) ? $registry->request['id'] : NULL;
-		$commentList = $articleModel->getCommentListByQuestionId($questionId);
+		$commentList = $articleModel->getCommentListByQuestionId($questionId,$userId);
 		$profilePicture = $articleModel->getCommentProfilePictureById($questionId);
 		$replyList = $articleModel->getReplyListByQuestionId($questionId);
 
+
 		$articleView->showArticle("article_pages",$articleData,$commentList,$replyList, $userId,$allVotes,$profilePicture, $articleModel->userIdToUsername($session->user->id));	
+
 	break;
 	case 'add' :
 		$articleView->postComment("addArticle");
@@ -294,8 +303,6 @@ switch ($registry->requestAction)
 			 		// //$replyUserName = $_POST['replyUserName'];
 			 		$articleModel->editComment($comment,$commentId,$userId);
 			 		// var_dump("ACIIC");
-			 		// Zend_Debug::dump($_POST);
-			 		// exit();
 			 		header("Location: " . $baseUrl . "/article/show_article/id/" . $redirectId);
 				}
 		}

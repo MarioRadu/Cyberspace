@@ -53,6 +53,7 @@ class Article extends Dot_Model
 	
 	public function getArticleById($id)
 	{
+		//self::getUserLikes($id,2);
 		// $select from table "question" where id = $id ; 
 		$select = $this->db->select()
 							->from("question")
@@ -90,13 +91,20 @@ class Article extends Dot_Model
 		$this->db->update("question", $data, $where);
 	}
 
+	/*
+	.
+	.
+	.
+	.
+	.
+	.
 
+	*/
 	//get all comments from a question by questionId
-	public function getCommentListByQuestionId($questionId)
+	public function getCommentListByQuestionId($questionId, $userId = '')
 	{	
 		// select all from table "comment" where questionId is equal to "questionId"
 		// we want to get all comments from table user where userId = id, we use joinLeft .
-
 		$select = $this->db->select()
 							->from('comment')
 							->where('questionId = ?',  $questionId)
@@ -105,8 +113,25 @@ class Article extends Dot_Model
 							//->joinLeft("user","comment.userId=user.id",["picture"=>"picture"])
 							;
 		$result = $this->db->fetchAll($select);
-
-		return $result;
+		
+		// Zend_Debug::dump($result);die;
+		$done = [];
+	    foreach ($result as $separateComment) {
+				// Zend_Debug::dump($separateComment);die;
+	    	$likes = $this->getUserLikes($separateComment['id'], $userId);
+	    	// var_dump($likes);die;
+	    	if($likes != false) {
+				$separateComment['like'] = $likes;
+				$done[$separateComment['id']] = $separateComment;
+			} else {
+				$done[$separateComment['id']] = $separateComment;
+			}
+	    }
+		// if($userId != '') {
+		// 	$likes = $this->getUserLikes($questionId, $userId);
+		// }
+		// Zend_Debug::dump($done);die;
+		return $done;
 	}
 
 	public function postQuestion($data,$userId)
@@ -191,23 +216,20 @@ class Article extends Dot_Model
 			$resultByContent = $this->db->fetchAll($selectByContent);
 
 
-			if(count($resultByTitle) > 0)
-			{
-				$countResultByTitle = count($countResultByTitle);
-			}
-			elseif (count($resultByContent) > 0)
-			{
-				$countResultByContent = count($countResultByContent);
-			}
-				// 
-			if($countResultByContent > $countResultByTitle)
-			{
-				return $resultByContent;
-			}
-			else
+			//
+
+			if(count($resultByTitle)>count($resultByContent))
 			{
 				return $resultByTitle;
 			}
+			elseif(count($resultByContent)>count($resultByTitle))
+			{
+				return $resultByContent;
+			}elseif (count($resultByContent) == count($resultByTitle))
+			{
+				return $resultByContent;
+			}
+
 		}
 		else
 		{
@@ -289,6 +311,9 @@ class Article extends Dot_Model
 			$commentData = ['id = ?'=>$id,'userId = ?'=>$userId];
 	   	    $this->db->delete('comment', $commentData);
 
+	   	   	$data = array('comments' => new Zend_Db_Expr('comments - 1')); 
+			$where = array('id = ?' => $id);; 
+			$this->db->update('question', $data, $where);
 	}
 
 
@@ -451,4 +476,21 @@ class Article extends Dot_Model
 		return $datePassed;
 	}
 
+
+	/// functie cu care selectezi din db fiecare comentariu la care a dat like userId loggat .  
+
+	public function getUserLikes($commentId,$userId)
+	{	
+
+		$finalData = [];
+
+		$select = $this->db->select()
+							->from('vote','vote')
+							->where('commentId =?', $commentId)
+							->where('userId =?', $userId);							
+
+		$result = $this->db->fetchOne($select);
+		// Zend_Debug::dump($result);exit;
+		return $result;
+	}
 }

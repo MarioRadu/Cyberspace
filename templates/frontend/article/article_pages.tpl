@@ -25,8 +25,7 @@ function editReply(replyId,replyContent)
 
 function editComment(commentId,commentContent)
 {	
-	//alert(commentContent);
-	//alert(commentId);
+
 	$("div #editCommentForm_" + commentId).show();
 	$('#commentTextArea').val(commentContent);
 	$("div #commentFormDiv").hide();
@@ -38,6 +37,13 @@ function myFunction()
     confirm("Your comment will be permanently canceled !");
 }
 
+
+// function enableDisableVoteButtons(buttonId)
+// {
+// 	$(".upVoteBtn"+buttonId).hide();
+// 	//upVoteBtn
+// 	//$("div #commentFormDiv").hide();
+// }
 
 function voteRequest(action,buttonId,questionId,buttonClass)
 {
@@ -107,22 +113,26 @@ function voteRequest(action,buttonId,questionId,buttonClass)
 
 
 $(document).ready(function()
+
 {
 	$(".upVoteBtn").click(function()
    		{
+
    	    	var buttonClass = $(this).attr("class");
       	 	voteRequest('up',this.id,$(this).attr('value'),buttonClass);
-      	 	$(this).attr('disabled','disabled');
-      	 	$('.downVoteBtn').attr('disabled','disabled');
+      	 	// $(".upVoteBtn").unbind('click');
+      	 	// $(this).attr('disabled','disabled');
+      	 	//$('.downVoteBtn').attr('disabled','disabled');
   	    });
 
         $(".downVoteBtn").click(function()
         {
         	var buttonClass = $(this).attr("class");
       	 	voteRequest('down',this.id,$(this).attr('value'),buttonClass);
-      	 	$(this).attr('disabled','disabled');
-      	 	$('.upVoteBtn').attr('disabled','disabled');
-
+      	 	// $(".downVoteBtn").unbind('click');
+      	 	// $(this).attr('disabled','disabled');
+      	 	//$('.upVoteBtn').attr('disabled','disabled');
+      	 	// /console.log("ok");
       		//increment(this.id);
       	});
 });
@@ -152,41 +162,34 @@ $(document).ready(function()
 		<ul id="comments-list" class="comments-list">
 			<li>
 				<div class="comment-main-level">
-					<!-- Avatar -->
-					<div class="comment-avatar"><img src="{SITE_URL}/{REPLY_IMAGE}" alt="NOT" class = "profilePic"></div>
-					<!-- Contenedor del Comentario -->
+					<div class="comment-avatar"><img src="{SITE_URL}/{REPLY_PICTURE}" alt="NOT" class = "profilePic"></div>
 					<div class="comment-box">
 						<div class="comment-head">
-							<h6 class="comment-name by-author"><a href="{SITE_URL}/article/profile/id/{COMMENT_USERNAME}">{COMMENT_USERNAME}</a></h6>
+							<h6 class="comment-name by-author"><a href="http://creaticode.com/blog">{COMMENT_USERNAME}</a></h6>
 							<i id ="comment_{COMMENT_ID}" onclick = "showReply({COMMENT_ID})" class="fa fa-reply"></i>
-							<a href="{SITE_URL}/article/delete_comment/id/{COMMENT_ID}/questionId/{ID}" title="Delete" class="delete_state"><i class="fa fa-trash" onclick ="myFunction()"></i></a>								
-							<i onclick="editComment({COMMENT_ID},'{COMMENT_CONTENT}')" class="fa fa-pencil"></i>
-
-							<div id="editCommentForm_{COMMENT_ID}" style="display:none;" >
-								<form action="{SITE_URL}/article/edit_comment/id/{COMMENT_ID}" method="POST">
-									<input type="number" name="id" value="{ID}" hidden="true">
-									<input type="number" name="commentId" value="{COMMENT_ID}" hidden="true">
-									<input type="text" name="commentUserName" value="{COMMENT_USERNAME}" hidden="true">	
-									<textarea name="comment" placeholder="Edit comment..." id="replyTextArea" class="replyTextArea"></textarea>
-			  						<input type="submit" value="Save" id = 'postReplyButton3' class = 'fa fa-reply'>
-								</form>
-							</div>
+							<i class="fa fa-heart"></i>
 						</div>
-							<div class="comment-content">
-								{COMMENT_CONTENT}
-								<div id="replyForm_{COMMENT_ID}" style="display:none;" >
-									<form action="{SITE_URL}/article/post_reply/id/{COMMENT_ID}" method="POST">
-										<input type="number" name="id" value="{ID}" hidden="true">	
-										<textarea name="reply" placeholder="Enter reply here..." id="textarea" class="replyTextArea"></textarea>
-							  			<input type="submit" value="Post Reply" id = 'postReplyButton' class = 'fa fa-reply'>
-									</form>
-								</div>
-							</div>
+						<div class="comment-content">
+						{COMMENT_CONTENT}
+						<div id="replyForm_{COMMENT_ID}" style="display:none;" >
+							<form action="{SITE_URL}/article/post_reply/id/{COMMENT_ID}" method="POST">
+								<input type="number" name="id" value="{ID}" hidden="true">	
+								<textarea name="reply" placeholder="Enter reply here..." id="textarea" class="replyTextArea"></textarea>
+							  	<input type="submit" value="Post Reply" id = 'postReplyButton' class = 'fa fa-reply'>
+							</form>
+					</div>
+						</div>
+								
 					</div>
 				</div>
-					<p id = "{COMMENT_ID}" class = "voteState"> Like : <span class="likeCount" id="likeCount{COMMENT_ID}">{RATING}</span> </p>
+				<p id = "{COMMENT_ID}" class = "voteState"> 
+					Like : <span class="likeCount" id="likeCount{COMMENT_ID}">{RATING}</span> 
+				</p>
+				<!-- BEGIN likeDislike_buttons -->
 				<button name ='unlikeButton' type="button" id="{COMMENT_ID}" class = "downVoteBtn" value="{ID}" style = "float:right;margin: 5px 10px 0 0;"><span class="glyphicon glyphicon-thumbs-down"></span></button>
 				<button name = 'likeButton' type="button" id="{COMMENT_ID}" class = "upVoteBtn" value="{ID}"  style = "float:right;margin: 5px 10px 0 0;"><span class="glyphicon glyphicon-thumbs-up"></span></button>
+				<!-- END likeDislike_buttons -->
+
 
 			<!-- BEGIN reply_list -->
 			<div class ="reply">
@@ -194,10 +197,12 @@ $(document).ready(function()
 					<li>
 						
 						<div class="comment-avatar"><div id ='divReplyPicture'><a href = "{SITE_URL}/article/profile/id/{REPLY_USERNAME}"><img src="{SITE_URL}/{REPLY_IMAGE}" alt="NOT" class = "profilePic"></a></div></div>
+
 						
 						<div class="comment-box">
 							<div class="comment-head">
 								<h6 class="comment-name"><a href="http://creaticode.com/blog">#{REPLY_USERNAME}</a></h6>
+
 								<a href ="{SITE_URL}/article/delete_reply/id/{REPLY_ID}/questionId/{ID}" ><i class="fa fa-trash" onclick ="myFunction()"></i></a>
 								<i onclick = "editReply({REPLY_ID},'{REPLY_CONTENT}')" class="fa fa-pencil"></i>
 								<div id="editForm_{REPLY_ID}" style="display:none;" >
@@ -228,6 +233,34 @@ $(document).ready(function()
 			<!-- END reply_list -->
 
 					
+
+					<div id="editCommentForm_{COMMENT_ID}" style="display:none;" >
+						<form action="{SITE_URL}/article/edit_comment/id/{COMMENT_ID}" method="POST">
+							<input type="number" name="id" value="{ID}" hidden="true">
+							<input type="number" name="commentId" value="{COMMENT_ID}" hidden="true">
+							<input type="text" name="commentUserName" value="{COMMENT_USERNAME}" hidden="true">	
+							<textarea name="comment" placeholder="Edit comment..." id="replyTextArea" class="replyTextArea"></textarea>
+			  				<input type="submit" value="Save" id = 'postReplyButton' class = 'fa fa-reply'>
+						</form>
+					</div>
+		</div>
+		<div class = "replyButton">
+			<!-- <button id ="reply_{COMMENT_ID}" onclick = "showReply({COMMENT_ID})">Reply</button> -->
+			<a href="{SITE_URL}/article/delete_comment/id/{COMMENT_ID}/questionId/{ID}" title="Delete" class="delete_state"><button onclick="myFunction()">Delete</button></a>
+			<button onclick="editComment({COMMENT_ID},'{COMMENT_CONTENT}')">Edit Comment</button>
+		</div>
+
+		
+
+
+		
+		<div id="editComment_{COMMENT_ID}" style="display:none;" >
+			<form action="{SITE_URL}/article/edit_comment/id/{COMMENT_ID}" method="POST">
+				<input type="number" name="id" value="{ID}" hidden="true">	
+				<textarea name="reply" placeholder="Edit comment..." id="textarea" class="replyTextArea"></textarea>
+			  	<input type="submit" value="Save" id = 'postReplyButton' class = 'fa fa-reply'>
+			</form>
+
 		</div>
 
 	<!-- END comment_list -->
@@ -243,4 +276,4 @@ $(document).ready(function()
 </div>
 <p class ="info">Published on:{DATE} by <a href="dasda">{USERNAME}</a></p>
 
-<!--// 0729016066 //-->
+<!--// 0729016066 //--> 
